@@ -4,7 +4,7 @@ import PostGrid from "../components/PostGrid";
 
 const Cakes = () => {
   useEffect(() => {
-    document.title = "Cake Portfolio";
+    document.title = "Cake Portfolio | Baked Goodies by H";
   }, []);
   return (
     <>

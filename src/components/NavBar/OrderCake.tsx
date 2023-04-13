@@ -1,21 +1,6 @@
-import {
-  Accordion,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalOverlay,
-  Show,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Button, Show, useDisclosure } from "@chakra-ui/react";
 import { GiCakeSlice } from "react-icons/gi";
-import FlavorRadio from "../OrderModal/FlavorRadio";
-import DescriptionArea from "../OrderModal/DescriptionArea";
-import OrderAccordion from "../OrderModal/OrderAccordion";
+import OrderModal from "../OrderModal/OrderModal";
 
 const CakeButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -29,41 +14,7 @@ const CakeButton = () => {
       >
         <Show above="lg">Order Cake</Show>
       </Button>
-
-      <Modal
-        size={{
-          md: "xl",
-          lg: "2xl",
-          xl: "3xl",
-          "2xl": "4xl",
-        }}
-        closeOnOverlayClick={false}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalBody p="30px">
-            <Accordion defaultIndex={[0]} allowMultiple>
-              <OrderAccordion header="Pick Flavor">
-                <FlavorRadio />
-              </OrderAccordion>
-              <OrderAccordion header="Give Cake Description">
-                <DescriptionArea />
-                <FormControl p="6px">
-                  or Upload Photo:
-                  <Input p="6px" variant="unstyled" type="file" />
-                </FormControl>
-              </OrderAccordion>
-            </Accordion>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="pink" mr="10px" onClick={onClose}>
-              Submit
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <OrderModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </>
   );
 };
