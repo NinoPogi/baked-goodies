@@ -33,20 +33,20 @@ const OrderModal = (props: Props) => {
   useEffect(() => {
     setForm({ flavor: flavor, description: description });
   }, [flavor, description]);
+  const data = new FormData();
 
   const handleUpload = (event: any) => {
-    const data = new FormData();
     data.append("imageUpload", event.target.files[0]);
     for (var key of data.entries()) {
       console.log(key[0] + ", " + key[1]);
     }
-    axios.post("http://localhost:3000/api/upload/", data).then((res) => {
-      console.log(res.statusText);
-    });
   };
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
+    axios.post("http://localhost:3000/api/upload/", data).then((res) => {
+      console.log(res.statusText);
+    });
     console.log(form);
   };
 
@@ -83,6 +83,7 @@ const OrderModal = (props: Props) => {
                 type="file"
                 accept=".jpg,.jpeg,.png"
                 onChange={handleUpload}
+                multiple
               />
             </FormControl>
           </form>
