@@ -1,19 +1,21 @@
-import { Text, Textarea } from "@chakra-ui/react";
-import { useState } from "react";
+import { FormLabel, Text, Textarea } from "@chakra-ui/react";
+import { Dispatch, SetStateAction } from "react";
 
-const DescriptionArea = () => {
-  let [value, setValue] = useState("");
+interface Props {
+  description: string;
+  setDescription: Dispatch<SetStateAction<string>>;
+}
 
+const DescriptionArea = (props: Props) => {
   let handleInputChange = (e: any) => {
     let inputValue = e.target.value;
-    setValue(inputValue);
-    console.log(inputValue);
+    props.setDescription(inputValue);
   };
   return (
     <>
-      <Text mb="8px">Value: {value}</Text>
+      <FormLabel pt="30px">Describe</FormLabel>
       <Textarea
-        value={value}
+        value={props.description}
         onChange={handleInputChange}
         placeholder="Here is a sample placeholder"
         size="sm"
