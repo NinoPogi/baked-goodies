@@ -8,7 +8,7 @@ const NavLinks = () => {
         <Heading fontSize="2xl">Home</Heading>
       </Link>
       <Link as={ReactLink} to="/cakes">
-        <Heading fontSize="2xl">Cakes</Heading>
+        <Heading fontSize="2xl">Shop</Heading>
       </Link>
     </>
   );

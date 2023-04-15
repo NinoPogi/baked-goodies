@@ -1,10 +1,10 @@
-import { useEffect } from "react";
 import { Heading, Stack, Text } from "@chakra-ui/react";
-import PostGrid from "../components/PostGrid";
+import { useEffect } from "react";
+import PostGrid from "../components/CakePortfolio/PostGrid";
 
-const Cakes = () => {
+const Home = () => {
   useEffect(() => {
-    document.title = "Cake Portfolio | Baked Goodies by H";
+    document.title = "Baked Goodies by H";
   }, []);
   return (
     <>
@@ -17,4 +17,4 @@ const Cakes = () => {
   );
 };
 
-export default Cakes;
+export default Home;

@@ -8,7 +8,7 @@ const PostGrid = () => {
       spacing="20px"
       p="20px"
     >
-      {Array(50)
+      {Array(10)
         .fill(0)
         .map((x) => (
           <PostCard />

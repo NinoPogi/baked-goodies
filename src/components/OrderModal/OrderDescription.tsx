@@ -7,8 +7,8 @@ interface Props {
 }
 
 const DescriptionArea = (props: Props) => {
-  let handleInputChange = (e: any) => {
-    let inputValue = e.target.value;
+  const handleInputChange = (e: any) => {
+    const inputValue = e.target.value;
     props.setDescription(inputValue);
   };
   return (

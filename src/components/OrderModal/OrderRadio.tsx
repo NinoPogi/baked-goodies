@@ -1,8 +1,8 @@
-import { Box, Stack, useRadio, useRadioGroup } from "@chakra-ui/react";
+import { Box, Stack, useRadio, useRadioGroup, Text } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
-  setFlavor: Dispatch<SetStateAction<string>>;
+  onChange: (value: string) => void;
 }
 
 const FlavorRadio = (props: Props) => {
@@ -17,7 +17,7 @@ const FlavorRadio = (props: Props) => {
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "flavors",
     defaultValue: "Choco Moist",
-    onChange: props.setFlavor,
+    onChange: props.onChange,
   });
 
   const group = getRootProps();
@@ -28,7 +28,9 @@ const FlavorRadio = (props: Props) => {
         const radio = getRadioProps({ value });
         return (
           <RadioCard key={value} {...radio}>
-            {value}
+            <Text m={{ base: "-10px", lg: "-5px", xl: "-2px", "2xl": "0px" }}>
+              {value}
+            </Text>
           </RadioCard>
         );
       })}

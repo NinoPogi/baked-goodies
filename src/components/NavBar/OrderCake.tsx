@@ -1,6 +1,12 @@
-import { Button, Show, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  Show,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+} from "@chakra-ui/react";
 import { GiCakeSlice } from "react-icons/gi";
-import OrderModal from "../OrderModal/OrderModal";
+import OrderMain from "../OrderModal/OrderMain";
 
 const CakeButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -12,9 +18,22 @@ const CakeButton = () => {
         variant="solid"
         onClick={onOpen}
       >
-        <Show above="lg">Order Cake</Show>
+        <Show above="lg">OrderCakeNow</Show>
       </Button>
-      <OrderModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+      <Modal
+        size={{
+          md: "xl",
+          lg: "2xl",
+          xl: "3xl",
+          "2xl": "4xl",
+        }}
+        closeOnOverlayClick={false}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <OrderMain isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+      </Modal>
     </>
   );
 };

@@ -1,8 +1,8 @@
 import { Divider, Grid, GridItem } from "@chakra-ui/react";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import Home from "./pages/Home";
-import Cakes from "./pages/Cakes";
+import CakePortfolio from "./pages/CakePortfolio";
+import CakeShop from "./pages/CakeShop";
 
 function App() {
   return (
@@ -21,8 +21,8 @@ function App() {
       </GridItem>
       <GridItem area="main">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cakes" element={<Cakes />} />
+          <Route path="/" element={<CakePortfolio />} />
+          <Route path="/cakes" element={<CakeShop />} />
         </Routes>
       </GridItem>
       <GridItem area="footer">

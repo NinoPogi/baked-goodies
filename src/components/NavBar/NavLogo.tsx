@@ -8,7 +8,7 @@ const NavLogo = () => {
   return (
     <Link as={ReactLink} to="/" display="flex">
       <Heading color={colorMode === "light" ? "#d53f8c" : "#fbb6ce"}>
-        BakedGoodies
+        BakedGoodiesbyH
       </Heading>
       <Image src={logo} alt="Baked Goodies by H" boxSize="2.3em" mt="3px" />
     </Link>
