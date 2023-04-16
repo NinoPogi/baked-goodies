@@ -16,7 +16,7 @@ const FlavorRadio = (props: Props) => {
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "flavors",
-    defaultValue: "Choco Moist",
+    defaultValue: "Vanilla Chiffon",
     onChange: props.onChange,
   });
 

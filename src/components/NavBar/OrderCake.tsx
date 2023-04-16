@@ -18,7 +18,7 @@ const CakeButton = () => {
         variant="solid"
         onClick={onOpen}
       >
-        <Show above="lg">OrderCakeNow</Show>
+        <Show above="lg">OrderYourCakeNow</Show>
       </Button>
       <Modal
         size={{
@@ -32,7 +32,7 @@ const CakeButton = () => {
         onClose={onClose}
       >
         <ModalOverlay />
-        <OrderMain isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+        <OrderMain />
       </Modal>
     </>
   );

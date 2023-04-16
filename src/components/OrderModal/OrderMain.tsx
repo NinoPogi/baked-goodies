@@ -21,7 +21,7 @@ const OrderModal = () => {
     description: "",
     images: [],
   });
-  const [flavor, setFlavor] = useState("Choco Moist");
+  const [flavor, setFlavor] = useState("Vanilla Chiffon");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
   const formImages = new FormData();
@@ -59,8 +59,8 @@ const OrderModal = () => {
   return (
     <>
       <ModalContent>
-        <ModalHeader>
-          OrderCakeNow
+        <ModalHeader textAlign="center">
+          OrderYourCakeNow Form
           <ModalCloseButton />
         </ModalHeader>
         <ModalBody p="30px">
