@@ -34,6 +34,7 @@ const OrderModal = () => {
     }
     try {
       const response = await api.post("/upload", formImages);
+      console.log(response);
       setForm({ ...form, images: response.data });
     } catch (err) {
       alert(err);
@@ -42,12 +43,12 @@ const OrderModal = () => {
 
   const handleInfo = async () => {
     const customer = await api.post("/customer", info);
+    console.log(customer);
     setForm({ ...form, customerId: customer.data._id });
   };
 
   const handleOrder = async (event: FormEvent) => {
     event.preventDefault();
-    console.log(form);
     const response = await api.post("/order", form);
     console.log(response);
   };
