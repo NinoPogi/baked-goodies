@@ -1,12 +1,19 @@
 import {
+  Image,
   Button,
   Show,
   useDisclosure,
   Modal,
   ModalOverlay,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalBody,
 } from "@chakra-ui/react";
 import { GiCakeSlice } from "react-icons/gi";
-import OrderMain from "../OrderModal/OrderMain";
+import OrderForm from "../OrderCake/OrderForm";
+import logo from "../../assets/logo.svg";
 
 const CakeButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -32,7 +39,21 @@ const CakeButton = () => {
         onClose={onClose}
       >
         <ModalOverlay />
-        <OrderMain />
+        <ModalContent>
+          <ModalHeader textAlign="center">
+            OrderYourCakeNow Form
+            <Image src={logo} alt="Baked Goodies by H" boxSize="2em" />
+            <ModalCloseButton />
+          </ModalHeader>
+          <ModalBody p="5px 30px 0 30px">
+            <OrderForm />
+          </ModalBody>
+          <ModalFooter>
+            <Button form="orderForm" type="submit" colorScheme="pink">
+              Submit
+            </Button>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
     </>
   );

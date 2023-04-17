@@ -2,20 +2,22 @@ import { FormLabel, Text, Textarea } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
-  description: string;
-  setDescription: Dispatch<SetStateAction<string>>;
+  name: string
+  form: {};
+  onChange: Dispatch<SetStateAction<any>>;
+  label: string;
 }
 
 const DescriptionArea = (props: Props) => {
-  const handleInputChange = (e: any) => {
-    const inputValue = e.target.value;
-    props.setDescription(inputValue);
+  const handleInputChange = (event: any) => {
+    const value = event.target.value
+    props.onChange({ ...props.form, [event.target.name]: value });
   };
   return (
     <>
-      <FormLabel pt="30px">Describe</FormLabel>
+      <FormLabel>{props.label}</FormLabel>
       <Textarea
-        value={props.description}
+        name={props.name}
         onChange={handleInputChange}
         placeholder="Here is a sample placeholder"
         size="sm"
