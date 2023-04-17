@@ -15,7 +15,7 @@ const OrderDates = (props: Props) => {
   return (
     <InputGroup>
       <InputLeftAddon children="OrderDate" />
-      <Input type="text" value={dayjs().format("MM DD YYYY")} isReadOnly />
+      <Input type="text" value={dayjs().format("YYYY-MM-DD")} isReadOnly />
       <InputLeftAddon children="PromiseDate" />
       <Input
         name="promiseDate"

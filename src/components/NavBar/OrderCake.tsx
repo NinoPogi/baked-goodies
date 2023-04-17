@@ -49,7 +49,7 @@ const CakeButton = () => {
             <OrderForm />
           </ModalBody>
           <ModalFooter>
-            <Button form="orderForm" type="submit" colorScheme="pink">
+            <Button form="order" type="submit" colorScheme="pink">
               Submit
             </Button>
           </ModalFooter>

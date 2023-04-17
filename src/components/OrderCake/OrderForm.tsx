@@ -1,10 +1,10 @@
 import { BaseSyntheticEvent, FormEvent, useEffect, useState } from "react";
-import { Input, FormControl } from "@chakra-ui/react";
-import axios from "axios";
+import { Button, Input, FormControl } from "@chakra-ui/react";
 import OrderTextarea from "./OrderForm/OrderTextarea";
 import OrderRadio from "./OrderForm/OrderRadio";
 import CustomerInfo from "./OrderForm/CustomerInfo";
 import DatesInput from "./OrderForm/DatesInput";
+import api from "../../services/api-client";
 
 const OrderModal = () => {
   const [info, setInfo] = useState({
@@ -24,42 +24,42 @@ const OrderModal = () => {
   const [images, setImages] = useState([]);
   const formImages = new FormData();
 
-  const postCustomer = async () => {
-    const customer = await axios.post("http://localhost:3000/customer", info);
-    return setForm({ ...form, customerId: customer.data._id });
-
-    // const response = await axios.post("http://localhost:3000/order", form);
-    // console.log(response);
-  };
-
   const handleImages = (event: BaseSyntheticEvent) => {
     setImages(event.target.files);
   };
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-    if (images.length !== 0) {
-      for (let file of images) {
-        formImages.append("imageUpload", file);
-      }
-      try {
-        const images = await axios.post(
-          "http://localhost:3000/upload",
-          formImages
-        );
-        setForm({ ...form, images: images.data });
-      } catch (err) {
-        alert(err);
-      }
+
+  const handleUpload = async () => {
+    for (let file of images) {
+      formImages.append("imageUpload", file);
     }
-    // postCustomer();
+    try {
+      const response = await api.post("/upload", formImages);
+      setForm({ ...form, images: response.data });
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  const handleInfo = async () => {
+    const customer = await api.post("/customer", info);
+    setForm({ ...form, customerId: customer.data._id });
+  };
+
+  const handleOrder = async (event: FormEvent) => {
+    event.preventDefault();
     console.log(form);
+    const response = await api.post("/order", form);
+    console.log(response);
   };
 
   return (
-    <form id="orderForm" onSubmit={handleSubmit}>
-      <FormControl>
-        <DatesInput form={form} onChange={setForm} />
+    <FormControl>
+      <form id="order" onSubmit={handleOrder}>
         <CustomerInfo info={info} onChange={setInfo} />
+        <Button onClick={handleInfo} colorScheme="pink">
+          Submit
+        </Button>
+        <DatesInput form={form} onChange={setForm} />
         <OrderRadio
           name="flavor"
           label="Pick the Flavors"
@@ -90,7 +90,6 @@ const OrderModal = () => {
         />
         or Upload Photo/s:
         <Input
-          position={{ sm: "relative", md: "absolute" }}
           w="230px"
           p="6px"
           variant="unstyled"
@@ -99,6 +98,9 @@ const OrderModal = () => {
           onChange={handleImages}
           multiple
         />
+        <Button onClick={handleUpload} colorScheme="pink">
+          Upload
+        </Button>
         <OrderRadio
           name="payment"
           label="Pick payment method for the future:"
@@ -107,8 +109,8 @@ const OrderModal = () => {
           }}
           options={["GCash", "BDO"]}
         />
-      </FormControl>
-    </form>
+      </form>
+    </FormControl>
   );
 };
 
