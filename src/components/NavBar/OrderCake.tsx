@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Image,
   Button,
@@ -17,6 +18,7 @@ import logo from "../../assets/logo.svg";
 
 const CakeButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [loading, setLoading] = useState(false);
   return (
     <>
       <Button
@@ -46,12 +48,18 @@ const CakeButton = () => {
             <ModalCloseButton />
           </ModalHeader>
           <ModalBody p="5px 30px 0 30px">
-            <OrderForm />
+            <OrderForm loading={loading} setLoading={setLoading} />
           </ModalBody>
           <ModalFooter>
-            <Button form="order" type="submit" colorScheme="pink">
-              Submit
-            </Button>
+            {loading ? (
+              <Button isLoading colorScheme="pink">
+                Submit
+              </Button>
+            ) : (
+              <Button form="order" type="submit" colorScheme="pink">
+                Submit
+              </Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
