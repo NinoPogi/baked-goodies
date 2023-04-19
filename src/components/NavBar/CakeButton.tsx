@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Button,
   Show,
@@ -15,24 +15,33 @@ import {
 import OrderModal from "./OrderCake/OrderModal";
 import WaitModal from "./WaitCake/WaitModal";
 import PayModal from "./PayCake/PayModal";
+import api from "../../services/api-client";
 
 const CakeButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [part, setPart] = useState("order");
+  const [status, setStatus] = useState("ordering");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const apiCall = async () => {
+      const response = await api.get("/customer");
+      setStatus(response.data[0].status);
+    };
+    apiCall();
+  }, []);
 
   let buttonIcon;
   let buttonLabel;
   let modal;
-  if (part === "order") {
+  if (status === "ordering") {
     buttonIcon = <GiCakeSlice />;
     buttonLabel = "OrderYourCakeNow";
     modal = <OrderModal loading={loading} setLoading={setLoading} />;
-  } else if (part === "wait") {
+  } else if (status === "processing") {
     buttonIcon = <GiTimeSynchronization />;
     buttonLabel = "WaitYourCakeNow";
     modal = <WaitModal />;
-  } else if (part === "pay") {
+  } else if (status === "pay") {
     buttonIcon = <GiMoneyStack />;
     buttonLabel = "PayYourCakeNow";
     modal = <PayModal />;
