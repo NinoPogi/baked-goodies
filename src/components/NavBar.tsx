@@ -1,21 +1,20 @@
-import { Flex, Show, Spacer } from "@chakra-ui/react";
+import { useState } from "react";
+import { Box, Flex, Show, Spacer, Stack } from "@chakra-ui/react";
 import NavLogo from "./NavBar/NavLogo";
-import ThemeButton from "./NavBar/ThemeButton";
-import NavLinks from "./NavBar/NavLinks";
-import CakeButton from "./NavBar/CakeButton";
+import NavBarContainer from "./NavBar/NavBarContainer";
+import MenuToggle from "./NavBar/MenuToggle";
+import MenuLinks from "./NavBar/MenuLinks";
 
 const NavBar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
   return (
-    <>
-      <Flex alignItems="center" gap="30px" p="26px" overflow="hidden">
-        <NavLogo />
-        <Spacer />
-        <Show above="sm">
-          <NavLinks />
-          <CakeButton />
-        </Show>
-      </Flex>
-    </>
+    <NavBarContainer>
+      <NavLogo />
+      <MenuToggle toggle={toggle} isOpen={isOpen} />
+      <MenuLinks isOpen={isOpen} />
+    </NavBarContainer>
   );
 };
 

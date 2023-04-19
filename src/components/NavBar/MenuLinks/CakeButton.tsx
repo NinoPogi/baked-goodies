@@ -12,10 +12,10 @@ import {
   GiTimeSynchronization,
   GiMoneyStack,
 } from "react-icons/gi";
-import OrderModal from "./OrderCake/OrderModal";
-import WaitModal from "./WaitCake/WaitModal";
-import PayModal from "./PayCake/PayModal";
-import api from "../../services/api-client";
+import OrderModal from "../OrderCake/OrderModal";
+import WaitModal from "../WaitCake/WaitModal";
+import PayModal from "../PayCake/PayModal";
+import api from "../../../services/api-client";
 
 const CakeButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -55,7 +55,7 @@ const CakeButton = () => {
         variant="solid"
         onClick={onOpen}
       >
-        <Show above="lg">{buttonLabel}</Show>
+        {buttonLabel}
       </Button>
 
       <Modal
