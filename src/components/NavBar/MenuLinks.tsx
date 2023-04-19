@@ -16,7 +16,7 @@ const MenuLinks = ({ isOpen }: Props) => {
       <Stack
         spacing={8}
         align="center"
-        justify={["center", "space-between", "flex-end", "flex-end"]}
+        justify={["center", "space-between", "space-between", "flex-end"]}
         direction={["column", "row", "row", "row"]}
         pt={[5, 5, 7, 0]}
       >

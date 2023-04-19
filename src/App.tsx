@@ -9,7 +9,6 @@ function App() {
     <Grid
       templateAreas={`"nav" "main" "footer"`}
       p={{
-        sm: "0 100px 0 100px",
         md: "0 45px 0 45px",
         lg: "0 80px 0 80px",
         xl: "0 150px 0 150px",

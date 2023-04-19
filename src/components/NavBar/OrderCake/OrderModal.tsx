@@ -14,6 +14,7 @@ import {
   RadioGroup,
   FormLabel,
   Divider,
+  useToast,
 } from "@chakra-ui/react";
 import OrderDescription from "./OrderForm/OrderDescription";
 import OrderRadio from "./OrderForm/OrderRadio";
@@ -28,6 +29,7 @@ interface Props {
 }
 
 const OrderModal = ({ loading, setLoading }: Props) => {
+  const toast = useToast();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -47,6 +49,13 @@ const OrderModal = ({ loading, setLoading }: Props) => {
     setLoading(true);
     const response = await api.post("/order", form);
     console.log(response);
+    toast({
+      title: `Order created. ${response.statusText}`,
+      description: "Order is now Processing!",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
     setLoading(false);
   };
 

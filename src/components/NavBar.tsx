@@ -5,7 +5,7 @@ import MenuToggle from "./NavBar/MenuToggle";
 import MenuLinks from "./NavBar/MenuLinks";
 
 const NavBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggle = () => setIsOpen(!isOpen);
   return (

@@ -69,7 +69,7 @@ const DescriptionArea = (props: Props) => {
             multiple
           />
           {props.loading ? (
-            <Button isLoading colorScheme="pink">
+            <Button isLoading loadingText="Uploading" colorScheme="pink">
               Upload
             </Button>
           ) : (
