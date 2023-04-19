@@ -1,4 +1,4 @@
-import { Dispatch, FormEvent, useState } from "react";
+import { Dispatch, FormEvent, FormEventHandler, useState } from "react";
 import {
   Image,
   Button,
@@ -7,6 +7,12 @@ import {
   ModalCloseButton,
   ModalFooter,
   ModalHeader,
+  Heading,
+  VStack,
+  HStack,
+  Radio,
+  RadioGroup,
+  FormLabel,
 } from "@chakra-ui/react";
 import OrderDescription from "./OrderForm/OrderDescription";
 import OrderRadio from "./OrderForm/OrderRadio";
@@ -35,7 +41,7 @@ const OrderModal = ({ loading, setLoading }: Props) => {
     payment: "",
   });
 
-  const handleOrder = async (event: FormEvent) => {
+  const handleOrder: FormEventHandler = async (event: FormEvent) => {
     event.preventDefault();
     setLoading(true);
     const response = await api.post("/order", form);
@@ -49,45 +55,62 @@ const OrderModal = ({ loading, setLoading }: Props) => {
         <ModalCloseButton />
       </ModalHeader>
       <ModalBody p="5px 30px 0 30px">
+        <Heading pb="20px">OrderYourCakeNow.</Heading>
         <form id="order" onSubmit={handleOrder}>
-          <DatesInput form={form} onChange={setForm} />
-          <CustomerInfo info={form} onChange={setForm} />
-          <OrderRadio
-            label="Pick the Flavors"
-            onChange={(event: any) => {
-              setForm({ ...form, flavor: event });
-            }}
-            options={[
-              "Vanilla Chiffon",
-              "Choco Chiffon",
-              "Mocha Chiffon",
-              "Ube Chiffon",
-              "Choco Moist",
-            ]}
-          />
-          <OrderRadio
-            label="Pick the Shape"
-            onChange={(event: any) => {
-              setForm({ ...form, shape: event });
-            }}
-            options={["Circle", "Square", "Rectangle"]}
-          />
-          <OrderDescription
-            name="orderDetails"
-            label="Describe"
-            form={form}
-            setForm={setForm}
-            loading={loading}
-            setLoading={setLoading}
-          />
-
-          <OrderRadio
-            label="Pick payment method for the future:"
-            onChange={(event: any) => {
-              setForm({ ...form, payment: event });
-            }}
-            options={["GCash", "BDO"]}
-          />
+          <VStack spacing="10px">
+            <DatesInput form={form} onChange={setForm} />
+            <CustomerInfo info={form} onChange={setForm} />
+            <FormControl isRequired>
+              <FormLabel>Pick Your Cake Flavor:</FormLabel>
+              <RadioGroup
+                onChange={(event) => {
+                  setForm({ ...form, flavor: event });
+                }}
+              >
+                <HStack spacing={4}>
+                  <Radio value="Vanilla Chiffon">Vanilla Chiffon</Radio>
+                  <Radio value="Choco Chiffon">Choco Chiffon</Radio>
+                  <Radio value="Ube Chiffon">Ube Chiffon</Radio>
+                  <Radio value="Choco Moist">Choco Moist</Radio>
+                </HStack>
+              </RadioGroup>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Pick Your Cake Shape:</FormLabel>
+              <RadioGroup
+                onChange={(event) => {
+                  setForm({ ...form, shape: event });
+                }}
+              >
+                <HStack spacing={4}>
+                  <Radio value="Circle">Circle</Radio>
+                  <Radio value="Square">Square</Radio>
+                  <Radio value="Rectangle">Rectangle</Radio>
+                </HStack>
+              </RadioGroup>
+            </FormControl>
+            <OrderDescription
+              name="orderDetails"
+              label="Give Description of Your Cake:"
+              form={form}
+              setForm={setForm}
+              loading={loading}
+              setLoading={setLoading}
+            />
+            <FormControl isRequired>
+              <FormLabel>Pick Your Preferred Payment:</FormLabel>
+              <RadioGroup
+                onChange={(event) => {
+                  setForm({ ...form, payment: event });
+                }}
+              >
+                <HStack spacing={4}>
+                  <Radio value="Gcash">GCash</Radio>
+                  <Radio value="BDO">BDO</Radio>
+                </HStack>
+              </RadioGroup>
+            </FormControl>
+          </VStack>
         </form>
       </ModalBody>
       <ModalFooter>

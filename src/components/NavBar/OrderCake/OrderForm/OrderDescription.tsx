@@ -57,26 +57,28 @@ const DescriptionArea = (props: Props) => {
           size="sm"
         />
       </FormControl>
-      <Text>or Upload Photo/s:</Text>
-      <Flex>
-        <Input
-          w="340px"
-          p="6px"
-          type="file"
-          accept=".jpg,.jpeg,.png"
-          onChange={handleImages}
-          multiple
-        />
-        {props.loading ? (
-          <Button isLoading colorScheme="pink">
-            Upload
-          </Button>
-        ) : (
-          <Button onClick={handleUpload} colorScheme="pink">
-            Upload
-          </Button>
-        )}
-      </Flex>
+      <FormControl>
+        <Text pb="6px">or Upload Photo/s:</Text>
+        <Flex>
+          <Input
+            w="340px"
+            p="6px"
+            type="file"
+            accept=".jpg,.jpeg,.png"
+            onChange={handleImages}
+            multiple
+          />
+          {props.loading ? (
+            <Button isLoading colorScheme="pink">
+              Upload
+            </Button>
+          ) : (
+            <Button onClick={handleUpload} colorScheme="pink">
+              Upload
+            </Button>
+          )}
+        </Flex>
+      </FormControl>
     </>
   );
 };

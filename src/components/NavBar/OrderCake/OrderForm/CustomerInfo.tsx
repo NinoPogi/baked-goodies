@@ -43,7 +43,7 @@ const CustomerInfo = (props: Props) => {
         </InputGroup>
       </FormControl>
       <FormControl isRequired>
-        <FormLabel>Your Email:</FormLabel>
+        <FormLabel>Your Email Address:</FormLabel>
         <Input
           name="email"
           type="text"
@@ -52,7 +52,7 @@ const CustomerInfo = (props: Props) => {
         />
       </FormControl>
       <FormControl isRequired>
-        <FormLabel>Your Phone:</FormLabel>
+        <FormLabel>Your Phone Number:</FormLabel>
         <Input
           name="phone"
           type="text"
