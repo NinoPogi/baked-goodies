@@ -5,6 +5,7 @@ import {
   useRadioGroup,
   Text,
   FormLabel,
+  FormControl,
 } from "@chakra-ui/react";
 import { BaseSyntheticEvent } from "react";
 
@@ -14,7 +15,7 @@ interface Props {
   options: any[];
 }
 
-const OrderRadio = ({label, onChange, options}: Props) => {
+const OrderRadio = ({ label, onChange, options }: Props) => {
   const { getRootProps, getRadioProps } = useRadioGroup({
     onChange: onChange,
   });
@@ -23,19 +24,23 @@ const OrderRadio = ({label, onChange, options}: Props) => {
 
   return (
     <>
-      <FormLabel htmlFor="">{label}</FormLabel>
-      <Stack direction={{ base: "column", lg: "row" }} {...group}>
-        {options.map((value) => {
-          const radio = getRadioProps({ value });
-          return (
-            <RadioCard key={value} {...radio}>
-              <Text m={{ base: "-10px", lg: "-5px", xl: "-2px", "2xl": "0px" }}>
-                {value}
-              </Text>
-            </RadioCard>
-          );
-        })}
-      </Stack>
+      <FormControl>
+        <FormLabel htmlFor="">{label}</FormLabel>
+        <Stack direction={{ base: "column", lg: "row" }} {...group}>
+          {options.map((value) => {
+            const radio = getRadioProps({ value });
+            return (
+              <RadioCard key={value} {...radio}>
+                <Text
+                  m={{ base: "-10px", lg: "-5px", xl: "-2px", "2xl": "0px" }}
+                >
+                  {value}
+                </Text>
+              </RadioCard>
+            );
+          })}
+        </Stack>
+      </FormControl>
     </>
   );
 };

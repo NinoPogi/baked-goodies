@@ -49,48 +49,46 @@ const OrderModal = ({ loading, setLoading }: Props) => {
         <ModalCloseButton />
       </ModalHeader>
       <ModalBody p="5px 30px 0 30px">
-        <FormControl>
-          <form id="order" onSubmit={handleOrder}>
-            <CustomerInfo info={form} onChange={setForm} />
-            <DatesInput form={form} onChange={setForm} />
-            <OrderRadio
-              label="Pick the Flavors"
-              onChange={(event: any) => {
-                setForm({ ...form, flavor: event });
-              }}
-              options={[
-                "Vanilla Chiffon",
-                "Choco Chiffon",
-                "Mocha Chiffon",
-                "Ube Chiffon",
-                "Choco Moist",
-              ]}
-            />
-            <OrderRadio
-              label="Pick the Shape"
-              onChange={(event: any) => {
-                setForm({ ...form, shape: event });
-              }}
-              options={["Circle", "Square", "Rectangle"]}
-            />
-            <OrderDescription
-              name="orderDetails"
-              label="Describe"
-              form={form}
-              setForm={setForm}
-              loading={loading}
-              setLoading={setLoading}
-            />
+        <form id="order" onSubmit={handleOrder}>
+          <DatesInput form={form} onChange={setForm} />
+          <CustomerInfo info={form} onChange={setForm} />
+          <OrderRadio
+            label="Pick the Flavors"
+            onChange={(event: any) => {
+              setForm({ ...form, flavor: event });
+            }}
+            options={[
+              "Vanilla Chiffon",
+              "Choco Chiffon",
+              "Mocha Chiffon",
+              "Ube Chiffon",
+              "Choco Moist",
+            ]}
+          />
+          <OrderRadio
+            label="Pick the Shape"
+            onChange={(event: any) => {
+              setForm({ ...form, shape: event });
+            }}
+            options={["Circle", "Square", "Rectangle"]}
+          />
+          <OrderDescription
+            name="orderDetails"
+            label="Describe"
+            form={form}
+            setForm={setForm}
+            loading={loading}
+            setLoading={setLoading}
+          />
 
-            <OrderRadio
-              label="Pick payment method for the future:"
-              onChange={(event: any) => {
-                setForm({ ...form, payment: event });
-              }}
-              options={["GCash", "BDO"]}
-            />
-          </form>
-        </FormControl>
+          <OrderRadio
+            label="Pick payment method for the future:"
+            onChange={(event: any) => {
+              setForm({ ...form, payment: event });
+            }}
+            options={["GCash", "BDO"]}
+          />
+        </form>
       </ModalBody>
       <ModalFooter>
         {loading ? (

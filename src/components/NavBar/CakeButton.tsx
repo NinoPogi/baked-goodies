@@ -7,22 +7,48 @@ import {
   ModalOverlay,
   ModalContent,
 } from "@chakra-ui/react";
-import { GiCakeSlice } from "react-icons/gi";
+import {
+  GiCakeSlice,
+  GiTimeSynchronization,
+  GiMoneyStack,
+} from "react-icons/gi";
 import OrderModal from "./OrderCake/OrderModal";
+import WaitModal from "./WaitCake/WaitModal";
+import PayModal from "./PayCake/PayModal";
 
 const CakeButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [part, setPart] = useState("order");
   const [loading, setLoading] = useState(false);
+
+  let buttonIcon;
+  let buttonLabel;
+  let modal;
+  if (part === "order") {
+    buttonIcon = <GiCakeSlice />;
+    buttonLabel = "OrderYourCakeNow";
+    modal = <OrderModal loading={loading} setLoading={setLoading} />;
+  } else if (part === "wait") {
+    buttonIcon = <GiTimeSynchronization />;
+    buttonLabel = "WaitYourCakeNow";
+    modal = <WaitModal />;
+  } else if (part === "pay") {
+    buttonIcon = <GiMoneyStack />;
+    buttonLabel = "PayYourCakeNow";
+    modal = <PayModal />;
+  }
+
   return (
     <>
       <Button
-        leftIcon={<GiCakeSlice />}
+        leftIcon={buttonIcon}
         colorScheme="pink"
         variant="solid"
         onClick={onOpen}
       >
-        <Show above="lg">OrderYourCakeNow</Show>
+        <Show above="lg">{buttonLabel}</Show>
       </Button>
+
       <Modal
         size={{
           md: "xl",
@@ -35,9 +61,7 @@ const CakeButton = () => {
         onClose={onClose}
       >
         <ModalOverlay />
-        <ModalContent>
-          <OrderModal loading={loading} setLoading={setLoading} />
-        </ModalContent>
+        <ModalContent>{modal}</ModalContent>
       </Modal>
     </>
   );

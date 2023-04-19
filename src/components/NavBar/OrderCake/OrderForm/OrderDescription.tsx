@@ -2,6 +2,7 @@ import { BaseSyntheticEvent, Dispatch, SetStateAction, useState } from "react";
 import {
   Button,
   Flex,
+  FormControl,
   FormLabel,
   Input,
   Text,
@@ -47,13 +48,15 @@ const DescriptionArea = (props: Props) => {
 
   return (
     <>
-      <FormLabel>{props.label}</FormLabel>
-      <Textarea
-        name={props.name}
-        onChange={handleInputChange}
-        placeholder="example: Gusto ko po ng cake na ...."
-        size="sm"
-      />
+      <FormControl>
+        <FormLabel>{props.label}</FormLabel>
+        <Textarea
+          name={props.name}
+          onChange={handleInputChange}
+          placeholder="example: Gusto ko po ng cake na ...."
+          size="sm"
+        />
+      </FormControl>
       <Text>or Upload Photo/s:</Text>
       <Flex>
         <Input
