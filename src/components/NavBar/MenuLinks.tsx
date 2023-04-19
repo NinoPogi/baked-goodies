@@ -1,6 +1,7 @@
 import { Box, Stack } from "@chakra-ui/react";
 import MenuItem from "./MenuLinks/MenuItem";
 import CakeButton from "./MenuLinks/CakeButton";
+import ThemeButton from "./MenuLinks/ThemeButton";
 
 interface Props {
   isOpen: boolean;
@@ -9,16 +10,17 @@ interface Props {
 const MenuLinks = ({ isOpen }: Props) => {
   return (
     <Box
-      display={{ base: isOpen ? "block" : "none", md: "block" }}
-      flexBasis={{ base: "100%", md: "auto" }}
+      display={{ base: isOpen ? "block" : "none", lg: "block" }}
+      flexBasis={{ base: "100%", lg: "auto" }}
     >
       <Stack
         spacing={8}
         align="center"
         justify={["center", "space-between", "flex-end", "flex-end"]}
         direction={["column", "row", "row", "row"]}
-        pt={[4, 4, 0, 0]}
+        pt={[5, 5, 7, 0]}
       >
+        <ThemeButton />
         <MenuItem link="/">Home</MenuItem>
         <MenuItem link="/cakes">PriceList</MenuItem>
         <CakeButton />

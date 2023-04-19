@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
-import { FiX, FiMenu } from "react-icons/fi";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { MdOutlineClose } from "react-icons/md";
 
 interface Props {
   toggle: () => void;
@@ -8,8 +9,12 @@ interface Props {
 
 const MenuToggle = ({ toggle, isOpen }: Props) => {
   return (
-    <Box display={{ base: "block", md: "none" }} onClick={toggle}>
-      {isOpen ? <FiX /> : <FiMenu />}
+    <Box display={{ base: "block", lg: "none" }} onClick={toggle}>
+      {isOpen ? (
+        <MdOutlineClose color="white" size="30px" />
+      ) : (
+        <GiHamburgerMenu color="white" size="20px" />
+      )}
     </Box>
   );
 };

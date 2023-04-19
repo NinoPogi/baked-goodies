@@ -7,10 +7,13 @@ const NavLogo = (props: {}) => {
   const { colorMode } = useColorMode();
   return (
     <Link as={ReactLink} to="/" {...props}>
-      <HStack spacing={-0.5}>
+      <HStack spacing={-21}>
         <Heading
           fontSize="2xl"
-          color={colorMode === "light" ? "#d53f8c" : "#fbb6ce"}
+          color={{
+            base: "white",
+            lg: colorMode === "light" ? "#d53f8c" : "#fbb6ce",
+          }}
         >
           BakedGoodiesbyH
         </Heading>

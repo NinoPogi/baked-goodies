@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 
 interface Props {
@@ -7,17 +7,21 @@ interface Props {
 
 const NavBarContainer = ({ children, ...props }: Props) => {
   return (
-    <Flex
+    <Box
+      as={Flex}
+      borderRadius="lg"
+      boxShadow="md"
       align="center"
       justify="space-between"
+      wrap="wrap"
       w="100%"
       mb={8}
       p={8}
-      bg={["primary.500", "primary.500", "transparent", "transparent"]}
+      bg={["pink.400", "pink.400", "pink.400", "transparent"]}
       {...props}
     >
       {children}
-    </Flex>
+    </Box>
   );
 };
 
