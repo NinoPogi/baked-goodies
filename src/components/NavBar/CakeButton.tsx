@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import {
   Button,
   Show,
@@ -22,7 +22,7 @@ const CakeButton = () => {
   const [status, setStatus] = useState("ordering");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const apiCall = async () => {
       const response = await api.get("/customer");
       setStatus(response.data[0].status);
