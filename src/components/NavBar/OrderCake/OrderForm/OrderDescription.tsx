@@ -59,7 +59,7 @@ const DescriptionArea = (props: Props) => {
       </FormControl>
       <FormControl>
         <Text pb="6px">or Upload Photo/s:</Text>
-        <Flex>
+        <Flex gap="20px">
           <Input
             w="340px"
             p="6px"

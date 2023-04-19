@@ -13,6 +13,7 @@ import {
   Radio,
   RadioGroup,
   FormLabel,
+  Divider,
 } from "@chakra-ui/react";
 import OrderDescription from "./OrderForm/OrderDescription";
 import OrderRadio from "./OrderForm/OrderRadio";
@@ -68,10 +69,18 @@ const OrderModal = ({ loading, setLoading }: Props) => {
                 }}
               >
                 <HStack spacing={4}>
-                  <Radio value="Vanilla Chiffon">Vanilla Chiffon</Radio>
-                  <Radio value="Choco Chiffon">Choco Chiffon</Radio>
-                  <Radio value="Ube Chiffon">Ube Chiffon</Radio>
-                  <Radio value="Choco Moist">Choco Moist</Radio>
+                  <Radio value="Vanilla Chiffon" colorScheme="pink">
+                    Vanilla Chiffon
+                  </Radio>
+                  <Radio value="Choco Chiffon" colorScheme="pink">
+                    Choco Chiffon
+                  </Radio>
+                  <Radio value="Ube Chiffon" colorScheme="pink">
+                    Ube Chiffon
+                  </Radio>
+                  <Radio value="Choco Moist" colorScheme="pink">
+                    Choco Moist
+                  </Radio>
                 </HStack>
               </RadioGroup>
             </FormControl>
@@ -83,9 +92,15 @@ const OrderModal = ({ loading, setLoading }: Props) => {
                 }}
               >
                 <HStack spacing={4}>
-                  <Radio value="Circle">Circle</Radio>
-                  <Radio value="Square">Square</Radio>
-                  <Radio value="Rectangle">Rectangle</Radio>
+                  <Radio value="Circle" colorScheme="pink">
+                    Circle
+                  </Radio>
+                  <Radio value="Square" colorScheme="pink">
+                    Square
+                  </Radio>
+                  <Radio value="Rectangle" colorScheme="pink">
+                    Rectangle
+                  </Radio>
                 </HStack>
               </RadioGroup>
             </FormControl>
@@ -105,11 +120,16 @@ const OrderModal = ({ loading, setLoading }: Props) => {
                 }}
               >
                 <HStack spacing={4}>
-                  <Radio value="Gcash">GCash</Radio>
-                  <Radio value="BDO">BDO</Radio>
+                  <Radio value="Gcash" colorScheme="pink">
+                    GCash
+                  </Radio>
+                  <Radio value="BDO" colorScheme="pink">
+                    BDO
+                  </Radio>
                 </HStack>
               </RadioGroup>
             </FormControl>
+            <Divider orientation="horizontal" />
           </VStack>
         </form>
       </ModalBody>
