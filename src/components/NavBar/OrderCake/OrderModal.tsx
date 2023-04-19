@@ -44,9 +44,10 @@ const OrderModal = ({ loading, setLoading }: Props) => {
 
   const handleOrder: FormEventHandler = async (event: FormEvent) => {
     event.preventDefault();
-    // setLoading(true);
+    setLoading(true);
     const response = await api.post("/order", form);
-    // setLoading(false);
+    console.log(response);
+    setLoading(false);
   };
 
   return (
