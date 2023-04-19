@@ -8,9 +8,9 @@ const Home = () => {
   }, []);
   return (
     <>
-      <Stack align="center" p="100px 0 90px 0">
-        <Heading>CAKES</Heading>
-        <Text>Check my cakes 🎂!!1!</Text>
+      <Stack align="center" p="100px 70px 90px 70px">
+        <Heading>CHECK MY CAKES🎂</Heading>
+        <Text>Mahilig na talaga ako magbake or magluto.</Text>
       </Stack>
       <PostGrid />
     </>

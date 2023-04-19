@@ -26,9 +26,10 @@ import api from "../../../services/api-client";
 interface Props {
   loading: boolean;
   setLoading: Dispatch<React.SetStateAction<boolean>>;
+  setStatus: Dispatch<React.SetStateAction<string>>;
 }
 
-const OrderModal = ({ loading, setLoading }: Props) => {
+const OrderModal = ({ loading, setLoading, setStatus }: Props) => {
   const toast = useToast();
   const [form, setForm] = useState({
     name: "",
@@ -56,6 +57,7 @@ const OrderModal = ({ loading, setLoading }: Props) => {
       duration: 5000,
       isClosable: true,
     });
+    setStatus("processing");
     setLoading(false);
   };
 

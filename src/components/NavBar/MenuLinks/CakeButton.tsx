@@ -1,5 +1,4 @@
 import { useState, useLayoutEffect } from "react";
-import { useColorMode } from "@chakra-ui/color-mode";
 import {
   Button,
   useDisclosure,
@@ -18,7 +17,6 @@ import PayModal from "../PayCake/PayModal";
 import api from "../../../services/api-client";
 
 const CakeButton = () => {
-  const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [status, setStatus] = useState("ordering");
   const [loading, setLoading] = useState(false);
@@ -37,7 +35,13 @@ const CakeButton = () => {
   if (status === "ordering") {
     buttonIcon = <GiCakeSlice />;
     buttonLabel = "OrderYourCakeNow";
-    modal = <OrderModal loading={loading} setLoading={setLoading} />;
+    modal = (
+      <OrderModal
+        loading={loading}
+        setLoading={setLoading}
+        setStatus={setStatus}
+      />
+    );
   } else if (status === "processing") {
     buttonIcon = <GiTimeSynchronization />;
     buttonLabel = "WaitYourCakeNow";

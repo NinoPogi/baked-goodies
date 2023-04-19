@@ -1,5 +1,6 @@
 import { SimpleGrid } from "@chakra-ui/react";
 import PostCard from "./PostCard";
+import cakePortfolio from "../../data/cakePortfolio";
 
 const PostGrid = () => {
   return (
@@ -8,11 +9,9 @@ const PostGrid = () => {
       spacing="20px"
       p="20px"
     >
-      {Array(10)
-        .fill(0)
-        .map((x) => (
-          <PostCard />
-        ))}
+      {cakePortfolio.map((value) => (
+        <PostCard image={value.image}> {value.description}</PostCard>
+      ))}
     </SimpleGrid>
   );
 };
