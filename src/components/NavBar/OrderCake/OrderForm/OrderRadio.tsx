@@ -9,24 +9,23 @@ import {
 import { BaseSyntheticEvent } from "react";
 
 interface Props {
-  name: string;
   label: string;
   onChange: (event: any) => void;
-  options: string[];
+  options: any[];
 }
 
-const OrderRadio = (props: Props) => {
+const OrderRadio = ({label, onChange, options}: Props) => {
   const { getRootProps, getRadioProps } = useRadioGroup({
-    onChange: props.onChange,
+    onChange: onChange,
   });
 
   const group = getRootProps();
 
   return (
     <>
-      <FormLabel htmlFor="">{props.label}</FormLabel>
+      <FormLabel htmlFor="">{label}</FormLabel>
       <Stack direction={{ base: "column", lg: "row" }} {...group}>
-        {props.options.map((value) => {
+        {options.map((value) => {
           const radio = getRadioProps({ value });
           return (
             <RadioCard key={value} {...radio}>

@@ -1,4 +1,4 @@
-import { FormLabel, InputGroup, InputLeftAddon, Input } from "@chakra-ui/react";
+import { FormLabel, InputGroup, Input, FormControl } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
@@ -31,33 +31,35 @@ const CustomerInfo = (props: Props) => {
 
   return (
     <>
-      <FormLabel>Your Info</FormLabel>
-      <InputGroup>
-        <InputLeftAddon children="Name" />
-        <Input
-          name="name"
-          type="text"
-          placeholder="name"
-          onChange={handleName}
-        />
-      </InputGroup>
-      <InputGroup>
-        <InputLeftAddon children="Email" />
+      <FormControl isRequired>
+        <FormLabel>Your Name:</FormLabel>
+        <InputGroup>
+          <Input
+            name="name"
+            type="text"
+            placeholder="example: Hazel"
+            onChange={handleName}
+          />
+        </InputGroup>
+      </FormControl>
+      <FormControl isRequired>
+        <FormLabel>Your Email:</FormLabel>
         <Input
           name="email"
           type="text"
-          placeholder="email"
-          w="1500px"
+          placeholder="example: bakedgoodies@gmail.com"
           onChange={handleEmail}
         />
-        <InputLeftAddon children="Phone" />
+      </FormControl>
+      <FormControl isRequired>
+        <FormLabel>Your Phone:</FormLabel>
         <Input
           name="phone"
           type="text"
-          placeholder="phone"
+          placeholder="example: 09771243342"
           onChange={handlePhone}
         />
-      </InputGroup>
+      </FormControl>
     </>
   );
 };

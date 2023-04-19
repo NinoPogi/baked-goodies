@@ -18,6 +18,7 @@ function App() {
     >
       <GridItem area="nav">
         <NavBar />
+        <Divider orientation="horizontal" />
       </GridItem>
       <GridItem area="main">
         <Routes>
