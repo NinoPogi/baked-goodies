@@ -9,9 +9,9 @@ const PostCards = ({ children, image }: Props) => {
   return (
     <Card borderRadius="15px" overflow="hidden">
       <Image objectFit="cover" src={image} w="560px" h="250px" />
-      <CardBody>
+      {/* <CardBody>
         <Heading fontSize="1xl">{children}</Heading>
-      </CardBody>
+      </CardBody> */}
     </Card>
   );
 };

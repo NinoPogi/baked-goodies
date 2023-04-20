@@ -4,13 +4,13 @@ import { MdOutlineClose } from "react-icons/md";
 
 interface Props {
   toggle: () => void;
-  isOpen: boolean;
+  open: boolean;
 }
 
-const MenuToggle = ({ toggle, isOpen }: Props) => {
+const MenuToggle = ({ toggle, open }: Props) => {
   return (
     <Box display={{ base: "block", lg: "none" }} onClick={toggle}>
-      {isOpen ? (
+      {open ? (
         <MdOutlineClose color="white" size="30px" />
       ) : (
         <GiHamburgerMenu color="white" size="20px" />

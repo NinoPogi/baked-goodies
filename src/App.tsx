@@ -10,10 +10,25 @@ import OrderModal from "./components/OrderModal";
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [status, setStatus] = useState("ordering");
+  const [user, setUser] = useState({
+    orderDate: "",
+    promiseDate: "",
+    customer: {
+      name: "",
+      email: "",
+      phone: "",
+    },
+    flavor: "",
+    shape: "",
+    orderDetails: "",
+    images: [],
+    payment: "",
+  });
 
   useLayoutEffect(() => {
     const apiCall = async () => {
       const response = await api.get("/customer");
+      setUser(response.data[0]);
       setStatus(response.data[0].status);
     };
     apiCall();
@@ -30,7 +45,7 @@ function App() {
       }}
     >
       <GridItem area="nav">
-        <NavBar isOpen={isOpen} onOpen={onOpen} status={status} />
+        <NavBar onOpen={onOpen} status={status} />
       </GridItem>
       <GridItem area="main">
         <OrderModal
@@ -38,9 +53,13 @@ function App() {
           onClose={onClose}
           status={status}
           setStatus={setStatus}
+          user={user}
         />
         <Routes>
-          <Route path="/" element={<CakePortfolio />} />
+          <Route
+            path="/"
+            element={<CakePortfolio status={status} user={user} />}
+          />
           <Route path="/cakes" element={<CakeShop />} />
         </Routes>
       </GridItem>

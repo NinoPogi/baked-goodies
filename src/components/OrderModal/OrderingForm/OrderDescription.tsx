@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, Dispatch, SetStateAction, useState } from "react";
+import { BaseSyntheticEvent, Dispatch, SetStateAction } from "react";
 import {
   Button,
   Flex,
@@ -8,39 +8,40 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import api from "../../../services/api-client";
 
 interface Props {
   name: string;
   form: {};
   setForm: Dispatch<SetStateAction<any>>;
   label: string;
+  handleImages: (event: BaseSyntheticEvent) => void;
 }
 
-const DescriptionArea = ({ name, form, setForm, label }: Props) => {
-  const [images, setImages] = useState([]);
-  const formImages = new FormData();
+const DescriptionArea = ({
+  name,
+  form,
+  setForm,
+  label,
+  handleImages,
+}: Props) => {
+  // const [images, setImages] = useState([]);
 
   const handleInputChange = (event: any) => {
     const value = event.target.value;
     setForm({ ...form, [event.target.name]: value });
   };
 
-  const handleImages = (event: BaseSyntheticEvent) => {
-    setImages(event.target.files);
-  };
-
-  const handleUpload = async () => {
-    for (let file of images) {
-      formImages.append("imageUpload", file);
-    }
-    try {
-      const response = await api.post("/upload", formImages);
-      setForm({ ...form, images: response.data });
-    } catch (err) {
-      alert(err);
-    }
-  };
+  // const handleUpload = async () => {
+  //   for (let file of images) {
+  //     formImages.append("imageUpload", file);
+  //   }
+  //   try {
+  //     const response = await api.post("/upload", formImages);
+  //     setForm({ ...form, images: response.data });
+  //   } catch (err) {
+  //     alert(err);
+  //   }
+  // };
 
   return (
     <>
@@ -64,9 +65,9 @@ const DescriptionArea = ({ name, form, setForm, label }: Props) => {
             onChange={handleImages}
             multiple
           />
-          <Button onClick={handleUpload} colorScheme="pink">
+          {/* <Button onClick={handleUpload} colorScheme="pink">
             Upload
-          </Button>
+          </Button> */}
         </Flex>
       </FormControl>
     </>

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import {
   Image,
   Button,
@@ -14,21 +14,37 @@ import logo from "../assets/logo.svg";
 import OrderingForm from "./OrderModal/OrderingForm";
 import WaitingForm from "./OrderModal/WaitingForm";
 
+interface User {
+  orderDate: string;
+  promiseDate: string;
+  customer: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+  flavor: string;
+  shape: string;
+  orderDetails: string;
+  images: string[];
+  payment: string;
+}
+
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   status: string;
   setStatus: Dispatch<SetStateAction<string>>;
+  user: User;
 }
 
-const OrderModal = ({ isOpen, onClose, status, setStatus }: Props) => {
+const OrderModal = ({ isOpen, onClose, status, setStatus, user }: Props) => {
   let modal;
 
   if (status === "ordering") {
     modal = <OrderingForm setStatus={setStatus} />;
   } else if (status === "processing") {
-    modal = <WaitingForm />;
-  } else if (status === "pay") {
+    modal = <WaitingForm user={user} />;
+  } else if (status === "paying") {
     modal = "";
   }
   return (
@@ -49,12 +65,7 @@ const OrderModal = ({ isOpen, onClose, status, setStatus }: Props) => {
           <Image src={logo} alt="Baked Goodies by H" boxSize="2.3em" />
           <ModalCloseButton />
         </ModalHeader>
-        <ModalBody p="5px 30px 0 30px">{modal}</ModalBody>
-        <ModalFooter>
-          <Button form="order" type="submit" colorScheme="pink">
-            Submit
-          </Button>
-        </ModalFooter>
+        {modal}
       </ModalContent>
     </Modal>
   );

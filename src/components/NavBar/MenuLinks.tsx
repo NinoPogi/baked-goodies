@@ -5,14 +5,14 @@ import ThemeSwitcher from "./MenuLinks/ThemeSwitcher";
 
 interface Props {
   status: string;
-  isOpen: boolean;
+  open: boolean;
   onOpen: () => void;
 }
 
-const MenuLinks = ({ status, isOpen, onOpen }: Props) => {
+const MenuLinks = ({ status, open, onOpen }: Props) => {
   return (
     <Box
-      display={{ base: isOpen ? "block" : "none", lg: "block" }}
+      display={{ base: open ? "block" : "none", lg: "block" }}
       flexBasis={{ base: "100%", lg: "auto" }}
     >
       <Stack
