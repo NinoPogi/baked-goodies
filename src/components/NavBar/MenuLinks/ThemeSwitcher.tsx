@@ -1,12 +1,5 @@
-import {
-  Button,
-  Heading,
-  Hide,
-  Link,
-  Show,
-  useColorMode,
-} from "@chakra-ui/react";
-import { CgDarkMode } from "react-icons/Cg";
+import { Heading, Hide, Link, Show, useColorMode } from "@chakra-ui/react";
+import { CgDarkMode } from "react-icons/cg";
 
 const ThemeButton = () => {
   const { colorMode, toggleColorMode } = useColorMode();

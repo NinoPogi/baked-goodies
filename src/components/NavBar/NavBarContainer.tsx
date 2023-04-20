@@ -16,7 +16,7 @@ const NavBarContainer = ({ children, ...props }: Props) => {
       wrap="wrap"
       w="100%"
       mb={8}
-      p={{ base: 8, md: 12 }}
+      p={{ base: 6, md: 12 }}
       bg={["pink.400", "pink.400", "pink.400", "transparent"]}
       {...props}
     >

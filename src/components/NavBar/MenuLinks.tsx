@@ -1,13 +1,15 @@
 import { Box, Stack } from "@chakra-ui/react";
 import MenuItem from "./MenuLinks/MenuItem";
 import CakeButton from "./MenuLinks/CakeButton";
-import ThemeButton from "./MenuLinks/ThemeButton";
+import ThemeSwitcher from "./MenuLinks/ThemeSwitcher";
 
 interface Props {
+  status: string;
   isOpen: boolean;
+  onOpen: () => void;
 }
 
-const MenuLinks = ({ isOpen }: Props) => {
+const MenuLinks = ({ status, isOpen, onOpen }: Props) => {
   return (
     <Box
       display={{ base: isOpen ? "block" : "none", lg: "block" }}
@@ -20,10 +22,9 @@ const MenuLinks = ({ isOpen }: Props) => {
         direction={["column", "row", "row", "row"]}
         pt={[5, 5, 7, 0]}
       >
-        <ThemeButton />
         <MenuItem link="/">Home</MenuItem>
         <MenuItem link="/cakes">PriceList</MenuItem>
-        <CakeButton />
+        <CakeButton status={status} onOpen={onOpen} />
       </Stack>
     </Box>
   );

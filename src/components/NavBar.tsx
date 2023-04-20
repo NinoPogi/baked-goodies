@@ -1,18 +1,31 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import {
+  Modal,
+  ModalContent,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 import NavLogo from "./NavBar/NavLogo";
 import NavBarContainer from "./NavBar/NavBarContainer";
 import MenuToggle from "./NavBar/MenuToggle";
 import MenuLinks from "./NavBar/MenuLinks";
+import OrderModal from "./OrderModal";
 
-const NavBar = () => {
-  const [isOpen, setIsOpen] = useState(true);
+interface Props {
+  status: string;
+  isOpen: boolean;
+  onOpen: () => void;
+}
 
-  const toggle = () => setIsOpen(!isOpen);
+const NavBar = ({ status, isOpen, onOpen }: Props) => {
+  const [open, setOpen] = useState(true);
+
+  const toggle = () => setOpen(!open);
   return (
     <NavBarContainer>
       <NavLogo />
       <MenuToggle toggle={toggle} isOpen={isOpen} />
-      <MenuLinks isOpen={isOpen} />
+      <MenuLinks status={status} isOpen={isOpen} onOpen={onOpen} />
     </NavBarContainer>
   );
 };

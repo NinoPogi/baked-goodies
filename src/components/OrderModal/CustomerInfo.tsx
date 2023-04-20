@@ -6,25 +6,25 @@ interface Props {
   onChange: Dispatch<SetStateAction<any>>;
 }
 
-const CustomerInfo = (props: Props) => {
+const CustomerInfo = ({ info, onChange }: Props) => {
   const handleName = (event: any) => {
     const value = event.target.value;
-    props.onChange({
-      ...props.info,
+    onChange({
+      ...info,
       [event.target.name]: value,
     });
   };
   const handleEmail = (event: any) => {
     const value = event.target.value;
-    props.onChange({
-      ...props.info,
+    onChange({
+      ...info,
       [event.target.name]: value,
     });
   };
   const handlePhone = (event: any) => {
     const value = event.target.value;
-    props.onChange({
-      ...props.info,
+    onChange({
+      ...info,
       [event.target.name]: value,
     });
   };

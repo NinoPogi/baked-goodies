@@ -1,17 +1,17 @@
+import { Dispatch, SetStateAction } from "react";
 import { Input, FormControl, FormLabel } from "@chakra-ui/react";
 import dayjs from "dayjs";
-import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   form: {};
   onChange: Dispatch<SetStateAction<any>>;
 }
 
-const OrderDates = (props: Props) => {
+const OrderDates = ({ form, onChange }: Props) => {
   const handleDate = (event: any) => {
     const value = event.target.value;
-    props.onChange({
-      ...props.form,
+    onChange({
+      ...form,
       [event.target.name]: value,
       orderDate: dayjs().format("YYYY-MM-DD"),
     });
