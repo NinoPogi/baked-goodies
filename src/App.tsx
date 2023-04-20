@@ -33,7 +33,12 @@ function App() {
         <NavBar isOpen={isOpen} onOpen={onOpen} status={status} />
       </GridItem>
       <GridItem area="main">
-        <OrderModal isOpen={isOpen} onClose={onClose} setStatus={setStatus} />
+        <OrderModal
+          isOpen={isOpen}
+          onClose={onClose}
+          status={status}
+          setStatus={setStatus}
+        />
         <Routes>
           <Route path="/" element={<CakePortfolio />} />
           <Route path="/cakes" element={<CakeShop />} />

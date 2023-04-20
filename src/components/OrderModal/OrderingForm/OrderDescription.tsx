@@ -8,7 +8,7 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import api from "../../services/api-client";
+import api from "../../../services/api-client";
 
 interface Props {
   name: string;
