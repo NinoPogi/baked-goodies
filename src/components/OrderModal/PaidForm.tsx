@@ -6,7 +6,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-const FullfillingForm = () => {
+const PaidForm = () => {
   return (
     <>
       <ModalBody p="5px 30px 0 30px">
@@ -18,4 +18,4 @@ const FullfillingForm = () => {
   );
 };
 
-export default FullfillingForm;
+export default PaidForm;

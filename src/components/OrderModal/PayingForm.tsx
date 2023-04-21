@@ -35,7 +35,6 @@ interface Props {
 const PayingForm = ({ order }: Props) => {
   const [form, setForm] = useState({
     status: "paid",
-    isPaid: true,
   });
 
   const handleSubmit = async () => {
@@ -55,6 +54,7 @@ const PayingForm = ({ order }: Props) => {
               boxSize="360px"
             />
           </Card>
+          <Text>Down Payment</Text>
           <Text>Upload Your Proof of Payment:</Text>
           <Input
             w="340px"
