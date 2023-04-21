@@ -10,11 +10,12 @@ interface Props {
 const MenuToggle = ({ toggle, open }: Props) => {
   return (
     <Box display={{ base: "block", lg: "none" }} onClick={toggle}>
-      {open ? (
+      <GiHamburgerMenu color="white" size="20px" />
+      {/* {open ? (
         <MdOutlineClose color="white" size="30px" />
       ) : (
         <GiHamburgerMenu color="white" size="20px" />
-      )}
+      )} */}
     </Box>
   );
 };

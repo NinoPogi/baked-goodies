@@ -9,7 +9,7 @@ interface Props {
 const NavLinks = ({ children, link }: Props) => {
   return (
     <Link as={ReactLink} to={link}>
-      <Heading color={{ base: "white", lg: "black" }} fontSize="1xl">
+      <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
         {children}
       </Heading>
     </Link>

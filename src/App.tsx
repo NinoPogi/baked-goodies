@@ -1,7 +1,16 @@
 import { useLayoutEffect, useState } from "react";
-import { Divider, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Grid,
+  GridItem,
+  Hide,
+  Show,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
+import SideBar from "./components/SideBar";
 import CakePortfolio from "./pages/CakePortfolio";
 import CakeShop from "./pages/CakeShop";
 import api from "./services/api-client";
@@ -48,17 +57,28 @@ function App() {
 
   return (
     <Grid
-      templateAreas={`"nav" "main" "footer"`}
-      p={{
-        md: "0 45px 0 45px",
-        lg: "0 80px 0 80px",
-        xl: "0 150px 0 150px",
-        "2xl": "0 500px 0 500px",
+      templateAreas={{
+        base: `"nav" "main"`,
+        lg: `"aside main" "aside main"`,
       }}
+      bgColor={{ base: "transparent", lg: "pink.50" }}
+      // p={{
+      //   md: "0 45px 0 45px",
+      //   lg: "0 80px 0 80px",
+      //   xl: "0 150px 0 150px",
+      //   "2xl": "0 500px 0 500px",
+      // }}
     >
-      <GridItem area="nav">
-        <NavBar onOpen={onOpen} status={status} />
-      </GridItem>
+      <Hide above="lg">
+        <GridItem area="nav">
+          <NavBar onOpen={onOpen} status={status} />
+        </GridItem>
+      </Hide>
+      <Show above="lg">
+        <GridItem area="aside" m="15px">
+          <SideBar onOpen={onOpen} status={status} />
+        </GridItem>
+      </Show>
       <GridItem area="main">
         <OrderModal
           customer={customer}
@@ -68,18 +88,16 @@ function App() {
           order={order}
           onClose={onClose}
         />
-        <Routes>
-          <Route path="/" element={<Hero />} />
-          <Route
-            path="/cakes"
-            element={<CakePortfolio customer={customer} />}
-          />
-          <Route path="/price" element={<CakeShop />} />
-        </Routes>
-      </GridItem>
-      <GridItem area="footer">
-        <Divider orientation="horizontal" />
-        footer
+        <Box bgColor="white" borderRadius="20px" m="15px" p="15px">
+          <Routes>
+            <Route path="/" element={<Hero />} />
+            <Route
+              path="/cakes"
+              element={<CakePortfolio customer={customer} />}
+            />
+            <Route path="/price" element={<CakeShop />} />
+          </Routes>
+        </Box>
       </GridItem>
     </Grid>
   );

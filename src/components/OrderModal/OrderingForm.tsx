@@ -120,14 +120,17 @@ const OrderingForm = ({ customer, setStatus }: Props) => {
                 }}
               >
                 <HStack spacing={4}>
-                  <Radio value="Circle" colorScheme="pink">
-                    Circle
+                  <Radio value="Round" colorScheme="pink">
+                    Round
                   </Radio>
-                  <Radio value="Square" colorScheme="pink">
-                    Square
+                  <Radio value="Heart 4x2" colorScheme="pink">
+                    Heart 4x2
                   </Radio>
-                  <Radio value="Rectangle" colorScheme="pink">
-                    Rectangle
+                  <Radio value="Heart 7x2" colorScheme="pink">
+                    Heart 7x2
+                  </Radio>
+                  <Radio value="Heart 7x4" colorScheme="pink">
+                    Heart 7x4
                   </Radio>
                 </HStack>
               </RadioGroup>

@@ -53,7 +53,7 @@ const WaitingForm = ({ customer, order, setStatus }: Props) => {
   return (
     <>
       <ModalBody p="5px 30px 20px 30px">
-        <VStack alignItems="Left">
+        <VStack alignItems="left">
           <Heading pb="20px">WaitYourCakeNow.</Heading>
           <Text>Your CakeOrder is Still Processing</Text>
           <TableContainer>
