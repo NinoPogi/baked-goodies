@@ -127,9 +127,9 @@ const WaitingForm = ({ customer, order, setStatus }: Props) => {
           >
             CancelOrder
           </Button>
-          <Button colorScheme="pink" isDisabled>
+          {/* <Button colorScheme="pink" isDisabled>
             EditOrder
-          </Button>
+          </Button> */}
         </ButtonGroup>
       </ModalFooter>
     </>
