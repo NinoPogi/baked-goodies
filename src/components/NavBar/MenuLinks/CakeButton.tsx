@@ -20,6 +20,9 @@ const CakeButton = ({ status, onOpen }: Props) => {
   } else if (status === "processing") {
     buttonIcon = <GiTimeSynchronization />;
     buttonLabel = "WaitYourCakeNow";
+  } else if (status === "fullfilling") {
+    buttonIcon = <GiTimeSynchronization />;
+    buttonLabel = "WaitYourCakeNow";
   } else if (status === "paying") {
     buttonIcon = <GiMoneyStack />;
     buttonLabel = "PayYourCakeNow";
