@@ -9,7 +9,7 @@ interface Props {
 const NavLinks = ({ children, link }: Props) => {
   return (
     <Link as={ReactLink} to={link}>
-      <Heading fontSize="2xl">{children}</Heading>
+      <Heading fontSize="1xl">{children}</Heading>
     </Link>
   );
 };

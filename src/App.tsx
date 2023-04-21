@@ -6,11 +6,20 @@ import CakePortfolio from "./pages/CakePortfolio";
 import CakeShop from "./pages/CakeShop";
 import api from "./services/api-client";
 import OrderModal from "./components/OrderModal";
+import Hero from "./pages/Hero";
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [status, setStatus] = useState("ordering");
-  const [user, setUser] = useState({
+  const [customer, setCustomer] = useState({
+    _id: "",
+    name: "",
+    email: "",
+    phone: "",
+    orders: [],
+  });
+  const [order, setOrder] = useState({
+    _id: "",
     orderDate: "",
     promiseDate: "",
     customer: {
@@ -27,12 +36,15 @@ function App() {
 
   useLayoutEffect(() => {
     const apiCall = async () => {
-      const response = await api.get("/customer");
-      setUser(response.data[0]);
-      setStatus(response.data[0].status);
+      const customer = await api.get("/customer");
+      setCustomer(customer.data);
+      const order = await api.get(`/order/${customer.data.orders[0]}`);
+      console.log(order);
+      setOrder(order.data);
+      if (order.data.status) setStatus(order.data.status);
     };
     apiCall();
-  }, []);
+  }, [status]);
 
   return (
     <Grid
@@ -49,18 +61,20 @@ function App() {
       </GridItem>
       <GridItem area="main">
         <OrderModal
+          customer={customer}
           isOpen={isOpen}
-          onClose={onClose}
           status={status}
           setStatus={setStatus}
-          user={user}
+          order={order}
+          onClose={onClose}
         />
         <Routes>
+          <Route path="/" element={<Hero />} />
           <Route
-            path="/"
-            element={<CakePortfolio status={status} user={user} />}
+            path="/cakes"
+            element={<CakePortfolio customer={customer} />}
           />
-          <Route path="/cakes" element={<CakeShop />} />
+          <Route path="/price" element={<CakeShop />} />
         </Routes>
       </GridItem>
       <GridItem area="footer">

@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import {
   Button,
   VStack,
@@ -15,8 +16,14 @@ import {
   Tr,
   ButtonGroup,
 } from "@chakra-ui/react";
+import api from "../../services/api-client";
 
-interface User {
+interface Customer {
+  _id: string;
+  orders: string[];
+}
+
+interface Order {
   orderDate: string;
   promiseDate: string;
   customer: {
@@ -32,13 +39,21 @@ interface User {
 }
 
 interface Props {
-  user: User;
+  customer: Customer;
+  order: Order;
+  setStatus: Dispatch<SetStateAction<string>>;
 }
 
-const WaitingForm = ({ user }: Props) => {
+const WaitingForm = ({ customer, order, setStatus }: Props) => {
+  const handleCancel = async () => {
+    const response = await api.put(`/customer/cancel/${customer._id}`);
+    console.log(response);
+    setStatus("ordering");
+  };
+
   return (
     <>
-      <ModalBody p="5px 30px 0 30px">
+      <ModalBody p="5px 30px 20px 30px">
         <VStack alignItems="Left">
           <Heading pb="20px">WaitYourCakeNow.</Heading>
           <Text>Your CakeOrder is Still Processing</Text>
@@ -53,43 +68,43 @@ const WaitingForm = ({ user }: Props) => {
               <Tbody>
                 <Tr>
                   <Th>name</Th>
-                  <Th>{user.customer.name}</Th>
+                  <Th>{order.customer.name}</Th>
                 </Tr>
                 <Tr>
                   <Th>email</Th>
-                  <Th>{user.customer.email}</Th>
+                  <Th>{order.customer.email}</Th>
                 </Tr>
                 <Tr>
                   <Th>phone</Th>
-                  <Th>{user.customer.phone}</Th>
+                  <Th>{order.customer.phone}</Th>
                 </Tr>
                 <Tr>
                   <Th>orderDate</Th>
-                  <Th>{user.orderDate}</Th>
+                  <Th>{order.orderDate}</Th>
                 </Tr>
                 <Tr>
                   <Th>promiseDate</Th>
-                  <Th>{user.promiseDate}</Th>
+                  <Th>{order.promiseDate}</Th>
                 </Tr>
                 <Tr>
                   <Th>flavor</Th>
-                  <Th>{user.flavor}</Th>
+                  <Th>{order.flavor}</Th>
                 </Tr>
                 <Tr>
                   <Th>shape</Th>
-                  <Th>{user.shape}</Th>
+                  <Th>{order.shape}</Th>
                 </Tr>
                 <Tr>
                   <Th>orderDetails</Th>
-                  <Th>{user.orderDetails}</Th>
+                  <Th>{order.orderDetails}</Th>
                 </Tr>
                 <Tr>
                   <Th>images</Th>
-                  <Th>{user.images}</Th>
+                  <Th>{order.images}</Th>
                 </Tr>
                 <Tr>
                   <Th>payment</Th>
-                  <Th>{user.payment}</Th>
+                  <Th>{order.payment}</Th>
                 </Tr>
               </Tbody>
               <Tfoot>
@@ -103,8 +118,8 @@ const WaitingForm = ({ user }: Props) => {
         </VStack>
       </ModalBody>
       <ModalFooter>
-        <ButtonGroup>
-          <Button colorScheme="pink" isDisabled>
+        <ButtonGroup spacing="96">
+          <Button colorScheme="red" onClick={handleCancel}>
             CancelOrder
           </Button>
           <Button colorScheme="pink" isDisabled>

@@ -16,14 +16,15 @@ const MenuLinks = ({ status, open, onOpen }: Props) => {
       flexBasis={{ base: "100%", lg: "auto" }}
     >
       <Stack
-        spacing={8}
+        spacing={5}
         align="center"
         justify={["center", "space-between", "space-between", "flex-end"]}
         direction={["column", "row", "row", "row"]}
         pt={[5, 5, 7, 0]}
       >
-        <MenuItem link="/">Home</MenuItem>
-        <MenuItem link="/cakes">PriceList</MenuItem>
+        <MenuItem link="/">About</MenuItem>
+        <MenuItem link="/cakes">Cakes</MenuItem>
+        <MenuItem link="/price">PriceList</MenuItem>
         <CakeButton status={status} onOpen={onOpen} />
       </Stack>
     </Box>

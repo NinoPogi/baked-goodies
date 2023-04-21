@@ -2,25 +2,22 @@ import { Heading, Stack, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import PostGrid from "../components/CakePortfolio/PostGrid";
 
-interface User {
-  customer: {
-    name: string;
-  };
+interface Customer {
+  name: string;
 }
 
 interface Props {
-  status: string;
-  user: User;
+  customer: Customer;
 }
 
-const Home = ({ status, user }: Props) => {
+const Home = ({ customer }: Props) => {
   useEffect(() => {
-    document.title = "Baked Goodies by H";
+    document.title = "Cake Portfolio | Baked Goodies by H";
   }, []);
 
   let heading = "CHECK MY CAKES🎂";
-  if (status !== "ordering") {
-    heading = `Welcome Back ${user.customer.name}`;
+  if (customer.name !== "") {
+    heading = `Welcome Back ${customer.name}`;
   }
 
   return (

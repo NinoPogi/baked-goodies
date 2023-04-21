@@ -1,10 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import {
   Image,
-  Button,
-  ModalBody,
   ModalCloseButton,
-  ModalFooter,
   ModalHeader,
   Modal,
   ModalContent,
@@ -13,8 +10,18 @@ import {
 import logo from "../assets/logo.svg";
 import OrderingForm from "./OrderModal/OrderingForm";
 import WaitingForm from "./OrderModal/WaitingForm";
+import PayingForm from "./OrderModal/PayingForm";
 
-interface User {
+interface Customer {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  orders: string[];
+}
+
+interface Order {
+  _id: string;
   orderDate: string;
   promiseDate: string;
   customer: {
@@ -30,22 +37,32 @@ interface User {
 }
 
 interface Props {
-  isOpen: boolean;
-  onClose: () => void;
+  customer: Customer;
+  order: Order;
   status: string;
   setStatus: Dispatch<SetStateAction<string>>;
-  user: User;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const OrderModal = ({ isOpen, onClose, status, setStatus, user }: Props) => {
+const OrderModal = ({
+  isOpen,
+  onClose,
+  status,
+  setStatus,
+  order,
+  customer,
+}: Props) => {
   let modal;
 
   if (status === "ordering") {
-    modal = <OrderingForm setStatus={setStatus} />;
+    modal = <OrderingForm customer={customer} setStatus={setStatus} />;
   } else if (status === "processing") {
-    modal = <WaitingForm user={user} />;
+    modal = (
+      <WaitingForm customer={customer} order={order} setStatus={setStatus} />
+    );
   } else if (status === "paying") {
-    modal = "";
+    modal = <PayingForm order={order} />;
   }
   return (
     <Modal

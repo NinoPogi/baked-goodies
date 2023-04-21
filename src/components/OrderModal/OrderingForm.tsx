@@ -25,11 +25,18 @@ import DatesInput from "./OrderingForm/DatesInput";
 import OrderDescription from "./OrderingForm/OrderDescription";
 import api from "../../services/api-client";
 
+interface Customer {
+  name: string;
+  email: string;
+  phone: string;
+}
+
 interface Props {
+  customer: Customer;
   setStatus: Dispatch<SetStateAction<string>>;
 }
 
-const OrderingForm = ({ setStatus }: Props) => {
+const OrderingForm = ({ customer, setStatus }: Props) => {
   const toast = useToast();
   const [form, setForm] = useState({
     name: "",
@@ -81,7 +88,7 @@ const OrderingForm = ({ setStatus }: Props) => {
         <form id="order" onSubmit={handleOrder}>
           <VStack spacing="10px">
             <DatesInput form={form} onChange={setForm} />
-            <CustomerInfo info={form} onChange={setForm} />
+            <CustomerInfo customer={customer} info={form} onChange={setForm} />
             <FormControl isRequired>
               <FormLabel>Pick Your Cake Flavor:</FormLabel>
               <RadioGroup
