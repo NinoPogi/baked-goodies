@@ -48,7 +48,6 @@ const WaitingForm = ({ customer, order, setStatus }: Props) => {
   const handleCancel = async () => {
     const response = await api.put(`/customer/cancel/${customer._id}`);
     console.log(response);
-    setStatus("ordering");
   };
 
   return (
@@ -119,7 +118,13 @@ const WaitingForm = ({ customer, order, setStatus }: Props) => {
       </ModalBody>
       <ModalFooter>
         <ButtonGroup spacing="96">
-          <Button colorScheme="red" onClick={handleCancel}>
+          <Button
+            colorScheme="red"
+            onClick={() => {
+              handleCancel();
+              setStatus("ordering");
+            }}
+          >
             CancelOrder
           </Button>
           <Button colorScheme="pink" isDisabled>

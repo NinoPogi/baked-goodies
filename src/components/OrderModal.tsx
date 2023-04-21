@@ -11,6 +11,7 @@ import logo from "../assets/logo.svg";
 import OrderingForm from "./OrderModal/OrderingForm";
 import WaitingForm from "./OrderModal/WaitingForm";
 import PayingForm from "./OrderModal/PayingForm";
+import FullfillingForm from "./OrderModal/FullfillingForm";
 
 interface Customer {
   _id: string;
@@ -61,6 +62,8 @@ const OrderModal = ({
     modal = (
       <WaitingForm customer={customer} order={order} setStatus={setStatus} />
     );
+  } else if (status === "fullfilling") {
+    modal = <FullfillingForm />;
   } else if (status === "paying") {
     modal = <PayingForm order={order} />;
   }
