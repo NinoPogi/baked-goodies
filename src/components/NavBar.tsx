@@ -1,51 +1,101 @@
 import { useState } from "react";
-import { Box, Flex, Stack } from "@chakra-ui/react";
-import NavLogo from "./NavBar/NavLogo";
-import MenuToggle from "./NavBar/MenuToggle";
-import CakeButton from "./NavBar/MenuLinks/CakeButton";
-import MenuItem from "./NavBar/MenuLinks/MenuItem";
+import {
+  Box,
+  Flex,
+  Stack,
+  MenuItem,
+  Link,
+  HStack,
+  Heading,
+  Image,
+} from "@chakra-ui/react";
+import { useColorMode } from "@chakra-ui/color-mode";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { Link as ReactLink } from "react-router-dom";
+import logo from "../images/logo.svg";
 
-interface Props {
-  status: string;
-  onOpen: () => void;
-}
-
-const NavBar = ({ status, onOpen }: Props) => {
+const NavBar = () => {
+  const { colorMode } = useColorMode();
   const [open, setOpen] = useState(false);
 
   const toggle = () => {
     setOpen(!open);
   };
+
   return (
     <Box
       as={Flex}
-      align="center"
-      gap={5}
-      // justify="space-between"
       wrap="wrap"
-      w="100%"
-      mb={8}
+      align="center"
+      justify={{ base: "none", lg: "space-between" }}
+      gap={5}
       p={3}
-      // p={{ base: 6, md: 12 }}
+      //   p={{ base: 3, lg: 12 }}
+      borderRadius={8}
       bg={{ base: "pink.400", lg: "transparent" }}
     >
-      <MenuToggle toggle={toggle} open={open} />
-      <NavLogo />
+      <Box display={{ base: "block", lg: "none" }} onClick={toggle}>
+        <GiHamburgerMenu color="white" size={25} />
+      </Box>
+      <Link as={ReactLink} to="/">
+        <HStack spacing={-0.5}>
+          <Image src={logo} boxSize={9} alt="Baked Goodies by H" />
+          <Heading
+            fontSize={{ base: "2xl", md: "3xl" }}
+            color={{
+              base: "white",
+              lg: colorMode === "light" ? "#d53f8c" : "#fbb6ce",
+            }}
+          >
+            BakedGoodiesbyH
+          </Heading>
+        </HStack>
+      </Link>
       <Box
         display={{ base: open ? "block" : "none", lg: "block" }}
         flexBasis={{ base: "100%", lg: "auto" }}
       >
         <Stack
-          spacing={5}
+          spacing={{ base: 0, md: 5 }}
           align="center"
-          justify={["center", "space-between", "space-between", "flex-end"]}
-          direction={["column", "row", "row", "row"]}
+          direction={{ base: "column", md: "row" }}
           pt={[3, 3, 5, 0]}
         >
-          <CakeButton status={status} onOpen={onOpen} />
-          <MenuItem link="/price">Pricing</MenuItem>
-          <MenuItem link="/cakes">Cakes</MenuItem>
-          <MenuItem link="/">About</MenuItem>
+          <Link as={ReactLink} to="/">
+            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
+              Home
+            </Heading>
+          </Link>
+          <Link as={ReactLink} to="/bento">
+            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
+              Bento Cakes
+            </Heading>
+          </Link>
+          <Link as={ReactLink} to="/money">
+            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
+              Money Cakes
+            </Heading>
+          </Link>
+          <Link as={ReactLink} to="/customize">
+            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
+              Customize Cakes
+            </Heading>
+          </Link>
+          <Link as={ReactLink} to="/tier">
+            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
+              Tier Cakes
+            </Heading>
+          </Link>
+          <Link as={ReactLink} to="/cupcake">
+            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
+              Cupcakes
+            </Heading>
+          </Link>
+          <Link as={ReactLink} to="/about">
+            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
+              About
+            </Heading>
+          </Link>
         </Stack>
       </Box>
     </Box>
