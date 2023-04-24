@@ -2,10 +2,7 @@ import { Flex, Grid, GridItem } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import CakeBento from "./pages/CakeBento";
-import CakeCustomize from "./pages/CakeCustomize";
-import Cupcake from "./pages/Cupcake";
-import CakeAll from "./pages/CakeAll";
+import CakePage from "./pages/CakePage";
 import Footer from "./components/Footer";
 
 function App() {
@@ -18,10 +15,7 @@ function App() {
         <Flex justify="center">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/custom" element={<CakeCustomize />} />
-            <Route path="/bento" element={<CakeBento />} />
-            <Route path="/cupcake" element={<Cupcake />} />
-            <Route path="/other" element={<CakeAll />} />
+            <Route path="/cakes" element={<CakePage />} />
           </Routes>
         </Flex>
       </GridItem>

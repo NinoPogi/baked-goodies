@@ -10,7 +10,7 @@ const settings = {
   infinite: true,
   autoplay: true,
   speed: 500,
-  autoplaySpeed: 5000,
+  autoplaySpeed: 30000,
   slidesToShow: 1,
   slidesToScroll: 1,
 };
@@ -30,7 +30,7 @@ const CakeCarousel = () => {
     <Box
       display={{ base: "block", lg: "block" }}
       position="relative"
-      h={{ base: 600, md: 580, lg: 650 }}
+      h={{ base: 500, lg: 600 }}
       width="100%"
       maxWidth={{
         "1sm": 280,
@@ -42,7 +42,7 @@ const CakeCarousel = () => {
       }}
       overflow="hidden"
       transform="auto"
-      borderRadius="30px"
+      borderRadius="20px"
     >
       <link
         rel="stylesheet"

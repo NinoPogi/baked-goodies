@@ -29,24 +29,24 @@ const NavBar = () => {
         wrap="wrap"
         align="center"
         gap="8px"
-        justify={{ base: "none", lg: "space-evenly" }}
-        p={{ base: "8px", lg: "22px 56px" }}
+        justify={{ base: "none", lg: "center" }}
+        p={{ base: "8px", lg: "22px 68px" }}
         bg={{ base: "pink.400", lg: "transparent" }}
       >
         <Box display={{ base: "flex", lg: "none" }} onClick={toggle}>
           <GiHamburgerMenu color="white" size={25} />{" "}
         </Box>
-        <Spacer display={{ lg: "none" }} />
+        <Spacer hideFrom="lg" />
         <Link as={ReactLink} display={{ base: "none", lg: "block" }} to="/">
           <HStack>
             <Image src={logo} boxSize="65px" alt="Baked Goodies by H" />
-            {/* <Heading fontSize={{ "1sm": "2xl", sm: "3xl" }}>
+            <Heading fontSize={{ "1sm": "2xl", sm: "3xl" }}>
               BakedGoodiesbyH
-            </Heading> */}
+            </Heading>
           </HStack>
         </Link>
-        <Spacer display={{ lg: "none" }} />
-        <Box display={{ base: "block", lg: "none" }}>Account</Box>
+        <Spacer />
+        {/* <Box display={{ base: "block", lg: "none" }}>Account</Box> */}
         <Box
           display={{ base: open ? "block" : "none", lg: "block" }}
           flexBasis={{ base: "100%", lg: "auto" }}
@@ -60,29 +60,20 @@ const NavBar = () => {
                 Home
               </Heading>
             </Link>
-            <Link as={ReactLink} to="/custom">
+            <Link as={ReactLink} to="/cakes">
               <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
-                Custom cakes
+                All Cakes
               </Heading>
             </Link>
-            <Link as={ReactLink} to="/bento">
+            <Link as={ReactLink} to="/account">
               <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
-                Bento cakes
+                Account
               </Heading>
             </Link>
-            <Link as={ReactLink} to="/cupcake">
-              <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
-                Cupcakes
-              </Heading>
-            </Link>
-            {/* <Link as={ReactLink} to="/other">
-              <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
-                Others
-              </Heading>
-            </Link> */}
           </Stack>
         </Box>
-        <Box display={{ base: "none", lg: "block" }}>Welcome Back</Box>
+
+        {/* <Box display={{ base: "none", lg: "block" }}>Welcome Back</Box> */}
       </Box>
       <Flex as={Flex} justify="center">
         <Link
