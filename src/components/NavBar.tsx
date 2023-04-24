@@ -3,11 +3,11 @@ import {
   Box,
   Flex,
   Stack,
-  MenuItem,
   Link,
   HStack,
   Heading,
   Image,
+  Spacer,
 } from "@chakra-ui/react";
 import { useColorMode } from "@chakra-ui/color-mode";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -23,82 +23,83 @@ const NavBar = () => {
   };
 
   return (
-    <Box
-      as={Flex}
-      wrap="wrap"
-      align="center"
-      justify={{ base: "none", lg: "space-between" }}
-      gap={5}
-      p={3}
-      //   p={{ base: 3, lg: 12 }}
-      borderRadius={8}
-      bg={{ base: "pink.400", lg: "transparent" }}
-    >
-      <Box display={{ base: "block", lg: "none" }} onClick={toggle}>
-        <GiHamburgerMenu color="white" size={25} />
-      </Box>
-      <Link as={ReactLink} to="/">
-        <HStack spacing={-0.5}>
-          <Image src={logo} boxSize={9} alt="Baked Goodies by H" />
-          <Heading
-            fontSize={{ base: "2xl", md: "3xl" }}
-            color={{
-              base: "white",
-              lg: colorMode === "light" ? "#d53f8c" : "#fbb6ce",
-            }}
-          >
-            BakedGoodiesbyH
-          </Heading>
-        </HStack>
-      </Link>
+    <>
       <Box
-        display={{ base: open ? "block" : "none", lg: "block" }}
-        flexBasis={{ base: "100%", lg: "auto" }}
+        as={Flex}
+        wrap="wrap"
+        align="center"
+        gap="8px"
+        justify={{ base: "none", lg: "space-evenly" }}
+        p={{ base: "8px", lg: "22px 56px" }}
+        bg={{ base: "pink.400", lg: "transparent" }}
       >
-        <Stack
-          spacing={{ base: 0, md: 5 }}
-          align="center"
-          direction={{ base: "column", md: "row" }}
-          pt={[3, 3, 5, 0]}
+        <Box display={{ base: "flex", lg: "none" }} onClick={toggle}>
+          <GiHamburgerMenu color="white" size={25} />{" "}
+        </Box>
+        <Spacer display={{ lg: "none" }} />
+        <Link as={ReactLink} display={{ base: "none", lg: "block" }} to="/">
+          <HStack>
+            <Image src={logo} boxSize="65px" alt="Baked Goodies by H" />
+            {/* <Heading fontSize={{ "1sm": "2xl", sm: "3xl" }}>
+              BakedGoodiesbyH
+            </Heading> */}
+          </HStack>
+        </Link>
+        <Spacer display={{ lg: "none" }} />
+        <Box display={{ base: "block", lg: "none" }}>Account</Box>
+        <Box
+          display={{ base: open ? "block" : "none", lg: "block" }}
+          flexBasis={{ base: "100%", lg: "auto" }}
         >
-          <Link as={ReactLink} to="/">
-            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
-              Home
-            </Heading>
-          </Link>
-          <Link as={ReactLink} to="/bento">
-            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
-              Bento Cakes
-            </Heading>
-          </Link>
-          <Link as={ReactLink} to="/money">
-            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
-              Money Cakes
-            </Heading>
-          </Link>
-          <Link as={ReactLink} to="/customize">
-            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
-              Customize Cakes
-            </Heading>
-          </Link>
-          <Link as={ReactLink} to="/tier">
-            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
-              Tier Cakes
-            </Heading>
-          </Link>
-          <Link as={ReactLink} to="/cupcake">
-            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
-              Cupcakes
-            </Heading>
-          </Link>
-          <Link as={ReactLink} to="/about">
-            <Heading color={{ base: "white", lg: "black" }} fontSize="2xl">
-              About
-            </Heading>
-          </Link>
-        </Stack>
+          <Stack
+            spacing={{ base: "16px", md: "36px" }}
+            direction={{ base: "column", lg: "row" }}
+          >
+            <Link as={ReactLink} to="/">
+              <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
+                Home
+              </Heading>
+            </Link>
+            <Link as={ReactLink} to="/custom">
+              <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
+                Custom cakes
+              </Heading>
+            </Link>
+            <Link as={ReactLink} to="/bento">
+              <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
+                Bento cakes
+              </Heading>
+            </Link>
+            <Link as={ReactLink} to="/cupcake">
+              <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
+                Cupcakes
+              </Heading>
+            </Link>
+            {/* <Link as={ReactLink} to="/other">
+              <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
+                Others
+              </Heading>
+            </Link> */}
+          </Stack>
+        </Box>
+        <Box display={{ base: "none", lg: "block" }}>Welcome Back</Box>
       </Box>
-    </Box>
+      <Flex as={Flex} justify="center">
+        <Link
+          as={ReactLink}
+          display={{ base: "block", lg: "none" }}
+          m="20px"
+          to="/"
+        >
+          <HStack spacing="-2px">
+            <Image src={logo} boxSize="40px" alt="Baked Goodies by H" />
+            <Heading fontSize={{ "1sm": "2xl", sm: "3xl" }}>
+              BakedGoodiesbyH
+            </Heading>
+          </HStack>
+        </Link>
+      </Flex>
+    </>
   );
 };
 

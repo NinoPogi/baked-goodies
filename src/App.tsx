@@ -1,30 +1,32 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Flex, Grid, GridItem } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import { Route, Routes } from "react-router-dom";
-import CakePortfolio from "./pages/CakePortfolio";
+import Home from "./pages/Home";
 import CakeBento from "./pages/CakeBento";
-import CakeMoney from "./pages/CakeMoney";
 import CakeCustomize from "./pages/CakeCustomize";
-import CakeTier from "./pages/CakeTier";
 import Cupcake from "./pages/Cupcake";
-import About from "./pages/About";
+import CakeAll from "./pages/CakeAll";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <Grid templateAreas={`"nav" "main"`}>
+    <Grid templateAreas={`"nav" "main" "footer"`} bgColor="teal.100">
       <GridItem area="nav">
         <NavBar />
       </GridItem>
-      <GridItem area="main">
-        <Routes>
-          <Route path="/" element={<CakePortfolio />} />
-          <Route path="/bento" element={<CakeBento />} />
-          <Route path="/money" element={<CakeMoney />} />
-          <Route path="/customize" element={<CakeCustomize />} />
-          <Route path="/tier" element={<CakeTier />} />
-          <Route path="/cupcake" element={<Cupcake />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
+      <GridItem area="main" p="0 20px 0 20px">
+        <Flex justify="center">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/custom" element={<CakeCustomize />} />
+            <Route path="/bento" element={<CakeBento />} />
+            <Route path="/cupcake" element={<Cupcake />} />
+            <Route path="/other" element={<CakeAll />} />
+          </Routes>
+        </Flex>
+      </GridItem>
+      <GridItem area="footer" pt="60px">
+        <Footer />
       </GridItem>
     </Grid>
   );
