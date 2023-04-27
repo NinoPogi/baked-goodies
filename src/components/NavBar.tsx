@@ -26,12 +26,16 @@ const NavBar = () => {
     <>
       <Box
         as={Flex}
+        w="100%"
         wrap="wrap"
         align="center"
         gap="8px"
         justify={{ base: "none", lg: "center" }}
-        p={{ base: "8px", lg: "22px 68px" }}
-        bg={{ base: "pink.400", lg: "transparent" }}
+        zIndex="1"
+        // position="fixed"
+        p={{ base: "8px", lg: "8px 68px" }}
+        bg="pink.400"
+        backdropFilter="saturate(180%) blur(5px)"
       >
         <Box display={{ base: "flex", lg: "none" }} onClick={toggle}>
           <GiHamburgerMenu color="white" size={25} />{" "}
@@ -62,7 +66,7 @@ const NavBar = () => {
             </Link>
             <Link as={ReactLink} to="/cakes">
               <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
-                All Cakes
+                Cakes
               </Heading>
             </Link>
             <Link as={ReactLink} to="/account">
@@ -75,13 +79,12 @@ const NavBar = () => {
 
         {/* <Box display={{ base: "none", lg: "block" }}>Welcome Back</Box> */}
       </Box>
-      <Flex as={Flex} justify="center">
-        <Link
-          as={ReactLink}
-          display={{ base: "block", lg: "none" }}
-          m="20px"
-          to="/"
-        >
+      <Flex
+        display={{ base: "flex", lg: "none" }}
+        justify="center"
+        // mt="41px"
+      >
+        <Link as={ReactLink} m="20px" to="/">
           <HStack spacing="-2px">
             <Image src={logo} boxSize="40px" alt="Baked Goodies by H" />
             <Heading fontSize={{ "1sm": "2xl", sm: "3xl" }}>

@@ -2,64 +2,90 @@ import { Flex, Grid, GridItem } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import CakePage from "./pages/CakePage";
+import CakesShop from "./pages/CakesShop";
 import Footer from "./components/Footer";
 import AccountPage from "./pages/AccountPage";
-import Bento from "./pages/Cakes/Bento/Bento";
-import BentoNumber from "./pages/Cakes/Bento/BentoNumber";
-import BentoBundle from "./pages/Cakes/Bento/BentoBundle";
-import Cupcake from "./pages/Cakes/Cupcake/Cupcake";
-import PullapartCupcake from "./pages/Cakes/Cupcake/PullapartCupcake";
-import Tier3 from "./pages/Cakes/Tier/Tier3";
-import TierBaby from "./pages/Cakes/Tier/TierBaby";
-import TierBig from "./pages/Cakes/Tier/TierBig";
-import TierMini from "./pages/Cakes/Tier/TierMini";
-import TierSmall from "./pages/Cakes/Tier/TierSmall";
-import TierSmall3 from "./pages/Cakes/Tier/TierSmall3";
-import CakeTheme from "./pages/Cakes/CustomCake/CakeTheme";
-import CakeMinimalist from "./pages/Cakes/CustomCake/CakeMinimalist";
-import CakeMoney from "./pages/Cakes/CustomCake/CakeMoney";
-import CakeNumber from "./pages/Cakes/CustomCake/CakeNumber";
-import CakeNumberMini from "./pages/Cakes/CustomCake/CakeNumberMini";
+import CakePage from "./pages/CakePage";
 
 function App() {
   return (
-    <Grid templateAreas={`"nav" "main" "footer"`} bgColor="teal.100">
+    <Grid
+      templateAreas={`"nav" "main" "footer"`}
+      // bgColor="teal.100"
+    >
       <GridItem area="nav">
         <NavBar />
       </GridItem>
-      <GridItem area="main" p="0 20px">
+      {/* mt={{ base: "0", lg: "109px" }} */}
+      <GridItem area="main" p="20px 20px">
         <Flex justify="center">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="cakes" element={<CakePage />} />
+            <Route path="cakes" element={<CakesShop />} />
             <Route path="cake">
               <Route path="bento">
-                <Route path="" element={<Bento />} />
-                <Route path="number" element={<BentoNumber />} />
-                <Route path="bundle" element={<BentoBundle />} />
+                <Route path="" element={<CakePage cakeName="Bento Cake" />} />
+                <Route
+                  path="number"
+                  element={<CakePage cakeName="Bento Number Cake" />}
+                />
+                <Route
+                  path="bundle"
+                  element={<CakePage cakeName="Bento Bundle" />}
+                />
               </Route>
               <Route path="cupcake">
-                <Route path="" element={<Cupcake />} />
-                <Route path="pullapart" element={<PullapartCupcake />} />
+                <Route path="" element={<CakePage cakeName="Cupcake" />} />
+                <Route
+                  path="pullapart"
+                  element={<CakePage cakeName="Pullapart Cupcake" />}
+                />
               </Route>
               <Route path="tier">
-                <Route path="" element={<Tier3 />} />
-                <Route path="baby" element={<TierBaby />} />
-                <Route path="big" element={<TierBig />} />
-                <Route path="mini" element={<TierMini />} />
-                <Route path="small" element={<TierSmall />} />
-                <Route path="small3" element={<TierSmall3 />} />
+                <Route path="" element={<CakePage cakeName="3 Tier Cake" />} />
+                <Route
+                  path="baby"
+                  element={<CakePage cakeName="Baby Tier Cake" />}
+                />
+                <Route
+                  path="big"
+                  element={<CakePage cakeName="Big Tier Cake" />}
+                />
+                <Route
+                  path="mini"
+                  element={<CakePage cakeName="Mini Tier Cake" />}
+                />
+                <Route
+                  path="small"
+                  element={<CakePage cakeName="Small Tier Cake" />}
+                />
+                <Route
+                  path="small3"
+                  element={<CakePage cakeName="Small 3 Tier Cake" />}
+                />
               </Route>
               <Route path="custom">
-                <Route path="" element={<CakeTheme />} />
-                <Route path="minimalist" element={<CakeMinimalist />} />
-                <Route path="money" element={<CakeMoney />} />
-                <Route path="number" element={<CakeNumber />} />
-                <Route path="numbermini" element={<CakeNumberMini />} />
+                <Route path="" element={<CakePage cakeName="Theme Cake" />} />
+                <Route
+                  path="minimalist"
+                  element={<CakePage cakeName="Minimalist Cake" />}
+                />
+                <Route
+                  path="money"
+                  element={<CakePage cakeName="Money Cake" />}
+                />
+                <Route
+                  path="number"
+                  element={<CakePage cakeName="Number Cake" />}
+                />
+                <Route
+                  path="numbermini"
+                  element={<CakePage cakeName="Mini Number Cake" />}
+                />
               </Route>
             </Route>
             <Route path="account" element={<AccountPage />} />
+            <Route path="*" element={<Home />} />
           </Routes>
         </Flex>
       </GridItem>

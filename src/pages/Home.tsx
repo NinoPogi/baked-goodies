@@ -1,9 +1,14 @@
+import { useEffect } from "react";
 import { HStack, Heading, Image, Stack, VStack } from "@chakra-ui/react";
 import CakeCarousel from "../components/HomePage/CakeCarousel";
 import CakePricing from "../components/HomePage/CakePricing";
 import pickup from "../images/pickup.jpg";
 
-const CakePortfolio = () => {
+const CakeHome = () => {
+  useEffect(() => {
+    document.title = "Baked Goodies by H";
+  }, []);
+
   return (
     <VStack spacing="60px">
       <CakeCarousel />
@@ -20,7 +25,7 @@ const CakePortfolio = () => {
         </Stack>
         <Stack>
           <Heading fontSize="1xl">Step 3</Heading>
-          <Heading fontSize="1xl">Design You Cake</Heading>
+          <Heading fontSize="1xl">Design Your Cake</Heading>
         </Stack>
         <Stack>
           <Heading fontSize="1xl">Step 4</Heading>
@@ -35,8 +40,9 @@ const CakePortfolio = () => {
         </Stack>
         <Image src={pickup} w="35%" />
       </HStack>
+      <CakePricing />
     </VStack>
   );
 };
 
-export default CakePortfolio;
+export default CakeHome;

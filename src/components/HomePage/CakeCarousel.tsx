@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box, IconButton } from "@chakra-ui/react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import Slider from "react-slick";
@@ -21,10 +21,6 @@ const CakeCarousel = () => {
     "https://scontent.fcrk1-5.fna.fbcdn.net/v/t39.30808-6/316176703_601990148279925_4393692677306225527_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeEDPjiHhu9f0FRVjbjKAfzt9RZIgpmj5T31FkiCmaPlPa8CPKZ5P3v1eUqxL258FwwdaU_On5FUMaVS8LTrOM74&_nc_ohc=Sjq8hCIjxRUAX8OJHPs&_nc_ht=scontent.fcrk1-5.fna&oh=00_AfA5adY78YS0DlJf0JY41b2_K8mHR6LLBa8Y6oIu11cf3g&oe=644A203C",
     "https://scontent.fcrk1-5.fna.fbcdn.net/v/t39.30808-6/219696633_291770972635179_9059821622491358644_n.png?_nc_cat=103&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeENGKHYltBeygB2SlityOtfEe2xp9HUsLYR7bGn0dSwtkEG1bu2yG5kwEPBYFnDDy_z45m9MscpTewgZBfk2JB0&_nc_ohc=_mGU5jkcJlAAX95nf5f&_nc_ht=scontent.fcrk1-5.fna&oh=00_AfBCUTXnYNY_nYJePJfcbNcwrrXSc2Bs__fYjOQiOWuH4Q&oe=644BA62A",
   ];
-
-  useEffect(() => {
-    document.title = "Baked Goodies by H";
-  }, []);
 
   return (
     <Box
@@ -59,7 +55,7 @@ const CakeCarousel = () => {
         aria-label="left-arrow"
         variant="ghost"
         position="absolute"
-        left={{ base: "30%", md: "40px" }}
+        left={{ base: "30%", md: "20px" }}
         top={{ base: "90%", md: "50%" }}
         transform={"translate(0%, -50%)"}
         zIndex={2}
@@ -71,7 +67,7 @@ const CakeCarousel = () => {
         aria-label="right-arrow"
         variant="ghost"
         position="absolute"
-        right={{ base: "30%", md: "40px" }}
+        right={{ base: "30%", md: "20px" }}
         top={{ base: "90%", md: "50%" }}
         transform={"translate(0%, -50%)"}
         zIndex={2}

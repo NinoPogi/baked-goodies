@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Box, RadioGroup, Stack, Heading, Radio, Link } from "@chakra-ui/react";
 
-const FilterButton = () => {
+interface Props {
+  onChange: (event: string) => void;
+}
+
+const FilterButton = ({ onChange }: Props) => {
   const [open, setOpen] = useState(false);
 
   const toggle = () => {
@@ -13,19 +17,22 @@ const FilterButton = () => {
         <Heading fontSize="xl">filter & sort</Heading>
       </Link>
       <Box display={{ base: open ? "block" : "none", md: "block" }}>
-        <RadioGroup>
+        <RadioGroup defaultValue="" onChange={onChange}>
           <Stack spacing={5}>
             <Heading fontSize="xl">CAKE TYPE</Heading>
-            <Radio colorScheme="pink" value="cupcakes">
+            <Radio colorScheme="pink" value="">
+              All Cakes
+            </Radio>
+            <Radio colorScheme="pink" value="?type=cupcake">
               Cupcakes
             </Radio>
-            <Radio colorScheme="pink" value="bento">
+            <Radio colorScheme="pink" value="?type=bento">
               Bento Cakes
             </Radio>
-            <Radio colorScheme="pink" value="tier">
+            <Radio colorScheme="pink" value="?type=tier">
               Tier Cakes
             </Radio>
-            <Radio colorScheme="pink" value="custom">
+            <Radio colorScheme="pink" value="?type=custom">
               Custom Cakes
             </Radio>
           </Stack>

@@ -1,25 +1,47 @@
-import { Flex, SimpleGrid, Stack } from "@chakra-ui/react";
-import { useEffect } from "react";
-import CakeCard from "../components/CakePage/CakeCard";
-import CakeFilter from "../components/CakePage/CakeFilter";
-import cakes from "../data/cakes";
+import { useEffect, useState } from "react";
+import { Stack, Link, Heading } from "@chakra-ui/react";
+import { Link as ReactLink } from "react-router-dom";
+import CakeShowcase from "../components/CakePage/CakeShowcase";
+import CakeForm from "../components/CakePage/CakeForm";
+import CakeRecommend from "../components/CakePage/CakeRecommend";
+import api from "../services/api-client";
 
-const CakeAll = () => {
+interface Props {
+  cakeName: string;
+}
+
+const CakePage = ({ cakeName }: Props) => {
+  const [cake, setCake] = useState({
+    title: "",
+    pricing: "",
+    radios: [],
+    info: [],
+    images: [],
+    checkboxes: [],
+  });
+
   useEffect(() => {
-    document.title = "Cakes | Baked Goodies by H";
+    async function apiCall() {
+      const response = await api.get(`/cake?title=${cakeName}`);
+      setCake(response.data[0]);
+      console.log(response.data[0]);
+    }
+    document.title = `${cakeName} | Baked Goodies by H`;
+    apiCall();
   }, []);
+
   return (
-    <Stack direction={{ base: "column", md: "row" }}>
-      <CakeFilter />
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing="30px">
-        {cakes.map((cake) => (
-          <CakeCard route={cake.route} image={cake.image}>
-            {cake.title}
-          </CakeCard>
-        ))}
-      </SimpleGrid>
+    <Stack spacing="40px">
+      <Link as={ReactLink} to="/cakes">
+        <Heading fontSize="2xl">Back to Cake Shop</Heading>
+      </Link>
+      <Stack direction={{ base: "column", md: "row" }} spacing="50px">
+        <CakeShowcase cake={cake} />
+        <CakeForm cake={cake} />
+      </Stack>
+      <CakeRecommend />
     </Stack>
   );
 };
 
-export default CakeAll;
+export default CakePage;

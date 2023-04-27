@@ -8,6 +8,7 @@ import {
   useColorModeValue,
   Image,
 } from "@chakra-ui/react";
+import { Link as ReactLink } from "react-router-dom";
 import logo from "../images/logo.svg";
 
 export default function Footer() {
@@ -17,10 +18,14 @@ export default function Footer() {
       color={useColorModeValue("gray.700", "gray.200")}
     >
       <Stack maxW={"6xl"} py={10} align="center">
-        <HStack justify="center">
-          <Image src={logo} boxSize="40px" alt="Baked Goodies by H" />
-          <Heading fontSize="2xl">BakedGoodiesbyH</Heading>
-        </HStack>
+        <Link as={ReactLink} to="/">
+          <HStack>
+            <Image src={logo} boxSize="45px" alt="Baked Goodies by H" />
+            <Heading fontSize={{ "1sm": "2xl", sm: "3xl" }}>
+              BakedGoodiesbyH
+            </Heading>
+          </HStack>
+        </Link>
         <HStack justify="center">
           <Link href={"https://www.facebook.com/BakedGoodiesbyH"} isExternal>
             Facebook
