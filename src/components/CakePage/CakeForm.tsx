@@ -17,7 +17,11 @@ interface Props {
   cake: {
     title: string;
     pricing: string;
-    radios: { name: string; options: string[]; defaultValue: string }[];
+    radios: {
+      name: string;
+      options: { value: string; description: string }[];
+      defaultValue: string;
+    }[];
     checkboxes: {
       name: string;
       options: { value: string; description: string }[];

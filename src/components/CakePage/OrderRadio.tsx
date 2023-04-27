@@ -39,7 +39,7 @@ const RadioCard = (props: any) => {
 interface Props {
   radio: {
     name: string;
-    options: string[];
+    options: { value: string; description: string }[];
     defaultValue: string;
   };
   onChange: (value: string) => void;
@@ -65,11 +65,11 @@ const OrderRadio = ({ radio, onChange }: Props) => {
         <Heading fontSize="2xl">{display.toUpperCase()}</Heading>
       </HStack>
       <SimpleGrid columns={2} spacing="10px" {...group}>
-        {radio.options.map((value) => {
-          const radio = getRadioProps({ value });
+        {radio.options.map((option) => {
+          const radio = getRadioProps({ value: option.value });
           return (
-            <RadioCard key={value} {...radio}>
-              {value}
+            <RadioCard key={option.value} {...radio}>
+              {option.description}
             </RadioCard>
           );
         })}
