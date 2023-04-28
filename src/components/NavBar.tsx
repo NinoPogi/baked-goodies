@@ -32,7 +32,7 @@ const NavBar = () => {
         gap="8px"
         justify={{ base: "none", lg: "center" }}
         zIndex="1"
-        // position="fixed"
+        position="fixed"
         p={{ base: "8px", lg: "8px 68px" }}
         bg="pink.400"
         backdropFilter="saturate(180%) blur(5px)"
@@ -50,7 +50,7 @@ const NavBar = () => {
           </HStack>
         </Link>
         <Spacer />
-        {/* <Box display={{ base: "block", lg: "none" }}>Account</Box> */}
+        <Box display={{ base: "block", lg: "none" }}>Account</Box>
         <Box
           display={{ base: open ? "block" : "none", lg: "block" }}
           flexBasis={{ base: "100%", lg: "auto" }}
@@ -77,13 +77,9 @@ const NavBar = () => {
           </Stack>
         </Box>
 
-        {/* <Box display={{ base: "none", lg: "block" }}>Welcome Back</Box> */}
+        <Box display={{ base: "none", lg: "block" }}>Welcome Back</Box>
       </Box>
-      <Flex
-        display={{ base: "flex", lg: "none" }}
-        justify="center"
-        // mt="41px"
-      >
+      <Flex display={{ base: "flex", lg: "none" }} justify="center" mt="41px">
         <Link as={ReactLink} m="20px" to="/">
           <HStack spacing="-2px">
             <Image src={logo} boxSize="40px" alt="Baked Goodies by H" />

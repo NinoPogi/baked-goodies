@@ -43,6 +43,7 @@ const CakeForm = ({ cake }: Props) => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
+    event.preventDefault();
     console.log(form);
   };
 

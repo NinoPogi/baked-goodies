@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { HStack, Heading, Image, Stack, VStack } from "@chakra-ui/react";
+import { Box, HStack, Heading, Image, Stack, VStack } from "@chakra-ui/react";
 import CakeCarousel from "../components/HomePage/CakeCarousel";
 import CakePricing from "../components/HomePage/CakePricing";
 import pickup from "../images/pickup.jpg";
+import CakeRecommend from "../components/CakePage/CakeRecommend";
 
 const CakeHome = () => {
   useEffect(() => {
@@ -12,6 +13,9 @@ const CakeHome = () => {
   return (
     <VStack spacing="60px">
       <CakeCarousel />
+      <Heading fontSize="2xl">BROWSE CAKE</Heading>
+
+      <CakeRecommend cakeName="" />
 
       <Heading fontSize="2xl">ORDERING PROCESS GUIDE</Heading>
       <HStack justify="space-evenly">

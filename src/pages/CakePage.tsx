@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { Stack, Link, Heading } from "@chakra-ui/react";
-import { Link as ReactLink } from "react-router-dom";
+import { Link as ReactLink, useParams } from "react-router-dom";
 import CakeShowcase from "../components/CakePage/CakeShowcase";
 import CakeForm from "../components/CakePage/CakeForm";
 import CakeRecommend from "../components/CakePage/CakeRecommend";
 import api from "../services/api-client";
 
-interface Props {
-  cakeName: string;
-}
-
-const CakePage = ({ cakeName }: Props) => {
+const CakePage = () => {
+  const params = useParams();
   const [cake, setCake] = useState({
     title: "",
     pricing: "",
@@ -21,12 +18,12 @@ const CakePage = ({ cakeName }: Props) => {
   });
 
   useEffect(() => {
-    document.title = `${cakeName} | Baked Goodies by H`;
+    document.title = `${params.type} | Baked Goodies by H`;
     api
-      .get(`/cake?title=${cakeName}`)
+      .get(`/cake?title=${params.type}`)
       .then((res) => setCake(res.data[0]))
       .catch((err) => alert(err));
-  }, []);
+  }, [params]);
 
   return (
     <Stack spacing="40px">
@@ -37,7 +34,8 @@ const CakePage = ({ cakeName }: Props) => {
         <CakeShowcase cake={cake} />
         <CakeForm cake={cake} />
       </Stack>
-      <CakeRecommend />
+      <Heading>Check Other Cakes:</Heading>
+      <CakeRecommend cakeName={params.type} />
     </Stack>
   );
 };
