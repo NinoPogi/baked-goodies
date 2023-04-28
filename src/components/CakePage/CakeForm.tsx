@@ -1,3 +1,4 @@
+import { FormEvent, useEffect, useState } from "react";
 import {
   Accordion,
   AccordionButton,
@@ -31,24 +32,49 @@ interface Props {
 }
 
 const CakeForm = ({ cake }: Props) => {
-  const handleRadio = (value: string) => {};
-  const handleCheckbox = (value: (string | number)[]) => {};
+  const [form, setForm] = useState({});
+
+  useEffect(() => {
+    setForm({ ...form, type: cake.title });
+    cake.radios.map((radio) => {
+      setForm((prev) => ({ ...prev, [radio.name]: radio.defaultValue }));
+    });
+  }, [cake]);
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    console.log(form);
+  };
 
   return (
     <Stack spacing="20px">
-      <Stack>
-        <Heading fontSize="5xl">{cake.title.toUpperCase()}</Heading>
-        <Heading fontSize="2xl">{`price ${cake.pricing}`}</Heading>
-      </Stack>
-      {cake.radios.map((radio) => (
-        <OrderRadio radio={radio} onChange={handleRadio} />
-      ))}
-      {cake.checkboxes.map((checkbox) => (
-        <OrderCheckbox checkbox={checkbox} onChange={handleCheckbox} />
-      ))}
-      <Button colorScheme="pink" width="170px">
-        OrderYourCakeNow
-      </Button>
+      <form id="orderForm" onSubmit={handleSubmit}>
+        <Stack>
+          <Heading fontSize="5xl">{cake.title.toUpperCase()}</Heading>
+          <Heading fontSize="2xl">{`price ${cake.pricing}`}</Heading>
+        </Stack>
+        {cake.radios.map((radio) => (
+          <OrderRadio
+            radio={radio}
+            onChange={(value) => {
+              setForm({ ...form, [radio.name]: value });
+            }}
+          />
+        ))}
+        {cake.checkboxes.map((checkbox) => (
+          <OrderCheckbox
+            checkbox={checkbox}
+            onChange={(value) => {
+              setForm({ ...form, [checkbox.name]: value });
+            }}
+          />
+        ))}
+
+        <Button type="submit" form="orderForm" colorScheme="pink" width="170px">
+          OrderYourCakeNow
+        </Button>
+      </form>
+
       <Accordion defaultIndex={[0]} allowToggle>
         <AccordionItem>
           <AccordionButton>

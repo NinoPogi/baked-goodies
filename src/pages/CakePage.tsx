@@ -21,13 +21,11 @@ const CakePage = ({ cakeName }: Props) => {
   });
 
   useEffect(() => {
-    async function apiCall() {
-      const response = await api.get(`/cake?title=${cakeName}`);
-      setCake(response.data[0]);
-      console.log(response.data[0]);
-    }
     document.title = `${cakeName} | Baked Goodies by H`;
-    apiCall();
+    api
+      .get(`/cake?title=${cakeName}`)
+      .then((res) => setCake(res.data[0]))
+      .catch((err) => alert(err));
   }, []);
 
   return (
