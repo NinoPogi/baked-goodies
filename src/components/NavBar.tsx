@@ -14,7 +14,19 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Link as ReactLink } from "react-router-dom";
 import logo from "../images/logo.svg";
 
-const NavBar = () => {
+interface Customer {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  orders: string[];
+}
+
+interface Props {
+  customer: Customer;
+}
+
+const NavBar = ({ customer }: Props) => {
   const { colorMode } = useColorMode();
   const [open, setOpen] = useState(false);
 
@@ -50,7 +62,7 @@ const NavBar = () => {
           </HStack>
         </Link>
         <Spacer />
-        <Box display={{ base: "block", lg: "none" }}>Account</Box>
+
         <Box
           display={{ base: open ? "block" : "none", lg: "block" }}
           flexBasis={{ base: "100%", lg: "auto" }}
@@ -64,20 +76,18 @@ const NavBar = () => {
                 Home
               </Heading>
             </Link>
-            <Link as={ReactLink} to="/cakes">
+            <Link as={ReactLink} to="/cakeshop">
               <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
                 Cakes
               </Heading>
             </Link>
-            <Link as={ReactLink} to="/account">
+            <Link as={ReactLink} to="/hello">
               <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
-                Account
+                {customer.name !== "" ? `Hello ${customer.name}` : "Hello"}
               </Heading>
             </Link>
           </Stack>
         </Box>
-
-        <Box display={{ base: "none", lg: "block" }}>Welcome Back</Box>
       </Box>
       <Flex display={{ base: "flex", lg: "none" }} justify="center" mt="41px">
         <Link as={ReactLink} m="20px" to="/">

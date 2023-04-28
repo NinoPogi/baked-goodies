@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Stack, Link, Heading } from "@chakra-ui/react";
 import { Link as ReactLink, useParams } from "react-router-dom";
 import CakeShowcase from "../components/CakePage/CakeShowcase";
@@ -6,7 +6,13 @@ import CakeForm from "../components/CakePage/CakeForm";
 import CakeRecommend from "../components/CakePage/CakeRecommend";
 import api from "../services/api-client";
 
-const CakePage = () => {
+interface Props {
+  onOpen: () => void;
+  form: {};
+  setForm: Dispatch<SetStateAction<any>>;
+}
+
+const CakePage = ({ onOpen, form, setForm }: Props) => {
   const params = useParams();
   const [cake, setCake] = useState({
     title: "",
@@ -18,24 +24,27 @@ const CakePage = () => {
   });
 
   useEffect(() => {
-    document.title = `${params.type} | Baked Goodies by H`;
     api
-      .get(`/cake?title=${params.type}`)
-      .then((res) => setCake(res.data[0]))
+      .get(`/cake?type=${params.type}`)
+      .then((res) => {
+        const response = res.data[0];
+        document.title = `${response.title} | Baked Goodies by H`;
+        setCake(response);
+      })
       .catch((err) => alert(err));
   }, [params]);
 
   return (
     <Stack spacing="40px">
-      <Link as={ReactLink} to="/cakes">
+      <Link as={ReactLink} to="/cakeshop">
         <Heading fontSize="2xl">Back to Cake Shop</Heading>
       </Link>
       <Stack direction={{ base: "column", md: "row" }} spacing="50px">
         <CakeShowcase cake={cake} />
-        <CakeForm cake={cake} />
+        <CakeForm cake={cake} onOpen={onOpen} form={form} setForm={setForm} />
       </Stack>
       <Heading>Check Other Cakes:</Heading>
-      <CakeRecommend cakeName={params.type} />
+      <CakeRecommend cakeType={params.type} />
     </Stack>
   );
 };

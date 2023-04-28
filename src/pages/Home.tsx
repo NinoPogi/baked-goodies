@@ -15,7 +15,7 @@ const CakeHome = () => {
       <CakeCarousel />
       <Heading fontSize="2xl">BROWSE CAKE</Heading>
 
-      <CakeRecommend cakeName="" />
+      <CakeRecommend cakeType="" />
 
       <Heading fontSize="2xl">ORDERING PROCESS GUIDE</Heading>
       <HStack justify="space-evenly">
@@ -25,7 +25,7 @@ const CakeHome = () => {
         </Stack>
         <Stack>
           <Heading fontSize="1xl">Step 2</Heading>
-          <Heading fontSize="1xl">Choose Date & Check out</Heading>
+          <Heading fontSize="1xl">Choose Promise Date</Heading>
         </Stack>
         <Stack>
           <Heading fontSize="1xl">Step 3</Heading>

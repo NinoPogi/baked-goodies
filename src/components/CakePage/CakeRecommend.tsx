@@ -5,19 +5,19 @@ import api from "../../services/api-client";
 import { Link } from "react-router-dom";
 
 interface Props {
-  cakeName: string | undefined;
+  cakeType: string | undefined;
 }
 
-const CakeRecommend = ({ cakeName }: Props) => {
+const CakeRecommend = ({ cakeType }: Props) => {
   const [cakes, setCakes] = useState([
     { route: "", images: [], title: "", pricing: "" },
   ]);
 
   useEffect(() => {
-    api.get(`/cake/${cakeName}`).then((res) => {
+    api.get(`/cake/${cakeType}`).then((res) => {
       setCakes(res.data);
     });
-  }, [cakeName]);
+  }, [cakeType]);
 
   return (
     <Box h="340px" overflow="scroll">

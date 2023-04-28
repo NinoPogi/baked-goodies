@@ -23,16 +23,16 @@ const FilterButton = ({ onChange }: Props) => {
             <Radio colorScheme="pink" value="">
               All Cakes
             </Radio>
-            <Radio colorScheme="pink" value="?type=cupcake">
+            <Radio colorScheme="pink" value="?sort=cupcake">
               Cupcakes
             </Radio>
-            <Radio colorScheme="pink" value="?type=bento">
+            <Radio colorScheme="pink" value="?sort=bento">
               Bento Cakes
             </Radio>
-            <Radio colorScheme="pink" value="?type=tier">
+            <Radio colorScheme="pink" value="?sort=tier">
               Tier Cakes
             </Radio>
-            <Radio colorScheme="pink" value="?type=custom">
+            <Radio colorScheme="pink" value="?sort=custom">
               Custom Cakes
             </Radio>
           </Stack>
