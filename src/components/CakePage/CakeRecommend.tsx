@@ -14,7 +14,7 @@ const CakeRecommend = ({ cakeType }: Props) => {
   ]);
 
   useEffect(() => {
-    api.get(`/cake/${cakeType}`).then((res) => {
+    api.get(`/cake${cakeType}`).then((res) => {
       setCakes(res.data);
     });
   }, [cakeType]);

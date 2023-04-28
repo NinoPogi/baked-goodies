@@ -44,7 +44,7 @@ const CakePage = ({ onOpen, form, setForm }: Props) => {
         <CakeForm cake={cake} onOpen={onOpen} form={form} setForm={setForm} />
       </Stack>
       <Heading>Check Other Cakes:</Heading>
-      <CakeRecommend cakeType={params.type} />
+      <CakeRecommend cakeType={`/${params.type}`} />
     </Stack>
   );
 };
