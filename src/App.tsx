@@ -9,7 +9,6 @@ import OrderModal from "./components/OrderModal";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import api from "./services/api-client";
-import OrderDates from "../old components/OrderModal/OrderingForm/DatesInput";
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();

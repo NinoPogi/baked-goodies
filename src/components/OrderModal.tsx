@@ -7,8 +7,8 @@ import {
   ModalContent,
   ModalOverlay,
 } from "@chakra-ui/react";
-import logo from "../images/logo.svg";
 import OrderingForm from "./OrderModal/OrderingForm";
+import logo from "../images/logo.svg";
 
 interface Customer {
   _id: string;
