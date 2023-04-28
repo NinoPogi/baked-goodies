@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box, IconButton } from "@chakra-ui/react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import Slider from "react-slick";
+import banners from "../../data/banners";
 
 const settings = {
   dots: true,
@@ -17,10 +18,6 @@ const settings = {
 
 const CakeCarousel = () => {
   const [slider, setSlider] = useState<Slider | null>(null);
-  const cards = [
-    "https://scontent.fcrk1-5.fna.fbcdn.net/v/t39.30808-6/316176703_601990148279925_4393692677306225527_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeEDPjiHhu9f0FRVjbjKAfzt9RZIgpmj5T31FkiCmaPlPa8CPKZ5P3v1eUqxL258FwwdaU_On5FUMaVS8LTrOM74&_nc_ohc=Sjq8hCIjxRUAX8OJHPs&_nc_ht=scontent.fcrk1-5.fna&oh=00_AfA5adY78YS0DlJf0JY41b2_K8mHR6LLBa8Y6oIu11cf3g&oe=644A203C",
-    "https://scontent.fcrk1-5.fna.fbcdn.net/v/t39.30808-6/219696633_291770972635179_9059821622491358644_n.png?_nc_cat=103&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeENGKHYltBeygB2SlityOtfEe2xp9HUsLYR7bGn0dSwtkEG1bu2yG5kwEPBYFnDDy_z45m9MscpTewgZBfk2JB0&_nc_ohc=_mGU5jkcJlAAX95nf5f&_nc_ht=scontent.fcrk1-5.fna&oh=00_AfBCUTXnYNY_nYJePJfcbNcwrrXSc2Bs__fYjOQiOWuH4Q&oe=644BA62A",
-  ];
 
   return (
     <Box
@@ -76,14 +73,14 @@ const CakeCarousel = () => {
         <BiRightArrowAlt size="40px" />
       </IconButton>
       <Slider ref={(slider) => setSlider(slider)} {...settings}>
-        {cards.map((url, index) => (
+        {banners.map((banner, index) => (
           <Box
             key={index}
             h="2xl"
             backgroundPosition="center"
             backgroundRepeat="no-repeat"
             backgroundSize="cover"
-            backgroundImage={`url(${url})`}
+            backgroundImage={banner}
           />
         ))}
       </Slider>

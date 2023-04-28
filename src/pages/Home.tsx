@@ -40,7 +40,7 @@ const CakeHome = () => {
         </Stack>
         <Image src={pickup} w="35%" />
       </HStack>
-      <CakePricing />
+      {/* <CakePricing /> */}
     </VStack>
   );
 };
