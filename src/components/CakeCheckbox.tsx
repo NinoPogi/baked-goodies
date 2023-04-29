@@ -22,10 +22,10 @@ const Checkbox = (props: any) => {
         borderWidth="1px"
         borderRadius="md"
         fontSize="2xl"
+        borderColor="pink.400"
         _checked={{
-          bg: "teal.400",
+          bg: "pink.400",
           color: "white",
-          borderColor: "teal.600",
         }}
         p="5px 10px"
       >
@@ -43,7 +43,7 @@ interface Props {
   onChange: (value: (string | number)[]) => void;
 }
 
-const OrderCheckbox = ({ checkbox, onChange }: Props) => {
+const CakeCheckbox = ({ checkbox, onChange }: Props) => {
   const { value, getCheckboxProps } = useCheckboxGroup({
     onChange: onChange,
   });
@@ -68,4 +68,4 @@ const OrderCheckbox = ({ checkbox, onChange }: Props) => {
   );
 };
 
-export default OrderCheckbox;
+export default CakeCheckbox;

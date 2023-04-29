@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, IconButton } from "@chakra-ui/react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import Slider from "react-slick";
-import banners from "../../data/banners";
+import banners from "../data/banners";
 
 const settings = {
   dots: true,

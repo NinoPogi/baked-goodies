@@ -35,71 +35,62 @@ const NavBar = ({ customer }: Props) => {
   };
 
   return (
-    <>
-      <Box
-        as={Flex}
-        w="100%"
-        wrap="wrap"
-        align="center"
-        gap="8px"
-        justify={{ base: "none", lg: "center" }}
-        zIndex="1"
-        position="fixed"
-        p={{ base: "8px", lg: "8px 68px" }}
-        bg="pink.400"
-        backdropFilter="saturate(180%) blur(5px)"
-      >
-        <Box display={{ base: "flex", lg: "none" }} onClick={toggle}>
-          <GiHamburgerMenu color="white" size={25} />{" "}
-        </Box>
-        <Spacer hideFrom="lg" />
-        <Link as={ReactLink} display={{ base: "none", lg: "block" }} to="/">
-          <HStack>
-            <Image src={logo} boxSize="65px" alt="Baked Goodies by H" />
-            <Heading fontSize={{ "1sm": "2xl", sm: "3xl" }}>
-              BakedGoodiesbyH
-            </Heading>
-          </HStack>
-        </Link>
-        <Spacer />
-
-        <Box
-          display={{ base: open ? "block" : "none", lg: "block" }}
-          flexBasis={{ base: "100%", lg: "auto" }}
-        >
-          <Stack
-            spacing={{ base: "16px", md: "36px" }}
-            direction={{ base: "column", lg: "row" }}
-          >
-            <Link as={ReactLink} to="/">
-              <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
-                Home
-              </Heading>
-            </Link>
-            <Link as={ReactLink} to="/cakeshop">
-              <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
-                Cakes
-              </Heading>
-            </Link>
-            <Link as={ReactLink} to="/hello">
-              <Heading color={{ base: "white", lg: "black" }} fontSize="xl">
-                {customer.name !== "" ? `Hello ${customer.name}` : "Hello"}
-              </Heading>
-            </Link>
-          </Stack>
-        </Box>
+    <Box
+      as={Flex}
+      w="100%"
+      wrap="wrap"
+      align="center"
+      gap="8px"
+      justify={{ base: "none", lg: "center" }}
+      zIndex="2"
+      position="fixed"
+      p={{ base: "8px", lg: "8px 68px" }}
+      bg="pink.400"
+      backdropFilter="saturate(180%) blur(5px)"
+    >
+      <Link as={ReactLink} to="/">
+        <HStack>
+          <Image
+            src={logo}
+            boxSize={{ "1sm": "39px", sm: "50px" }}
+            alt="Baked Goodies by H"
+            mr="-10px"
+          />
+          <Heading color="white" fontSize={{ "1sm": "2xl", sm: "3xl" }}>
+            BakedGoodiesbyH
+          </Heading>
+        </HStack>
+      </Link>
+      <Spacer />
+      <Box display={{ base: "flex", lg: "none" }} onClick={toggle}>
+        <GiHamburgerMenu color="white" size={25} />{" "}
       </Box>
-      <Flex display={{ base: "flex", lg: "none" }} justify="center" mt="41px">
-        <Link as={ReactLink} m="20px" to="/">
-          <HStack spacing="-2px">
-            <Image src={logo} boxSize="40px" alt="Baked Goodies by H" />
-            <Heading fontSize={{ "1sm": "2xl", sm: "3xl" }}>
-              BakedGoodiesbyH
+      <Box
+        display={{ base: open ? "block" : "none", lg: "block" }}
+        flexBasis={{ base: "100%", lg: "auto" }}
+      >
+        <Stack
+          spacing={{ base: "16px", md: "36px" }}
+          direction={{ base: "column", lg: "row" }}
+        >
+          <Link as={ReactLink} to="/">
+            <Heading color="white" fontSize="xl">
+              Home
             </Heading>
-          </HStack>
-        </Link>
-      </Flex>
-    </>
+          </Link>
+          <Link as={ReactLink} to="/cakeshop">
+            <Heading color="white" fontSize="xl">
+              Cakes
+            </Heading>
+          </Link>
+          <Link as={ReactLink} to="/hello">
+            <Heading color="white" fontSize="xl">
+              {customer.name !== "" ? `Hello { ${customer.name} }` : "Hello"}
+            </Heading>
+          </Link>
+        </Stack>
+      </Box>
+    </Box>
   );
 };
 

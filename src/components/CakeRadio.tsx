@@ -45,7 +45,7 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-const OrderRadio = ({ radio, onChange }: Props) => {
+const CakeRadio = ({ radio, onChange }: Props) => {
   const [display, setDisplay] = useState(radio.defaultValue);
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: radio.name,
@@ -78,4 +78,4 @@ const OrderRadio = ({ radio, onChange }: Props) => {
   );
 };
 
-export default OrderRadio;
+export default CakeRadio;

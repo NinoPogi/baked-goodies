@@ -30,11 +30,7 @@ interface Order {
   _id: string;
   orderDate: string;
   promiseDate: string;
-  customer: {
-    name: string;
-    email: string;
-    phone: string;
-  };
+  customer: Customer;
   type: string;
   flavor: string;
   shape: string;
@@ -52,7 +48,7 @@ interface Order {
 interface Props {
   customer: Customer;
   setCustomer: Dispatch<SetStateAction<any>>;
-  orders: Order[];
+  orders: Order[] | undefined;
 }
 
 const AccountPage = ({ customer, setCustomer, orders }: Props) => {
@@ -133,7 +129,7 @@ const AccountPage = ({ customer, setCustomer, orders }: Props) => {
               </Tr>
             </Thead>
             <Tbody>
-              {orders.map((order) => (
+              {orders?.map((order) => (
                 <Tr>
                   <Th>{order.orderDate}</Th>
                   <Th>{order.promiseDate}</Th>

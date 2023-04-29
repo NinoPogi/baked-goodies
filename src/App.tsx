@@ -8,7 +8,37 @@ import HelloPage from "./pages/HelloPage";
 import OrderModal from "./components/OrderModal";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import api from "./services/api-client";
+import apiClient from "./services/api-client";
+
+interface Customer {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  orders: string[];
+}
+
+interface Order {
+  _id: string;
+  orderDate: string;
+  promiseDate: string;
+  customer: Customer;
+  type: string;
+  flavor: string;
+  shape: string;
+  size: string;
+  digits: string;
+  upgrades: string[];
+  addons: string[];
+  orderDetails: string;
+  images: string[];
+  status: string;
+  isPaid: string;
+  payment: string;
+}
+
+interface FetchCustomerResponse extends Customer {}
+interface FetchOrderResponse extends Array<Order> {}
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -17,10 +47,11 @@ function App() {
     name: "",
     email: "",
     phone: "",
-    orders: [],
+    orders: [""],
   });
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState<Order[] | undefined>([]);
   const [form, setForm] = useState({});
+  const [error, setError] = useState("");
 
   const element = useRoutes([
     { path: "/", element: <Home /> },
@@ -51,18 +82,18 @@ function App() {
   ]);
 
   useLayoutEffect(() => {
-    const apiCall = async () => {
-      const customer = await api.get("/customer");
-      setCustomer(customer.data);
-      if (customer.data.orders.length !== 0) {
-        const orders = await api.get(
-          `/order/?customer.email=${customer.data.email}`
-        );
-        console.log(orders);
-        setOrders(orders.data);
-      }
-    };
-    apiCall();
+    apiClient
+      .get<FetchCustomerResponse>("/customer")
+      .then((res) => {
+        setCustomer(res.data);
+        const email = res.data.email;
+        if (res.data.orders.length !== 0)
+          return apiClient.get<FetchOrderResponse>(
+            `/order/?customer.email=${email}`
+          );
+      })
+      .then((res) => setOrders(res?.data))
+      .catch((err) => setError(err.message));
   }, []);
 
   return (
@@ -70,7 +101,8 @@ function App() {
       <GridItem area="nav">
         <NavBar customer={customer} />
       </GridItem>
-      <GridItem area="main" p="20px 20px" mt={{ base: "0", lg: "109px" }}>
+      <GridItem area="main" p="20px 20px" mt={{ base: "66px", lg: "69px" }}>
+        {error && <p>{error}</p>}
         <OrderModal
           customer={customer}
           isOpen={isOpen}
