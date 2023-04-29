@@ -10,7 +10,7 @@ interface Props {
 
 const CakeRecommend = ({ type }: Props) => {
   const [cakes, setCakes] = useState([
-    { route: "", images: [], title: "", pricing: "" },
+    { _id: "", route: "", images: [], title: "", pricing: "" },
   ]);
 
   useEffect(() => {
@@ -35,6 +35,7 @@ const CakeRecommend = ({ type }: Props) => {
       <Stack direction="row">
         {cakes.map((cake) => (
           <CakeCard
+            key={cake._id}
             route={cake.route}
             image={cake.images[0]}
             pricing={cake.pricing}

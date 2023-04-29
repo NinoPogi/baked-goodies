@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { Stack, Link, Heading, Button, Box } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 import CakeRadio from "../components/CakeRadio";
@@ -7,6 +7,7 @@ import CakeInfoAccordion from "../components/CakeInfoAccordion";
 import CakeRecommend from "../components/CakeRecommend";
 import CakeCard from "../components/CakeCard";
 import useCakes from "../hooks/useCakes";
+import CakeCardSkeleton from "../components/CakeCardSkeleton";
 
 interface Props {
   onOpen: () => void;
@@ -15,7 +16,8 @@ interface Props {
 }
 
 const CakePage = ({ onOpen, form, setForm }: Props) => {
-  const { cake, params } = useCakes();
+  const { cake, params, isLoading } = useCakes();
+  const skeletons = [1, 2, 3, 4];
 
   useEffect(() => {
     document.title = `${cake.title} | Baked Goodies by H`;
@@ -43,8 +45,11 @@ const CakePage = ({ onOpen, form, setForm }: Props) => {
             overflow="auto"
           >
             <Stack direction={{ base: "row", md: "column" }}>
+              {skeletons.map(
+                (skeleton) => isLoading && <CakeCardSkeleton key={skeleton} />
+              )}
               {cake.images.map((url) => (
-                <CakeCard image={url} />
+                <CakeCard image={url} key={url} />
               ))}
             </Stack>
           </Box>
@@ -57,6 +62,7 @@ const CakePage = ({ onOpen, form, setForm }: Props) => {
           {cake.radios.map((radio) => (
             <CakeRadio
               radio={radio}
+              key={radio.name}
               onChange={(value) => {
                 setForm({ ...form, [radio.name]: value });
               }}
@@ -65,6 +71,7 @@ const CakePage = ({ onOpen, form, setForm }: Props) => {
           {cake.checkboxes.map((checkbox) => (
             <CakeCheckbox
               checkbox={checkbox}
+              key={checkbox.name}
               onChange={(value) => {
                 setForm({ ...form, [checkbox.name]: value });
               }}

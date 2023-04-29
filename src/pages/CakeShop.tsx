@@ -13,10 +13,10 @@ import {
 import CakeCard from "../components/CakeCard";
 import apiClient from "../services/api-client";
 
-const CakeAll = () => {
+const CakeShop = () => {
   const [open, setOpen] = useBoolean();
   const [cakes, setCakes] = useState([
-    { route: "", images: [], title: "", pricing: "" },
+    { _id: "", route: "", images: [], title: "", pricing: "" },
   ]);
   const [sort, setSort] = useState("");
 
@@ -74,6 +74,7 @@ const CakeAll = () => {
       >
         {cakes.map((cake) => (
           <CakeCard
+            key={cake._id}
             route={cake.route}
             image={cake.images[0]}
             pricing={cake.pricing}
@@ -86,4 +87,4 @@ const CakeAll = () => {
   );
 };
 
-export default CakeAll;
+export default CakeShop;

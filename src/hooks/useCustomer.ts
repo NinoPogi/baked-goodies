@@ -41,11 +41,13 @@ const useCustomer = () => {
     orders: [""],
   });
   const [orders, setOrders] = useState<Order[] | undefined>([]);
-
   const [error, setError] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
+
+    setLoading(true);
 
     apiClient
       .get<FetchCustomerResponse>("/customer", { signal: controller.signal })
@@ -57,17 +59,21 @@ const useCustomer = () => {
             `/order/?customer.email=${email}`
           );
       })
-      .then((res) => setOrders(res?.data))
+      .then((res) => {
+        setOrders(res?.data);
+        setLoading(false);
+      })
       .catch((err) => {
         if (err instanceof CanceledError) return;
         if (err.response.status === 401) return;
         setError(err.message);
+        setLoading(false);
       });
 
     return () => controller.abort();
   }, []);
 
-  return { customer, setCustomer, orders, error };
+  return { customer, setCustomer, orders, error, isLoading };
 };
 
 export default useCustomer;

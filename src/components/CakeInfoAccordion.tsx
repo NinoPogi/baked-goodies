@@ -27,9 +27,11 @@ const CakeInfoAccordion = ({ heading, info }: Props) => {
         <AccordionPanel pb={4}>
           <UnorderedList>
             {info.map((info) => (
-              <ListItem>{info}</ListItem>
+              <ListItem key={info}>{info}</ListItem>
             ))}
-            <ListItem>🚨 Price Increase Depends on Design & Add-Ons</ListItem>
+            <ListItem key="🚨">
+              🚨 Price Increase Depends on Design & Add-Ons
+            </ListItem>
           </UnorderedList>
         </AccordionPanel>
       </AccordionItem>
