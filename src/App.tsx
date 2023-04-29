@@ -1,57 +1,19 @@
-import { useState, useLayoutEffect } from "react";
+import { useState } from "react";
 import { useRoutes } from "react-router-dom";
 import { Flex, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
 import Home from "./pages/Home";
 import CakeShop from "./pages/CakeShop";
 import CakePage from "./pages/CakePage";
-import HelloPage from "./pages/HelloPage";
+import AccountPage from "./pages/AccountPage";
 import OrderModal from "./components/OrderModal";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import apiClient from "./services/api-client";
-
-interface Customer {
-  _id: string;
-  name: string;
-  email: string;
-  phone: string;
-  orders: string[];
-}
-
-interface Order {
-  _id: string;
-  orderDate: string;
-  promiseDate: string;
-  customer: Customer;
-  type: string;
-  flavor: string;
-  shape: string;
-  size: string;
-  digits: string;
-  upgrades: string[];
-  addons: string[];
-  orderDetails: string;
-  images: string[];
-  status: string;
-  isPaid: string;
-  payment: string;
-}
-
-interface FetchCustomerResponse extends Customer {}
-interface FetchOrderResponse extends Array<Order> {}
+import useCustomer from "./hooks/useCustomer";
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [customer, setCustomer] = useState({
-    _id: "",
-    name: "",
-    email: "",
-    phone: "",
-    orders: [""],
-  });
-  const [orders, setOrders] = useState<Order[] | undefined>([]);
+  const { customer, setCustomer, orders, error } = useCustomer();
   const [form, setForm] = useState({});
-  const [error, setError] = useState("");
 
   const element = useRoutes([
     { path: "/", element: <Home /> },
@@ -68,7 +30,7 @@ function App() {
     {
       path: "/hello",
       element: (
-        <HelloPage
+        <AccountPage
           customer={customer}
           setCustomer={setCustomer}
           orders={orders}
@@ -80,21 +42,6 @@ function App() {
       element: <Home />,
     },
   ]);
-
-  useLayoutEffect(() => {
-    apiClient
-      .get<FetchCustomerResponse>("/customer")
-      .then((res) => {
-        setCustomer(res.data);
-        const email = res.data.email;
-        if (res.data.orders.length !== 0)
-          return apiClient.get<FetchOrderResponse>(
-            `/order/?customer.email=${email}`
-          );
-      })
-      .then((res) => setOrders(res?.data))
-      .catch((err) => setError(err.message));
-  }, []);
 
   return (
     <Grid templateAreas={`"nav" "main" "footer"`} bgColor="teal.100">

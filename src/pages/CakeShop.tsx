@@ -34,7 +34,13 @@ const CakeAll = () => {
 
   return (
     <Stack direction={{ base: "column", md: "row" }}>
-      <Box position="sticky" bgColor="teal.300" borderRadius="20px" p="10px">
+      <Box
+        pos="fixed"
+        zIndex="1"
+        bgColor="teal.300"
+        borderRadius="20px"
+        p="10px"
+      >
         <Link display={{ base: "inline", md: "none" }} onClick={setOpen.toggle}>
           <Heading fontSize="xl">filter & sort</Heading>
         </Link>
@@ -61,7 +67,11 @@ const CakeAll = () => {
           </RadioGroup>
         </Box>
       </Box>
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing="30px">
+      <SimpleGrid
+        columns={{ base: 1, md: 2, lg: 3 }}
+        p={{ base: "42px 0 0 0", md: "0 0 0 170px" }}
+        spacing="30px"
+      >
         {cakes.map((cake) => (
           <CakeCard
             route={cake.route}

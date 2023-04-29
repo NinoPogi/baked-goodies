@@ -1,18 +1,12 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Stack, Link, Heading, Button, Box } from "@chakra-ui/react";
-import { Link as ReactLink, useParams } from "react-router-dom";
+import { Link as ReactLink } from "react-router-dom";
 import CakeRadio from "../components/CakeRadio";
 import CakeCheckbox from "../components/CakeCheckbox";
 import CakeInfoAccordion from "../components/CakeInfoAccordion";
 import CakeRecommend from "../components/CakeRecommend";
 import CakeCard from "../components/CakeCard";
-import apiClient from "../services/api-client";
+import useCakes from "../hooks/useCakes";
 
 interface Props {
   onOpen: () => void;
@@ -20,42 +14,8 @@ interface Props {
   setForm: Dispatch<SetStateAction<any>>;
 }
 
-interface Cake {
-  title: string;
-  pricing: string;
-  radios: {
-    name: string;
-    options: { value: string; description: string }[];
-    defaultValue: string;
-  }[];
-  checkboxes: {
-    name: string;
-    options: { value: string; description: string }[];
-  }[];
-  images: string[];
-  info: string[];
-}
-
 const CakePage = ({ onOpen, form, setForm }: Props) => {
-  const params = useParams();
-  const [cake, setCake] = useState<Cake>({
-    title: "",
-    pricing: "",
-    radios: [],
-    info: [],
-    images: [],
-    checkboxes: [],
-  });
-
-  useLayoutEffect(() => {
-    apiClient
-      .get(`/cake?type=${params.type}`)
-      .then((res) => {
-        const response = res.data[0];
-        setCake(response);
-      })
-      .catch((err) => alert(err));
-  }, [params]);
+  const { cake, params } = useCakes();
 
   useEffect(() => {
     document.title = `${cake.title} | Baked Goodies by H`;

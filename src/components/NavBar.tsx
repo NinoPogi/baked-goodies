@@ -43,10 +43,12 @@ const NavBar = ({ customer }: Props) => {
       gap="8px"
       justify={{ base: "none", lg: "center" }}
       zIndex="2"
-      position="fixed"
+      pos="fixed"
       p={{ base: "8px", lg: "8px 68px" }}
       bg="pink.400"
-      backdropFilter="saturate(180%) blur(5px)"
+      borderBottom="solid"
+      borderColor="pink.300"
+      shadow="lg"
     >
       <Link as={ReactLink} to="/">
         <HStack>

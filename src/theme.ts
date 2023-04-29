@@ -11,10 +11,10 @@ const theme = extendTheme({
     xl: "1440px",
     "2xl": "1920px",
   },
-  // fonts: {
-  //   heading: `'Alkatra', sans-serif`,
-  // body: `'Body Font Name', sans-serif`,
-  // },
+  fonts: {
+    heading: `'Alkatra', sans-serif`,
+    body: `'Body Font Name', sans-serif`,
+  },
 });
 
 export default theme;

@@ -105,65 +105,6 @@ const AccountPage = ({ customer, setCustomer, orders }: Props) => {
     element = (
       <VStack>
         <Heading>Welcome Back {customer.name}</Heading>
-
-        <TableContainer
-          overflow="auto"
-          w={{ "1sm": "280px", sm: "390px", md: "600px", lg: "900px" }}
-          bgColor="white"
-        >
-          <Table size="sm">
-            <Thead>
-              <Tr>
-                <Th>orderDate</Th>
-                <Th>promiseDate</Th>
-                <Th>type</Th>
-                <Th>flavor</Th>
-                <Th>shape</Th>
-                <Th>size</Th>
-                <Th>digits</Th>
-                <Th>upgrades</Th>
-                <Th>addons</Th>
-                <Th>orderDetails</Th>
-                <Th>images</Th>
-                <Th>payment</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {orders?.map((order) => (
-                <Tr>
-                  <Th>{order.orderDate}</Th>
-                  <Th>{order.promiseDate}</Th>
-                  <Th>{order.type}</Th>
-                  <Th>{order.flavor}</Th>
-                  <Th>{order.shape}</Th>
-                  <Th>{order.size}</Th>
-                  <Th>{order.digits}</Th>
-                  <Th>{order.upgrades}</Th>
-                  <Th>{order.addons}</Th>
-                  <Th>{order.orderDetails}</Th>
-                  <Th>{order.images}</Th>
-                  <Th>{order.payment}</Th>
-                </Tr>
-              ))}
-            </Tbody>
-            <Tfoot>
-              <Tr>
-                <Th>orderDate</Th>
-                <Th>promiseDate</Th>
-                <Th>type</Th>
-                <Th>flavor</Th>
-                <Th>shape</Th>
-                <Th>size</Th>
-                <Th>digits</Th>
-                <Th>upgrades</Th>
-                <Th>addons</Th>
-                <Th>orderDetails</Th>
-                <Th>images</Th>
-                <Th>payment</Th>
-              </Tr>
-            </Tfoot>
-          </Table>
-        </TableContainer>
       </VStack>
     );
   }
