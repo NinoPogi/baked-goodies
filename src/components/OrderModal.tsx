@@ -1,11 +1,4 @@
-import {
-  BaseSyntheticEvent,
-  Dispatch,
-  FormEvent,
-  FormEventHandler,
-  SetStateAction,
-  useState,
-} from "react";
+import { BaseSyntheticEvent, Dispatch, SetStateAction, useState } from "react";
 import {
   Image,
   Input,
@@ -31,17 +24,11 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
+import { FieldValues, useForm, Controller } from "react-hook-form";
 import dayjs from "dayjs";
 import logo from "../images/logo.svg";
 import apiClient from "../services/api-client";
-
-interface Customer {
-  _id: string;
-  name: string;
-  email: string;
-  phone: string;
-  orders: string[];
-}
+import { Customer } from "../hooks/useCustomer";
 
 interface Props {
   customer: Customer;
@@ -52,31 +39,10 @@ interface Props {
 }
 
 const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
+  const { handleSubmit, register, control } = useForm();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
   const formImages = new FormData();
-
-  const handleName = (event: any) => {
-    const value = event.target.value;
-    setForm({
-      ...form,
-      [event.target.name]: value,
-    });
-  };
-  const handleEmail = (event: any) => {
-    const value = event.target.value;
-    setForm({
-      ...form,
-      [event.target.name]: value,
-    });
-  };
-  const handlePhone = (event: any) => {
-    const value = event.target.value;
-    setForm({
-      ...form,
-      [event.target.name]: value,
-    });
-  };
 
   let propsName = {};
   let propsEmail = {};
@@ -97,20 +63,6 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
     };
   }
 
-  const handleDate = (event: any) => {
-    const value = event.target.value;
-    setForm({
-      ...form,
-      [event.target.name]: value,
-      orderDate: dayjs().format("YYYY-MM-DD"),
-    });
-  };
-
-  const handleInputChange = (event: any) => {
-    const value = event.target.value;
-    setForm({ ...form, [event.target.name]: value });
-  };
-
   const handleImages = async (event: BaseSyntheticEvent) => {
     for (const file of event.target.files) {
       formImages.append("imageUpload", file);
@@ -125,8 +77,7 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
     }
   };
 
-  const handleOrder: FormEventHandler = async (event: FormEvent) => {
-    event.preventDefault();
+  const handleOrder = async (submit: FieldValues) => {
     const response = await apiClient.post("/order", form);
     console.log(response);
     toast({
@@ -158,7 +109,7 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
         </ModalHeader>
         <ModalBody p="5px 30px 0 30px">
           <Heading pb="20px">OrderYourCakeNow.</Heading>
-          <form id="order" onSubmit={handleOrder}>
+          <form id="order" onSubmit={handleSubmit(handleOrder)}>
             <VStack spacing="10px">
               <FormControl>
                 <FormLabel>Order Date:</FormLabel>
@@ -166,47 +117,44 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
                   type="text"
                   value={dayjs().format("MM/DD/YYYY")}
                   isReadOnly
+                  {...register("orderDate")}
                 />
               </FormControl>
               <FormControl isRequired>
                 <FormLabel>Promise Date: </FormLabel>
                 <Input
-                  name="promiseDate"
                   type="date"
                   placeholder="Promise Date"
-                  onChange={handleDate}
+                  {...register("promiseDate")}
                 />
               </FormControl>
               <FormControl isRequired>
                 <FormLabel>Your Name:</FormLabel>
                 <InputGroup>
                   <Input
-                    name="name"
                     type="text"
                     placeholder="example: Hazel"
-                    onChange={handleName}
                     {...propsName}
+                    {...register("name")}
                   />
                 </InputGroup>
               </FormControl>
               <FormControl isRequired>
                 <FormLabel>Your Email Address:</FormLabel>
                 <Input
-                  name="email"
                   type="text"
                   placeholder="example: bakedgoodies@gmail.com"
-                  onChange={handleEmail}
                   {...propsEmail}
+                  {...register("email")}
                 />
               </FormControl>
               <FormControl isRequired>
                 <FormLabel>Your Phone Number:</FormLabel>
                 <Input
-                  name="phone"
                   type="text"
                   placeholder="example: 09771243342"
-                  onChange={handlePhone}
                   {...propsPhone}
+                  {...register("phone")}
                 />
               </FormControl>
               <FormControl>
@@ -214,11 +162,10 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
                   Tell Me What You Want Your Cake To Look Like:
                 </FormLabel>
                 <Textarea
-                  name="orderDetails"
-                  onChange={handleInputChange}
                   placeholder="example: Gusto ko po ng cake na .... 
           (Write Dedications & U can upload up to 5 pics)"
                   size="sm"
+                  {...register("orderDetails")}
                 />
               </FormControl>
               <FormControl>
@@ -236,23 +183,25 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
               </FormControl>
               <FormControl isRequired>
                 <FormLabel>Pick Your Preferred Payment:</FormLabel>
-                <RadioGroup
-                  onChange={(event) => {
-                    setForm({ ...form, payment: event });
-                  }}
-                >
-                  <HStack spacing={4}>
-                    <Radio value="Gcash" colorScheme="pink">
-                      GCash
-                    </Radio>
-                    <Radio value="BDO" colorScheme="pink">
-                      BDO
-                    </Radio>
-                    <Radio value="Cash On Pickup" colorScheme="pink">
-                      Cash On Pickup
-                    </Radio>
-                  </HStack>
-                </RadioGroup>
+                <Controller
+                  name="payment"
+                  control={control}
+                  render={({ field }) => (
+                    <RadioGroup {...field}>
+                      <HStack spacing={4}>
+                        <Radio value="Gcash" colorScheme="pink">
+                          GCash
+                        </Radio>
+                        <Radio value="BDO" colorScheme="pink">
+                          BDO
+                        </Radio>
+                        <Radio value="Cash On Pickup" colorScheme="pink">
+                          Cash On Pickup
+                        </Radio>
+                      </HStack>
+                    </RadioGroup>
+                  )}
+                />
               </FormControl>
               <Divider orientation="horizontal" />
             </VStack>

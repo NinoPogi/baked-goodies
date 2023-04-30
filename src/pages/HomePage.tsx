@@ -35,7 +35,7 @@ const HomePage = () => {
       </Stack>
       <Heading fontSize="2xl">PRE ORDERS ONLY</Heading>
       <Heading fontSize="1xl">Arayat, Pampanga</Heading>
-      <Image src={pickup} w="35%" />
+      <Image src={pickup} w="55%" />
     </VStack>
   );
 };
