@@ -24,9 +24,7 @@ function App() {
       children: [
         {
           path: ":type",
-          element: (
-            <ProductPage onOpen={onOpen} form={form} setForm={setForm} />
-          ),
+          element: <ProductPage onOpen={onOpen} setForm={setForm} />,
         },
       ],
     },

@@ -10,11 +10,10 @@ import CakeCard from "../components/ShopPage/CakeCard";
 
 interface Props {
   onOpen: () => void;
-  form: {};
   setForm: Dispatch<SetStateAction<any>>;
 }
 
-const ProductPage = ({ onOpen, form, setForm }: Props) => {
+const ProductPage = ({ onOpen, setForm }: Props) => {
   const { data, isLoading, error } = useCakes();
   const { handleSubmit, control } = useForm();
   const params = useParams();
