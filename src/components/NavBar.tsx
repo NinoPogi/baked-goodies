@@ -2,8 +2,13 @@ import { Box, Flex, useBoolean } from "@chakra-ui/react";
 import NavLogo from "./NavLogo";
 import MenuLinks from "./MenuLinks";
 import MenuToggle from "./MenuToggle";
+import { Customer } from "../hooks/useCustomer";
 
-const NavBar = () => {
+interface Props {
+  customer: Customer;
+}
+
+const NavBar = ({ customer }: Props) => {
   const [open, { toggle }] = useBoolean();
 
   return (
@@ -20,7 +25,7 @@ const NavBar = () => {
     >
       <NavLogo />
       <MenuToggle toggle={toggle} />
-      <MenuLinks open={open} />
+      <MenuLinks open={open} customer={customer} />
     </Box>
   );
 };

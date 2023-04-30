@@ -1,5 +1,4 @@
-import { Params, useParams } from "react-router-dom";
-import useData from "./useData";
+import cakes from "../data/cakes";
 
 export interface Cake {
   _id: string;
@@ -19,8 +18,5 @@ export interface Cake {
   info: string[];
 }
 
-const useCakes = () => {
-  const params = useParams();
-  return useData<Cake>("/cake", { params: { ...params } }, [params]);
-};
+const useCakes = () => ({ data: cakes, isLoading: false, error: null });
 export default useCakes;

@@ -71,12 +71,32 @@ const AccountPage = ({ customer, setCustomer, orders }: Props) => {
     <form id="customer" onSubmit={handleSubmit(onSubmit)}>
       <VStack m="60px  0">
         <Heading>Tell Me About Yourself:</Heading>
-        <Input type="text" placeholder="Name" {...register("name")} />
-        <Input type="text" placeholder="Email" {...register("email")} />
-        <Input type="text" placeholder="Phone" {...register("phone")} />
+        <Input
+          borderColor="pink"
+          type="text"
+          placeholder="Name"
+          {...register("name")}
+        />
+        <Input
+          borderColor="pink"
+          type="text"
+          placeholder="Email"
+          {...register("email")}
+        />
+        <Input
+          borderColor="pink"
+          type="text"
+          placeholder="Phone"
+          {...register("phone")}
+        />
         {/* <Input type="text" placeholder="Password" /> */}
         {/* <Link fontSize="2xs">Forgot your password?</Link> */}
-        <Button form="customer" type="submit">
+        <Button
+          form="customer"
+          type="submit"
+          colorScheme="pink"
+          borderRadius="0 20px 0 20px"
+        >
           Submit
         </Button>
         <Link fontSize="2xs" onClick={setLogin.toggle}>
@@ -90,8 +110,18 @@ const AccountPage = ({ customer, setCustomer, orders }: Props) => {
       <form id="login" onSubmit={handleSubmit(onSubmit)}>
         <VStack m="60px  0">
           <Heading>Enter Your Email:</Heading>
-          <Input type="text" placeholder="Email" {...register("email")} />
-          <Button form="login" type="submit">
+          <Input
+            borderColor="pink"
+            type="text"
+            placeholder="Email"
+            {...register("email")}
+          />
+          <Button
+            form="login"
+            type="submit"
+            colorScheme="pink"
+            borderRadius="0 20px 0 20px"
+          >
             Submit
           </Button>
           <Link fontSize="2xs" onClick={setLogin.toggle}>

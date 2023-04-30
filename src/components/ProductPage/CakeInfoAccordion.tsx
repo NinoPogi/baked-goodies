@@ -16,7 +16,7 @@ interface Props {
 
 const CakeInfoAccordion = ({ heading, info }: Props) => {
   return (
-    <Accordion defaultIndex={[0]} allowToggle>
+    <Accordion defaultIndex={[0]} allowToggle borderColor="pink">
       <AccordionItem>
         <AccordionButton>
           <Heading textAlign="left" flex="1" fontSize="2xl">

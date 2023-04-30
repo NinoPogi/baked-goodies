@@ -8,6 +8,8 @@ import AccountPage from "./pages/AccountPage";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import useCustomer from "./hooks/useCustomer";
+import NotFoundPage from "./pages/NotFoundPage";
+import OrderModal from "./components/OrderModal";
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -16,7 +18,7 @@ function App() {
 
   const element = useRoutes([
     { path: "/", element: <HomePage /> },
-    { path: "/cakeshop", element: <ShopPage /> },
+    { path: "/shop", element: <ShopPage /> },
     {
       path: "/cakes",
       children: [
@@ -29,7 +31,7 @@ function App() {
       ],
     },
     {
-      path: "/hello",
+      path: "/account",
       element: (
         <AccountPage
           customer={customer}
@@ -40,19 +42,26 @@ function App() {
     },
     {
       path: "/*",
-      element: <HomePage />,
+      element: <NotFoundPage />,
     },
   ]);
 
   return (
-    <Grid templateAreas={`"nav" "main" "footer"`}>
+    <Grid templateAreas={`"nav" "main" "footer"`} bgColor="navajowhite">
       <GridItem area="nav">
-        <NavBar />
+        <NavBar customer={customer} />
       </GridItem>
       <GridItem area="main" px="20px">
         <Flex justify="center">{element}</Flex>
+        <OrderModal
+          customer={customer}
+          isOpen={isOpen}
+          onClose={onClose}
+          form={form}
+          setForm={setForm}
+        />
       </GridItem>
-      <GridItem area="footer">
+      <GridItem area="footer" mt="60px">
         <Footer />
       </GridItem>
     </Grid>

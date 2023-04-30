@@ -1,9 +1,9 @@
 import { Stack } from "@chakra-ui/react";
-import cakes from "../../data/cakes";
 import CakeCard from "../ShopPage/CakeCard";
+import useCakes from "../../hooks/useCakes";
 
 const CakeGrid = () => {
-  const skeletons = [1, 2, 3, 4];
+  const { data, isLoading, error } = useCakes();
 
   return (
     <Stack
@@ -19,7 +19,7 @@ const CakeGrid = () => {
       }}
     >
       <Stack spacing="10px" direction="row">
-        {cakes.map((cake) => (
+        {data.map((cake) => (
           <CakeCard
             key={cake._id.$oid}
             route={cake.route}

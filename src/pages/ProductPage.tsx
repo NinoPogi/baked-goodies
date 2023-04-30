@@ -1,13 +1,11 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { Stack, Link, Heading, Button, Box } from "@chakra-ui/react";
 import { Link as ReactLink, useParams } from "react-router-dom";
-import CakeCardSkeleton from "../components/ShopPage/CakeCardSkeleton";
 import CakeCheckbox from "../components/ProductPage/CakeCheckbox";
 import CakeInfoAccordion from "../components/ProductPage/CakeInfoAccordion";
 import CakeRadio from "../components/ProductPage/CakeRadio";
 import useCakes from "../hooks/useCakes";
 import CakeCard from "../components/ShopPage/CakeCard";
-import cakes from "../data/cakes";
 
 interface Props {
   onOpen: () => void;
@@ -16,8 +14,9 @@ interface Props {
 }
 
 const ProductPage = ({ onOpen, form, setForm }: Props) => {
+  const { data, isLoading, error } = useCakes();
   const params = useParams();
-  const [cake] = cakes.filter((obj) => obj.type === params.type);
+  const [cake] = data.filter((obj) => obj.type === params.type);
 
   useEffect(() => {
     document.title = `${cake.title} | Baked Goodies by H`;
@@ -39,13 +38,17 @@ const ProductPage = ({ onOpen, form, setForm }: Props) => {
             <Heading fontSize="2xl">Back to Cake Shop</Heading>
           </Link>
           <Box
-            h={{ base: "300px", xl: "500px" }}
-            w={{ sm: "280px", md: "385px", xl: "300px" }}
+            h={{ base: "300px", lg: "625px", xl: "550px" }}
+            w={{ sm: "280px", md: "385px", xl: "500px" }}
             overflow="auto"
           >
             <Stack direction={{ base: "row", lg: "column" }}>
               {cake.images.map((url) => (
-                <CakeCard image={url} key={url} />
+                <CakeCard
+                  image={url}
+                  key={url}
+                  boxSize={{ sm: "17.1em", lg: "28em" }}
+                />
               ))}
             </Stack>
           </Box>
@@ -82,6 +85,7 @@ const ProductPage = ({ onOpen, form, setForm }: Props) => {
             p="30px"
             m="30px 0"
             onClick={onOpen}
+            borderRadius="0 20px 0 20px"
           >
             OrderYourCakeNow
           </Button>

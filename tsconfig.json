@@ -20,7 +20,7 @@
     "src",
     "old components",
     "old components2/NavBar.tsx",
-    "old components2/OrderModal.tsx"
+    "src/components/OrderModal.tsx"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

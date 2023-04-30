@@ -35,9 +35,10 @@ const CakeCard = ({ route, image, children, pricing, boxSize }: Props) => {
       <Link to={route} role="group">
         <Card
           shadow="none"
+          bg="transparent"
           p={{ base: "0", md: "8px" }}
           _groupHover={{
-            p: "6px",
+            p: "4px",
           }}
         >
           <CardBody p={{ base: "10px", md: "0px" }}>

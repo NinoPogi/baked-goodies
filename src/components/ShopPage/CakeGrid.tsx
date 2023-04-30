@@ -1,13 +1,23 @@
-import { SimpleGrid } from "@chakra-ui/react";
-import cakes from "../../data/cakes";
+import { SimpleGrid, Spinner } from "@chakra-ui/react";
+import useCakes from "../../hooks/useCakes";
 import CakeCard from "./CakeCard";
+import CakeCardSkeleton from "./CakeCardSkeleton";
 
 const CakeGrid = () => {
-  const skeletons = [1, 2, 3, 4];
+  const { data, isLoading, error } = useCakes();
+
+  if (error) return null;
+
+  if (isLoading)
+    return (
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3, xl: 4 }} spacing="10px">
+        <CakeCardSkeleton />
+      </SimpleGrid>
+    );
 
   return (
     <SimpleGrid columns={{ base: 1, md: 2, lg: 3, xl: 4 }} spacing="10px">
-      {cakes.map((cake) => (
+      {data.map((cake) => (
         <CakeCard
           key={cake._id.$oid}
           route={cake.route}
