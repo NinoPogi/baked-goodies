@@ -1,23 +1,21 @@
 import { useEffect } from "react";
-import { Box, HStack, Heading, Image, Stack, VStack } from "@chakra-ui/react";
-import CakeCarousel from "../components/CakeCarousel";
+import { Heading, Image, Stack, VStack } from "@chakra-ui/react";
 import pickup from "../images/pickup.jpg";
-import CakeRecommend from "../components/CakeRecommend";
+import CakeCarousel from "../components/HomePage/CakeCarousel";
+import CakeBrowse from "../components/HomePage/CakeBrowse";
 
-const CakeHome = () => {
+const HomePage = () => {
   useEffect(() => {
     document.title = "Baked Goodies by H";
   }, []);
 
   return (
-    <VStack spacing="60px">
+    <VStack spacing="20px">
       <CakeCarousel />
-      <Heading fontSize="2xl">BROWSE CAKE</Heading>
-
-      <CakeRecommend type="" />
-
+      <Heading fontSize="2xl">Browse Cakes ={">"}</Heading>
+      <CakeBrowse />
       <Heading fontSize="2xl">ORDERING PROCESS GUIDE</Heading>
-      <HStack justify="space-evenly">
+      <Stack justify="space-evenly" direction={{ base: "column", lg: "row" }}>
         <Stack>
           <Heading fontSize="1xl">Step 1</Heading>
           <Heading fontSize="1xl">Choose Cake</Heading>
@@ -34,17 +32,12 @@ const CakeHome = () => {
           <Heading fontSize="1xl">Step 4</Heading>
           <Heading fontSize="1xl">Pick Up Cake</Heading>
         </Stack>
-      </HStack>
+      </Stack>
       <Heading fontSize="2xl">PRE ORDERS ONLY</Heading>
-      <HStack justify="space-evenly">
-        <Stack>
-          <Heading fontSize="1xl">Full Address Here</Heading>
-          <Heading fontSize="1xl">Arayat, Pampanga</Heading>
-        </Stack>
-        <Image src={pickup} w="35%" />
-      </HStack>
+      <Heading fontSize="1xl">Arayat, Pampanga</Heading>
+      <Image src={pickup} w="35%" />
     </VStack>
   );
 };
 
-export default CakeHome;
+export default HomePage;

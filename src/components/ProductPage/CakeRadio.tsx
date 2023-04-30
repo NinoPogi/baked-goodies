@@ -21,7 +21,6 @@ const RadioCard = (props: any) => {
       <Box
         {...checkbox}
         borderWidth="1px"
-        borderRadius="md"
         borderColor="pink.400"
         fontSize="2xl"
         _checked={{

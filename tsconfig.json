@@ -16,6 +16,11 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "old components"],
+  "include": [
+    "src",
+    "old components",
+    "old components2/NavBar.tsx",
+    "old components2/OrderModal.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

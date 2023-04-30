@@ -14,10 +14,12 @@ import logo from "../images/logo.svg";
 export default function Footer() {
   return (
     <Box
-      bg={useColorModeValue("gray.50", "gray.900")}
-      color={useColorModeValue("gray.700", "gray.200")}
+      bg="pink.500"
+      h="100px"
+      // bg={useColorModeValue("gray.50", "gray.900")}
+      // color={useColorModeValue("gray.700", "gray.200")}
     >
-      <Stack maxW={"6xl"} py={10} align="center">
+      {/* <Stack maxW={"6xl"} py={10} align="center">
         <Link as={ReactLink} to="/">
           <HStack>
             <Image src={logo} boxSize="45px" alt="Baked Goodies by H" />
@@ -38,7 +40,7 @@ export default function Footer() {
           </Link>
         </HStack>
         <Text fontSize={"sm"}>Copyright © 2023, Baked Goodies by H.</Text>
-      </Stack>
+      </Stack> */}
     </Box>
   );
 }

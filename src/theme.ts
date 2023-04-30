@@ -4,16 +4,16 @@ const theme = extendTheme({
   initialColorMode: "system",
   useSystemColorMode: true,
   breakpoints: {
-    "1sm": "320px",
-    sm: "425px",
-    md: "768px",
-    lg: "1024px",
-    xl: "1440px",
-    "2xl": "1920px",
+    sm: "320px",
+    md: "425px",
+    lg: "640px",
+    xl: "1024px",
+    "2xl": "1366px",
+    "3xl": "1920px",
   },
   fonts: {
     heading: `'Alkatra', sans-serif`,
-    body: `'Body Font Name', sans-serif`,
+    // body: `'Body Font Name', sans-serif`,
   },
 });
 

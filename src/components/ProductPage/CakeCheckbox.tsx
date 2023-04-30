@@ -20,7 +20,6 @@ const Checkbox = (props: any) => {
       <Box
         {...checkbox}
         borderWidth="1px"
-        borderRadius="md"
         fontSize="2xl"
         borderColor="pink.400"
         _checked={{

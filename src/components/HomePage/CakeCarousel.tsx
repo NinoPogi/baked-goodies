@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, IconButton } from "@chakra-ui/react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import Slider from "react-slick";
-import banners from "../data/banners";
+import banners from "../../data/banners";
 
 const settings = {
   dots: true,
@@ -26,16 +26,15 @@ const CakeCarousel = () => {
       h={{ base: 500, lg: 600 }}
       width="100%"
       maxWidth={{
-        "1sm": 280,
-        sm: 380,
-        md: 704,
-        lg: 960,
-        xl: 1376,
-        "2xl": 1800,
+        sm: 280,
+        md: 380,
+        lg: 704,
+        xl: 960,
+        "2xl": 1376,
+        "3xl": 1800,
       }}
       overflow="hidden"
       transform="auto"
-      borderRadius="20px"
     >
       <link
         rel="stylesheet"
@@ -52,8 +51,8 @@ const CakeCarousel = () => {
         aria-label="left-arrow"
         variant="ghost"
         position="absolute"
-        left={{ base: "30%", md: "20px" }}
-        top={{ base: "90%", md: "50%" }}
+        left={{ base: "30%", lg: "20px" }}
+        top={{ base: "90%", lg: "50%" }}
         transform={"translate(0%, -50%)"}
         zIndex={2}
         onClick={() => slider?.slickPrev()}
@@ -64,8 +63,8 @@ const CakeCarousel = () => {
         aria-label="right-arrow"
         variant="ghost"
         position="absolute"
-        right={{ base: "30%", md: "20px" }}
-        top={{ base: "90%", md: "50%" }}
+        right={{ base: "30%", lg: "20px" }}
+        top={{ base: "90%", lg: "50%" }}
         transform={"translate(0%, -50%)"}
         zIndex={2}
         onClick={() => slider?.slickNext()}

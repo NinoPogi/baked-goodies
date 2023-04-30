@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useRoutes } from "react-router-dom";
 import { Flex, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
-import Home from "./pages/Home";
-import CakeShop from "./pages/CakeShop";
-import CakePage from "./pages/CakePage";
+import HomePage from "./pages/HomePage";
+import ShopPage from "./pages/ShopPage";
+import ProductPage from "./pages/ProductPage";
 import AccountPage from "./pages/AccountPage";
-import OrderModal from "./components/OrderModal";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import useCustomer from "./hooks/useCustomer";
@@ -16,14 +15,16 @@ function App() {
   const [form, setForm] = useState({});
 
   const element = useRoutes([
-    { path: "/", element: <Home /> },
-    { path: "/cakeshop", element: <CakeShop /> },
+    { path: "/", element: <HomePage /> },
+    { path: "/cakeshop", element: <ShopPage /> },
     {
       path: "/cakes",
       children: [
         {
           path: ":type",
-          element: <CakePage onOpen={onOpen} form={form} setForm={setForm} />,
+          element: (
+            <ProductPage onOpen={onOpen} form={form} setForm={setForm} />
+          ),
         },
       ],
     },
@@ -39,27 +40,19 @@ function App() {
     },
     {
       path: "/*",
-      element: <Home />,
+      element: <HomePage />,
     },
   ]);
 
   return (
-    <Grid templateAreas={`"nav" "main" "footer"`} bgColor="teal.100">
+    <Grid templateAreas={`"nav" "main" "footer"`}>
       <GridItem area="nav">
-        <NavBar customer={customer} />
+        <NavBar />
       </GridItem>
-      <GridItem area="main" p="20px 20px" mt={{ base: "66px", lg: "69px" }}>
-        {error && <p>{error}</p>}
-        <OrderModal
-          customer={customer}
-          isOpen={isOpen}
-          onClose={onClose}
-          form={form}
-          setForm={setForm}
-        />
+      <GridItem area="main" px="20px">
         <Flex justify="center">{element}</Flex>
       </GridItem>
-      <GridItem area="footer" pt="60px">
+      <GridItem area="footer">
         <Footer />
       </GridItem>
     </Grid>
