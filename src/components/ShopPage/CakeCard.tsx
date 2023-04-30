@@ -1,4 +1,12 @@
-import { Box, Card, CardBody, Heading, Image } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  Heading,
+  Image,
+  ImageProps,
+  ResponsiveValue,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import getCroppedImageUrl from "../../services/image-url";
 
@@ -10,6 +18,7 @@ interface OptionalProps {
   route: string;
   children: string;
   pricing: string;
+  boxSize: {};
 }
 
 interface Props extends RequiredProps, OptionalProps {}
@@ -17,9 +26,10 @@ const defaultProps: OptionalProps = {
   route: "",
   children: "",
   pricing: "",
+  boxSize: { base: "normal" },
 };
 
-const CakeCard = ({ route, image, children, pricing }: Props) => {
+const CakeCard = ({ route, image, children, pricing, boxSize }: Props) => {
   return (
     <Box flexShrink="0">
       <Link to={route} role="group">
@@ -31,11 +41,7 @@ const CakeCard = ({ route, image, children, pricing }: Props) => {
           }}
         >
           <CardBody p={{ base: "10px", md: "0px" }}>
-            <Image
-              src={getCroppedImageUrl(image)}
-              boxSize={{ "1sm": "15em", sm: "21em", md: "17em", xl: "20em" }}
-              // borderRadius="20px"
-            />
+            <Image src={getCroppedImageUrl(image)} boxSize={{ ...boxSize }} />
             <Heading
               textAlign="center"
               pt="5px "

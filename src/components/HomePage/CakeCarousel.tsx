@@ -11,7 +11,7 @@ const settings = {
   infinite: true,
   autoplay: true,
   speed: 500,
-  autoplaySpeed: 30000,
+  autoplaySpeed: 90000,
   slidesToShow: 1,
   slidesToScroll: 1,
 };
