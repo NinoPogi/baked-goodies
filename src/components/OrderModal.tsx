@@ -78,8 +78,8 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
   };
 
   const handleOrder = async (submit: FieldValues) => {
-    const response = await apiClient.post("/order", form);
-    console.log(response);
+    const req = { ...form, ...submit };
+    const response = await apiClient.post("/order", req);
     toast({
       title: `Order created. ${response.statusText}`,
       description: "Order is now Processing!",
@@ -213,7 +213,12 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
               Submit
             </Button>
           ) : (
-            <Button form="order" type="submit" colorScheme="pink">
+            <Button
+              form="order"
+              type="submit"
+              colorScheme="pink"
+              onClick={onClose}
+            >
               Submit
             </Button>
           )}

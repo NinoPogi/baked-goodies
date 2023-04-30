@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { Button, Heading, Input, Link, VStack } from "@chakra-ui/react";
+import { Button, Heading, Link, Input, VStack } from "@chakra-ui/react";
 import apiClient from "../services/api-client";
 import { Customer } from "../hooks/useCustomer";
+import { useNavigate } from "react-router-dom";
 
 interface Order {
   _id: string;
@@ -32,6 +33,7 @@ interface Props {
 const AccountPage = ({ customer, setCustomer, orders }: Props) => {
   const { register, handleSubmit } = useForm();
   const [login, setLogin] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Hello | Baked Goodies by H";
@@ -40,6 +42,7 @@ const AccountPage = ({ customer, setCustomer, orders }: Props) => {
   const onSubmit = async (form: FieldValues) => {
     const customer = await apiClient.post("/customer", form);
     setCustomer(customer.data);
+    navigate("/");
   };
 
   const logout = () => {
