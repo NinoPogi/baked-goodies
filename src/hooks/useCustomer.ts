@@ -10,27 +10,7 @@ export interface Customer {
   orders: string[];
 }
 
-export interface Order {
-  _id: string;
-  orderDate: string;
-  promiseDate: string;
-  customer: Customer;
-  type: string;
-  flavor: string;
-  shape: string;
-  size: string;
-  digits: string;
-  upgrades: string[];
-  addons: string[];
-  orderDetails: string;
-  images: string[];
-  status: string;
-  isPaid: string;
-  payment: string;
-}
-
 interface FetchCustomerResponse extends Customer {}
-interface FetchOrderResponse extends Array<Order> {}
 
 const useCustomer = () => {
   const [customer, setCustomer] = useState({
@@ -40,7 +20,6 @@ const useCustomer = () => {
     phone: "",
     orders: [""],
   });
-  const [orders, setOrders] = useState<Order[] | undefined>([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
@@ -53,14 +32,6 @@ const useCustomer = () => {
       .get<FetchCustomerResponse>("/customer", { signal: controller.signal })
       .then((res) => {
         setCustomer(res.data);
-        const email = res.data.email;
-        if (res.data.orders.length !== 0)
-          return apiClient.get<FetchOrderResponse>(
-            `/order/?customer.email=${email}`
-          );
-      })
-      .then((res) => {
-        setOrders(res?.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -73,7 +44,7 @@ const useCustomer = () => {
     return () => controller.abort();
   }, []);
 
-  return { customer, setCustomer, orders, error, isLoading };
+  return { customer, setCustomer, error, isLoading };
 };
 
 export default useCustomer;

@@ -13,7 +13,7 @@ import OrderModal from "./components/OrderModal";
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { customer, setCustomer, orders, error } = useCustomer();
+  const { customer, setCustomer, error } = useCustomer();
   const [form, setForm] = useState({});
 
   const element = useRoutes([
@@ -30,13 +30,7 @@ function App() {
     },
     {
       path: "/account",
-      element: (
-        <AccountPage
-          customer={customer}
-          setCustomer={setCustomer}
-          orders={orders}
-        />
-      ),
+      element: <AccountPage customer={customer} setCustomer={setCustomer} />,
     },
     {
       path: "/*",

@@ -2,23 +2,23 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { Button, Heading, Link, Input, VStack } from "@chakra-ui/react";
 import apiClient from "../services/api-client";
-import { Customer, Order } from "../hooks/useCustomer";
+import { Customer } from "../hooks/useCustomer";
 import { useNavigate } from "react-router-dom";
 import SignUp from "../components/AccountPage/SignUp";
 import Login from "../components/AccountPage/Login";
 import OrderTable from "../components/AccountPage/OrderTable";
+import useOrder from "../hooks/useOrder";
 
 interface Props {
   customer: Customer;
   setCustomer: Dispatch<SetStateAction<any>>;
-  orders: Order[] | undefined;
 }
 
-const AccountPage = ({ customer, setCustomer, orders }: Props) => {
+const AccountPage = ({ customer, setCustomer }: Props) => {
   const { register, handleSubmit } = useForm();
+  const { orders } = useOrder(customer);
   const [login, setLogin] = useState(false);
   const navigate = useNavigate();
-  console.log(orders);
 
   useEffect(() => {
     document.title = "Hello | Baked Goodies by H";

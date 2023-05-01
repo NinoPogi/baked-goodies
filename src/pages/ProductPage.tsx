@@ -62,24 +62,22 @@ const ProductPage = ({ onOpen, setForm }: Props) => {
           >
             {cake.radios.map((radio) => (
               <Controller
+                key={radio.name}
                 name={radio.name}
                 defaultValue={radio.defaultValue}
                 control={control}
-                render={({ field }) => (
-                  <CakeRadio radio={radio} key={radio.name} {...field} />
+                render={({ field: { onChange } }) => (
+                  <CakeRadio radio={radio} onChange={onChange} />
                 )}
               />
             ))}
             {cake.checkboxes.map((checkbox) => (
               <Controller
+                key={checkbox.name}
                 name={checkbox.name}
                 control={control}
-                render={({ field }) => (
-                  <CakeCheckbox
-                    checkbox={checkbox}
-                    key={checkbox.name}
-                    {...field}
-                  />
+                render={({ field: { onChange } }) => (
+                  <CakeCheckbox checkbox={checkbox} onChange={onChange} />
                 )}
               />
             ))}

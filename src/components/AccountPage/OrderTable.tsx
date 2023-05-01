@@ -8,7 +8,7 @@ import {
   Td,
   Button,
 } from "@chakra-ui/react";
-import { Order } from "../../hooks/useCustomer";
+import { Order } from "../../hooks/useOrder";
 
 interface Props {
   orders: Order[] | undefined;
@@ -28,7 +28,7 @@ const OrderTable = ({ orders }: Props) => {
         </Thead>
         <Tbody>
           {orders?.map((order) => (
-            <Tr>
+            <Tr key={order._id}>
               <Td>{order.type}</Td>
               <Td>{order.orderDate}</Td>
               <Td>{order.status}</Td>

@@ -8,7 +8,9 @@ const getCroppedImageUrl = (url: string | undefined) => {
   if (isString(url)) {
     index = url.indexOf(target) + target.length;
   }
-  return url?.slice(0, index) + "c_fill,h_350,w_450/" + url?.slice(index);
+  return (
+    url?.slice(0, index) + "q_auto:best/c_scale,w_450/" + url?.slice(index)
+  );
 };
 
 export default getCroppedImageUrl;
