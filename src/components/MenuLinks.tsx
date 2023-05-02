@@ -21,6 +21,7 @@ const MenuLinks = ({ open, customer }: Props) => {
         pt={[3, 3, 5, 0]}
       >
         <MenuItem link="/">Home</MenuItem>
+        <MenuItem link="/about">About</MenuItem>
         <MenuItem link="/shop">CakeShop</MenuItem>
         <MenuItem link="/account">
           {customer?.name !== "" ? `Hello {${customer?.name}}` : "Hello"}

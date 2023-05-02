@@ -1,13 +1,21 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { Button, Heading, Link, Input, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  Heading,
+  Link,
+  Input,
+  VStack,
+  useDisclosure,
+} from "@chakra-ui/react";
 import apiClient from "../services/api-client";
 import { Customer } from "../hooks/useCustomer";
 import { useNavigate } from "react-router-dom";
 import SignUp from "../components/AccountPage/SignUp";
 import Login from "../components/AccountPage/Login";
 import OrderTable from "../components/AccountPage/OrderTable";
-import useOrder from "../hooks/useOrder";
+import useOrder, { Order } from "../hooks/useOrder";
+import OrderModal from "../components/AccountPage/OrderModal";
 
 interface Props {
   customer: Customer;
@@ -15,14 +23,16 @@ interface Props {
 }
 
 const AccountPage = ({ customer, setCustomer }: Props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { register, handleSubmit } = useForm();
-  const { orders } = useOrder(customer);
   const [login, setLogin] = useState(false);
+  const [order, setOrder] = useState<Order>();
+  const { data } = useOrder(customer);
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Hello | Baked Goodies by H";
-  }, []);
+    document.title = `Hello ${customer?.name} | Baked Goodies by H`;
+  }, [customer]);
 
   const onSubmit = async (form: FieldValues) => {
     const customer = await apiClient.post("/customer", form);
@@ -35,12 +45,13 @@ const AccountPage = ({ customer, setCustomer }: Props) => {
     setCustomer({ name: "" });
   };
 
-  return customer.name !== "" ? (
+  return customer?.name !== "" ? (
     <VStack>
-      <Heading>Welcome Back {customer.name}</Heading>
-      <OrderTable orders={orders} />
+      <Heading>Welcome Back {customer?.name}</Heading>
+      <OrderTable orders={data} onOpen={onOpen} setOrder={setOrder} />
+      <OrderModal order={order} isOpen={isOpen} onClose={onClose} />
       <Link fontSize="2xs" onClick={logout}>
-        Goodbye?
+        Log Out?
       </Link>
     </VStack>
   ) : login !== false ? (

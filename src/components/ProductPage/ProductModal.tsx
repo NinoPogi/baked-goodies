@@ -26,9 +26,9 @@ import {
 } from "@chakra-ui/react";
 import { FieldValues, useForm, Controller } from "react-hook-form";
 import dayjs from "dayjs";
-import logo from "../images/logo.svg";
-import apiClient from "../services/api-client";
-import { Customer } from "../hooks/useCustomer";
+import logo from "../../images/logo.svg";
+import apiClient from "../../services/api-client";
+import { Customer } from "../../hooks/useCustomer";
 
 interface Props {
   customer: Customer;
@@ -38,7 +38,7 @@ interface Props {
   setForm: Dispatch<SetStateAction<any>>;
 }
 
-const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
+const ProductModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
   const { handleSubmit, register, control } = useForm();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
@@ -48,18 +48,18 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
   let propsEmail = {};
   let propsPhone = {};
 
-  if (customer.name !== "") {
+  if (customer?.name !== "") {
     propsName = {
-      value: customer.name,
-      isReadOnly: true,
+      value: customer?.name,
+      isDisabled: true,
     };
     propsEmail = {
-      value: customer.email,
-      isReadOnly: true,
+      value: customer?.email,
+      isDisabled: true,
     };
     propsPhone = {
-      value: customer.phone,
-      isReadOnly: true,
+      value: customer?.phone,
+      isDisabled: true,
     };
   }
 
@@ -114,15 +114,17 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
               <FormControl>
                 <FormLabel>Order Date:</FormLabel>
                 <Input
+                  variant="filled"
                   type="text"
-                  value={dayjs().format("MM/DD/YYYY")}
-                  isReadOnly
+                  value={dayjs().format("YYYY-MM-DD")}
+                  isDisabled
                   {...register("orderDate")}
                 />
               </FormControl>
               <FormControl isRequired>
                 <FormLabel>Promise Date: </FormLabel>
                 <Input
+                  variant="filled"
                   type="date"
                   placeholder="Promise Date"
                   {...register("promiseDate")}
@@ -132,6 +134,7 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
                 <FormLabel>Your Name:</FormLabel>
                 <InputGroup>
                   <Input
+                    variant="filled"
                     type="text"
                     placeholder="example: Hazel"
                     {...propsName}
@@ -142,6 +145,7 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
               <FormControl isRequired>
                 <FormLabel>Your Email Address:</FormLabel>
                 <Input
+                  variant="filled"
                   type="text"
                   placeholder="example: bakedgoodies@gmail.com"
                   {...propsEmail}
@@ -151,6 +155,7 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
               <FormControl isRequired>
                 <FormLabel>Your Phone Number:</FormLabel>
                 <Input
+                  variant="filled"
                   type="text"
                   placeholder="example: 09771243342"
                   {...propsPhone}
@@ -162,6 +167,7 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
                   Tell Me What You Want Your Cake To Look Like:
                 </FormLabel>
                 <Textarea
+                  variant="filled"
                   placeholder="example: Gusto ko po ng cake na .... 
           (Write Dedications & U can upload up to 5 pics)"
                   size="sm"
@@ -172,6 +178,7 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
                 <Text pb="6px">or Upload Photo/s:</Text>
                 <Flex gap="20px">
                   <Input
+                    variant="filled"
                     w="340px"
                     p="6px"
                     type="file"
@@ -228,4 +235,4 @@ const OrderModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
   );
 };
 
-export default OrderModal;
+export default ProductModal;

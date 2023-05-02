@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
-import apiClient from "../services/api-client";
-import { CanceledError } from "axios";
 import { Customer } from "./useCustomer";
+import useData from "./useData";
 
 export interface Order {
   _id: string;
@@ -22,37 +20,16 @@ export interface Order {
   payment: string;
 }
 
-interface FetchOrderResponse extends Array<Order> {}
+const useOrder = (customer: Customer) =>
+  useData<Order>(
+    "/order",
 
-const useCustomer = (customer: Customer) => {
-  const [orders, setOrders] = useState<Order[] | undefined>([]);
-  const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(false);
+    {
+      params: {
+        "customer.email": customer?.email,
+      },
+    },
+    [customer]
+  );
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    setLoading(true);
-
-    apiClient
-      .get<FetchOrderResponse>(`/order?customer.email=${customer.email}`, {
-        signal: controller.signal,
-      })
-      .then((res) => {
-        setOrders(res?.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        if (err.response.status === 401) return;
-        setError(err.message);
-        setLoading(false);
-      });
-
-    return () => controller.abort();
-  }, []);
-
-  return { orders, error, isLoading };
-};
-
-export default useCustomer;
+export default useOrder;

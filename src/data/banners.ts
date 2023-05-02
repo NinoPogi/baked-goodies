@@ -1,6 +1,6 @@
-import banner1 from "../images/banner1.jpeg";
-import banner2 from "../images/banner2.png";
-import banner3 from "../images/banner3.png";
-import banner4 from "../images/banner4.jpeg";
-
-export default [banner3, banner4, banner2, banner1];
+export default [
+  "https://res.cloudinary.com/dzobqin7p/image/upload/v1682951959/banners/banner3_jug2cc.png",
+  "https://res.cloudinary.com/dzobqin7p/image/upload/v1682951959/banners/banner1_v5zhpi.jpg",
+  "https://res.cloudinary.com/dzobqin7p/image/upload/v1682951959/banners/banner2_fvkkfj.png",
+  "https://res.cloudinary.com/dzobqin7p/image/upload/v1682951956/banners/banner4_yvjztz.jpg",
+];

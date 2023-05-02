@@ -9,11 +9,13 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import useCustomer from "./hooks/useCustomer";
 import NotFoundPage from "./pages/NotFoundPage";
-import OrderModal from "./components/OrderModal";
+import ProductModal from "./components/ProductPage/ProductModal";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { customer, setCustomer, error } = useCustomer();
+  const { data, error } = useCustomer();
+  const [customer, setCustomer] = useState({ ...data[0], name: "" });
   const [form, setForm] = useState({});
 
   const element = useRoutes([
@@ -27,6 +29,10 @@ function App() {
           element: <ProductPage onOpen={onOpen} setForm={setForm} />,
         },
       ],
+    },
+    {
+      path: "/about",
+      element: <AboutPage />,
     },
     {
       path: "/account",
@@ -45,7 +51,7 @@ function App() {
       </GridItem>
       <GridItem area="main" px="20px">
         <Flex justify="center">{element}</Flex>
-        <OrderModal
+        <ProductModal
           customer={customer}
           isOpen={isOpen}
           onClose={onClose}

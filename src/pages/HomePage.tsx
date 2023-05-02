@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Heading, Image, Stack, VStack } from "@chakra-ui/react";
-import pickup from "../images/pickup.jpg";
 import CakeCarousel from "../components/HomePage/CakeCarousel";
 import CakeBrowse from "../components/HomePage/CakeBrowse";
+import getCroppedImageUrl from "../services/image-url";
 
 const HomePage = () => {
   useEffect(() => {
@@ -12,10 +12,14 @@ const HomePage = () => {
   return (
     <VStack spacing="20px">
       <CakeCarousel />
-      <Heading fontSize="2xl">Browse Cakes ={">"}</Heading>
+      <Heading fontSize="2xl">BROWSE CAKES ={">"}</Heading>
       <CakeBrowse />
       <Heading fontSize="2xl">ORDERING PROCESS GUIDE</Heading>
-      <Stack justify="space-evenly" direction={{ base: "column", lg: "row" }}>
+      <Stack
+        justify="space-evenly"
+        spacing="100px"
+        direction={{ base: "column", lg: "row" }}
+      >
         <Stack>
           <Heading fontSize="1xl">Step 1</Heading>
           <Heading fontSize="1xl">Choose Cake</Heading>
@@ -35,7 +39,12 @@ const HomePage = () => {
       </Stack>
       <Heading fontSize="2xl">PRE ORDERS ONLY</Heading>
       <Heading fontSize="1xl">Arayat, Pampanga</Heading>
-      <Image src={pickup} w="55%" />
+      <Image
+        srcSet={getCroppedImageUrl(
+          "https://res.cloudinary.com/dzobqin7p/image/upload/v1682951978/banners/pickup_bsmffc.jpg"
+        )}
+        w="55%"
+      />
     </VStack>
   );
 };

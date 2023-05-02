@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import {
   TableContainer,
   Table,
@@ -12,9 +13,11 @@ import { Order } from "../../hooks/useOrder";
 
 interface Props {
   orders: Order[] | undefined;
+  setOrder: Dispatch<SetStateAction<any>>;
+  onOpen: () => void;
 }
 
-const OrderTable = ({ orders }: Props) => {
+const OrderTable = ({ orders, setOrder, onOpen }: Props) => {
   return (
     <TableContainer>
       <Table size="lg" colorScheme="orange">
@@ -33,7 +36,14 @@ const OrderTable = ({ orders }: Props) => {
               <Td>{order.orderDate}</Td>
               <Td>{order.status}</Td>
               <Td>
-                <Button colorScheme="pink" borderRadius="0 20px 0 20px">
+                <Button
+                  colorScheme="pink"
+                  borderRadius="0 20px 0 20px"
+                  onClick={() => {
+                    setOrder(order);
+                    onOpen();
+                  }}
+                >
                   View Order
                 </Button>
               </Td>

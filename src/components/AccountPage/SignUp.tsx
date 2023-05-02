@@ -47,7 +47,7 @@ const SignUp = ({ register, handleSubmit, onSubmit, setLogin }: Props) => {
           Submit
         </Button>
         <Link fontSize="2xs" onClick={() => setLogin(true)}>
-          Already said Hello?
+          Already Signed Up or Ordered?
         </Link>
       </VStack>
     </form>

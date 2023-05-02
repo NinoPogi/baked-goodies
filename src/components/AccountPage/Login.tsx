@@ -33,7 +33,7 @@ const Login = ({ register, handleSubmit, onSubmit, setLogin }: Props) => {
           Submit
         </Button>
         <Link fontSize="2xs" onClick={() => setLogin(false)}>
-          Hello?
+          Sign Up?
         </Link>
       </VStack>
     </form>
