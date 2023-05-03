@@ -9,15 +9,15 @@ import {
   Td,
   Button,
 } from "@chakra-ui/react";
-import { Order } from "../../hooks/useOrder";
+import { Order } from "../../hooks/useOrders";
 
 interface Props {
   orders: Order[] | undefined;
-  setOrder: Dispatch<SetStateAction<any>>;
+  setSelectedOrder: Dispatch<SetStateAction<any>>;
   onOpen: () => void;
 }
 
-const OrderTable = ({ orders, setOrder, onOpen }: Props) => {
+const OrderTable = ({ orders, setSelectedOrder, onOpen }: Props) => {
   return (
     <TableContainer>
       <Table size="lg" colorScheme="orange">
@@ -40,7 +40,7 @@ const OrderTable = ({ orders, setOrder, onOpen }: Props) => {
                   colorScheme="pink"
                   borderRadius="0 20px 0 20px"
                   onClick={() => {
-                    setOrder(order);
+                    setSelectedOrder(order);
                     onOpen();
                   }}
                 >

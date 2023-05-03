@@ -10,10 +10,10 @@ interface Props {
   register: UseFormRegister<FieldValues>;
   handleSubmit: UseFormHandleSubmit<FieldValues>;
   onSubmit: (form: FieldValues) => Promise<void>;
-  setLogin: Dispatch<SetStateAction<boolean>>;
+  setLoginMode: Dispatch<SetStateAction<boolean>>;
 }
 
-const SignUp = ({ register, handleSubmit, onSubmit, setLogin }: Props) => {
+const SignUp = ({ register, handleSubmit, onSubmit, setLoginMode }: Props) => {
   return (
     <form id="customer" onSubmit={handleSubmit(onSubmit)}>
       <VStack m="60px  0">
@@ -46,7 +46,7 @@ const SignUp = ({ register, handleSubmit, onSubmit, setLogin }: Props) => {
         >
           Sign Up
         </Button>
-        <Link fontSize="2xs" onClick={() => setLogin(true)}>
+        <Link fontSize="2xs" onClick={() => setLoginMode(true)}>
           Already Signed Up or Ordered?
         </Link>
       </VStack>

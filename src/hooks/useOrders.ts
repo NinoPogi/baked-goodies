@@ -21,9 +21,10 @@ export interface Order {
 }
 
 const useOrder = (customer: Customer) =>
-  useData<Order>(
+  useData<Order[]>(
+    "get",
     "/order",
-
+    [] as Order[],
     {
       params: {
         "customer.email": customer?.email,

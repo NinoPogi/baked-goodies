@@ -1,15 +1,11 @@
 import { Box, Stack } from "@chakra-ui/react";
 import MenuItem from "./MenuItem";
-import { useContext } from "react";
-import { CustomerContext } from "../contexts/CustomerProvider";
 
 interface Props {
   open: boolean;
 }
 
 const MenuLinks = ({ open }: Props) => {
-  const { customer } = useContext(CustomerContext);
-
   return (
     <Box
       display={{ base: open ? "block" : "none", xl: "block" }}
@@ -25,9 +21,7 @@ const MenuLinks = ({ open }: Props) => {
         <MenuItem link="/">Home</MenuItem>
         <MenuItem link="/about">About</MenuItem>
         <MenuItem link="/shop">CakeShop</MenuItem>
-        <MenuItem link="/account">
-          {customer?.name !== "" ? `Hello {${customer?.name}}` : "Hello"}
-        </MenuItem>
+        <MenuItem link="/account">Account</MenuItem>
       </Stack>
     </Box>
   );

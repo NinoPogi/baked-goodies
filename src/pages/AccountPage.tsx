@@ -1,79 +1,88 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { useContext, useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import {
-  Button,
-  Heading,
-  Link,
-  Input,
-  VStack,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Heading, Link, VStack, useDisclosure } from "@chakra-ui/react";
 import apiClient from "../services/api-client";
-import { Customer } from "../hooks/useCustomer";
 import { useNavigate } from "react-router-dom";
 import SignUp from "../components/AccountPage/SignUp";
 import Login from "../components/AccountPage/Login";
 import OrderTable from "../components/AccountPage/OrderTable";
-import useOrder, { Order } from "../hooks/useOrder";
+import { Order } from "../hooks/useOrders";
 import OrderModal from "../components/AccountPage/OrderModal";
 import { CustomerContext } from "../contexts/CustomerProvider";
 
 const AccountPage = () => {
-  const { customer, setCustomer } = useContext(CustomerContext);
+  const { customer, setCustomer, orders } = useContext(CustomerContext);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const { register, handleSubmit } = useForm();
-  const [login, setLogin] = useState(false);
-  const [order, setOrder] = useState<Order>();
-  const { data } = useOrder(customer);
+
+  const [loginMode, setLoginMode] = useState<boolean>(false);
+  const [selectedOrder, setSelectedOrder] = useState<Order>();
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = `Hello ${customer?.name} | Baked Goodies by H`;
-  }, [customer]);
+    document.title = `Account | Baked Goodies by H`;
+  }, []);
 
   const onSubmit = async (form: FieldValues) => {
-    const customer = await apiClient.post("/customer", form);
-    setCustomer(customer.data);
-    navigate("/");
+    try {
+      const customerData = await apiClient.post("/customer", form);
+      setCustomer(customerData.data);
+      navigate("/");
+    } catch (error) {
+      console.error("Error submitting form: ", error);
+    }
   };
 
   const logout = () => {
-    apiClient.get("/customer/logout");
-    setCustomer({ ...customer, name: "" });
+    try {
+      setCustomer({ _id: "", name: "", email: "", phone: "", orders: [] });
+      apiClient.get("/customer/logout");
+    } catch (error) {
+      console.error("Error logging out: ", error);
+    }
   };
 
-  return customer?.name !== "" ? (
-    <VStack>
-      <Heading>Welcome Back {customer?.name}</Heading>
-      <OrderTable orders={data} onOpen={onOpen} setOrder={setOrder} />
-      <OrderModal order={order} isOpen={isOpen} onClose={onClose} />
-      <Link fontSize="2xs" onClick={logout}>
-        Log Out?
-      </Link>
-    </VStack>
-  ) : login !== false ? (
-    <Login
-      register={register}
-      handleSubmit={handleSubmit}
-      onSubmit={onSubmit}
-      setLogin={setLogin}
-    />
-  ) : (
-    !login && (
+  if (customer?.name !== "") {
+    return (
+      <VStack>
+        <Heading>Welcome Back {customer?.name}</Heading>
+        <OrderTable
+          orders={orders}
+          onOpen={onOpen}
+          setSelectedOrder={setSelectedOrder}
+        />
+        <OrderModal
+          selectedOrder={selectedOrder}
+          isOpen={isOpen}
+          onClose={onClose}
+        />
+        <Link fontSize="2xs" onClick={logout}>
+          Log Out?
+        </Link>
+      </VStack>
+    );
+  } else if (loginMode) {
+    return (
+      <Login
+        register={register}
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        setLoginMode={setLoginMode}
+      />
+    );
+  } else {
+    return (
       <SignUp
         register={register}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
-        setLogin={setLogin}
+        setLoginMode={setLoginMode}
       />
-    )
-  );
+    );
+  }
 };
 
 export default AccountPage;

@@ -4,16 +4,7 @@ import CakeCard from "./CakeCard";
 import CakeCardSkeleton from "./CakeCardSkeleton";
 
 const CakeGrid = () => {
-  const { data, isLoading, error } = useCakes();
-
-  if (error) return null;
-
-  if (isLoading)
-    return (
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3, xl: 4 }} spacing="10px">
-        <CakeCardSkeleton />
-      </SimpleGrid>
-    );
+  const { data } = useCakes();
 
   return (
     <SimpleGrid columns={{ base: 1, md: 2, lg: 3, xl: 4 }} spacing="10px">

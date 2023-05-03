@@ -10,10 +10,10 @@ interface Props {
   register: UseFormRegister<FieldValues>;
   handleSubmit: UseFormHandleSubmit<FieldValues>;
   onSubmit: (form: FieldValues) => Promise<void>;
-  setLogin: Dispatch<SetStateAction<boolean>>;
+  setLoginMode: Dispatch<SetStateAction<boolean>>;
 }
 
-const Login = ({ register, handleSubmit, onSubmit, setLogin }: Props) => {
+const Login = ({ register, handleSubmit, onSubmit, setLoginMode }: Props) => {
   return (
     <form id="login" onSubmit={handleSubmit(onSubmit)}>
       <VStack m="60px  0">
@@ -32,7 +32,7 @@ const Login = ({ register, handleSubmit, onSubmit, setLogin }: Props) => {
         >
           Login
         </Button>
-        <Link fontSize="2xs" onClick={() => setLogin(false)}>
+        <Link fontSize="2xs" onClick={() => setLoginMode(false)}>
           Sign Up?
         </Link>
       </VStack>

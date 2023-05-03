@@ -10,7 +10,7 @@ const getCroppedImageUrl = (url: string | undefined) => {
   }
   return (
     url?.slice(0, index) +
-    "q_auto:best/c_scale,w_450,h_450/" +
+    "q_auto/e_vectorize:corners:40:detail:5.0/" +
     url?.slice(index)
   );
 };

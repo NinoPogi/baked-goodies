@@ -31,7 +31,7 @@ const defaultProps: OptionalProps = {
 
 const CakeCard = ({ route, image, children, pricing, boxSize }: Props) => {
   return (
-    <Box flexShrink="0">
+    <Box flexShrink="0" bg="pink">
       <Link to={route} role="group">
         <Card
           shadow="none"

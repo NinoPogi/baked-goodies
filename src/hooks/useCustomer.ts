@@ -11,7 +11,8 @@ export interface Customer {
   orders: string[];
 }
 
-const useCustomer = () => useData<Customer>("/customer");
+const useCustomer = (defaultValue: Customer) =>
+  useData<Customer>("get", "/customer", defaultValue);
 // {
 //   const [customer, setCustomer] = useState({
 //     _id: "",

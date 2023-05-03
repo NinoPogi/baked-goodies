@@ -1,4 +1,3 @@
-import { BaseSyntheticEvent, Dispatch, SetStateAction, useState } from "react";
 import {
   Image,
   ModalCloseButton,
@@ -13,16 +12,16 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import logo from "../../images/logo.svg";
-import { Order } from "../../hooks/useOrder";
+import { Order } from "../../hooks/useOrders";
 import apiClient from "../../services/api-client";
 
 interface Props {
-  order: Order | undefined;
+  selectedOrder: Order | undefined;
   isOpen: boolean;
   onClose: () => void;
 }
 
-const OrderModal = ({ order, isOpen, onClose }: Props) => {
+const OrderModal = ({ selectedOrder, isOpen, onClose }: Props) => {
   return (
     <Modal
       size={{
@@ -43,23 +42,23 @@ const OrderModal = ({ order, isOpen, onClose }: Props) => {
         </ModalHeader>
         <ModalBody p="5px 30px 0 30px">
           <Heading pb="20px">OrderYourCakeNow.</Heading>
-          <p>{order?._id}</p>
-          <p>{order?.orderDate}</p>
-          <p>{order?.promiseDate}</p>
-          <p>{order?.flavor}</p>
-          <p>{order?.shape}</p>
-          <p>{order?.size}</p>
-          <p>{order?.digits}</p>
-          {order?.upgrades.map((ups) => (
+          <p>{selectedOrder?._id}</p>
+          <p>{selectedOrder?.orderDate}</p>
+          <p>{selectedOrder?.promiseDate}</p>
+          <p>{selectedOrder?.flavor}</p>
+          <p>{selectedOrder?.shape}</p>
+          <p>{selectedOrder?.size}</p>
+          <p>{selectedOrder?.digits}</p>
+          {selectedOrder?.upgrades.map((ups) => (
             <p key={ups}>{ups}</p>
           ))}
-          {order?.addons.map((add) => (
+          {selectedOrder?.addons.map((add) => (
             <p key={add}>{add}</p>
           ))}
-          <p>{order?.orderDetails}</p>
-          <p>{order?.payment}</p>
-          <p>{order?.status}</p>
-          {order?.images.map((image) => (
+          <p>{selectedOrder?.orderDetails}</p>
+          <p>{selectedOrder?.payment}</p>
+          <p>{selectedOrder?.status}</p>
+          {selectedOrder?.images.map((image) => (
             <Image key={image} src={image} boxSize="50px" />
           ))}
         </ModalBody>
@@ -67,7 +66,7 @@ const OrderModal = ({ order, isOpen, onClose }: Props) => {
           <Button
             colorScheme="red"
             onClick={() => {
-              apiClient.put(`/customer/cancel/${order?._id}`);
+              apiClient.put(`/customer/cancel/${selectedOrder?._id}`);
               onClose();
             }}
           >

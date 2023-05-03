@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Stack,
   Link,
@@ -17,15 +17,15 @@ import CakeCard from "../components/ShopPage/CakeCard";
 import ProductModal from "../components/ProductPage/ProductModal";
 
 const ProductPage = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data, isLoading, error } = useCakes();
-  const { handleSubmit, control } = useForm();
   const params = useParams();
-  const [form, setForm] = useState({});
+  const { data } = useCakes();
   const [cake] = data.filter((obj) => obj.type === params.type);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { handleSubmit, control } = useForm();
+  const [form, setForm] = useState({});
 
   useEffect(() => {
-    document.title = `${cake.title} | Baked Goodies by H`;
+    document.title = `${cake?.title} | Baked Goodies by H`;
   }, []);
 
   return (
@@ -51,7 +51,7 @@ const ProductPage = () => {
             overflow="auto"
           >
             <Stack direction={{ base: "row", lg: "column" }}>
-              {cake.images.map((url) => (
+              {cake?.images.map((url) => (
                 <CakeCard
                   image={url}
                   key={url}
@@ -63,15 +63,15 @@ const ProductPage = () => {
         </Box>
         <Box w="100%">
           <Stack>
-            <Heading fontSize="5xl">{cake.title.toUpperCase()}</Heading>
-            <Heading fontSize="2xl">{`price ${cake.pricing}`}</Heading>
+            <Heading fontSize="5xl">{cake?.title.toUpperCase()}</Heading>
+            <Heading fontSize="2xl">{`price ${cake?.pricing}`}</Heading>
           </Stack>
           <form
             onSubmit={handleSubmit((submit) =>
-              setForm({ ...submit, type: cake.title })
+              setForm({ ...submit, type: cake?.title })
             )}
           >
-            {cake.radios.map((radio) => (
+            {cake?.radios.map((radio) => (
               <Controller
                 key={radio.name}
                 name={radio.name}
@@ -82,7 +82,7 @@ const ProductPage = () => {
                 )}
               />
             ))}
-            {cake.checkboxes.map((checkbox) => (
+            {cake?.checkboxes.map((checkbox) => (
               <Controller
                 key={checkbox.name}
                 name={checkbox.name}
@@ -105,7 +105,7 @@ const ProductPage = () => {
             </Button>
           </form>
 
-          <CakeInfoAccordion heading="Cake Information:" info={cake.info} />
+          <CakeInfoAccordion heading="Cake Information:" info={cake?.info} />
         </Box>
       </Stack>
     </Stack>
