@@ -167,6 +167,118 @@ export default [
   },
   {
     _id: {
+      $oid: "6449fef3e0714355491b85d0",
+    },
+    route: "/cakes/number-cake",
+    title: "Number Cake",
+    type: "number-cake",
+    pricing: "from ₱500 PHP",
+    info: ["🎂 Fondant Letters", "🧁 Whipped Cream Frosting"],
+    radios: [
+      {
+        name: "flavor",
+        options: [
+          {
+            value: "Choco Moist",
+            description: "Choco Moist",
+          },
+        ],
+        defaultValue: "Choco Moist",
+      },
+      {
+        name: "size",
+        options: [
+          {
+            value: "10 inches",
+            description: "10 inches",
+          },
+        ],
+        defaultValue: "10 inches",
+      },
+      {
+        name: "digits",
+        options: [
+          {
+            value: "One (#1)",
+            description: "One (#1 only) ₱500",
+          },
+          {
+            value: "One (#0,2-9)",
+            description: "One (#0,2-9) ₱650",
+          },
+          {
+            value: "Two",
+            description: "Two ₱1300",
+          },
+        ],
+        defaultValue: "One",
+      },
+    ],
+    checkboxes: [],
+    images: [
+      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646518/cakes/number/341834905_1498533090677095_3457164394052989162_n_xm3bgk.jpg",
+      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646515/cakes/number/341304217_179998304967317_2555326214864869291_n_de1bcw.jpg",
+      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646516/cakes/number/277219267_442968567515418_1824336328314807633_n_rsmlov.jpg",
+      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646511/cakes/number/278021235_452035469942061_7410147973522467307_n_zmj7cw.jpg",
+    ],
+    sort: "custom",
+  },
+  {
+    _id: {
+      $oid: "6449ff07e0714355491b85d2",
+    },
+    route: "/cakes/mini-number-cake",
+    title: "Mini Number Cake",
+    type: "mini-number-cake",
+    pricing: "from ₱350 PHP",
+    info: ["🎂 Fondant Letters", "🧁 Whipped Cream Frosting"],
+    radios: [
+      {
+        name: "flavor",
+        options: [
+          {
+            value: "Choco Moist",
+            description: "Choco Moist",
+          },
+        ],
+        defaultValue: "Choco Moist",
+      },
+      {
+        name: "size",
+        options: [
+          {
+            value: "5 inches",
+            description: "5 inches",
+          },
+        ],
+        defaultValue: "5 inches",
+      },
+      {
+        name: "digits",
+        options: [
+          {
+            value: "One",
+            description: "One ₱350",
+          },
+          {
+            value: "Two",
+            description: "Two ₱800",
+          },
+        ],
+        defaultValue: "One",
+      },
+    ],
+    checkboxes: [],
+    images: [
+      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646535/cakes/number%20mini/307329446_499889612147933_8360939395956161884_n_whujzl.jpg",
+      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646538/cakes/number%20mini/311799526_524193863050841_4658357394904488448_n_fxcupw.jpg",
+      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646538/cakes/number%20mini/309531616_508676421269252_7211871897560183576_n_wd1mas.jpg",
+      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646541/cakes/number%20mini/304750687_545021627310111_793404496071881732_n_dtlxsy.jpg",
+    ],
+    sort: "custom",
+  },
+  {
+    _id: {
       $oid: "6449fdefe0714355491b85ca",
     },
     route: "/cakes/bento-bundle",
@@ -402,118 +514,6 @@ export default [
       "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646490/cakes/money/285373726_486471156498492_3868273096455245244_n_parm9h.jpg",
     ],
     sort: "custo ",
-  },
-  {
-    _id: {
-      $oid: "6449fef3e0714355491b85d0",
-    },
-    route: "/cakes/number-cake",
-    title: "Number Cake",
-    type: "number-cake",
-    pricing: "from ₱500 PHP",
-    info: ["🎂 Fondant Letters", "🧁 Whipped Cream Frosting"],
-    radios: [
-      {
-        name: "flavor",
-        options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-        ],
-        defaultValue: "Choco Moist",
-      },
-      {
-        name: "size",
-        options: [
-          {
-            value: "10 inches",
-            description: "10 inches",
-          },
-        ],
-        defaultValue: "10 inches",
-      },
-      {
-        name: "digits",
-        options: [
-          {
-            value: "One (#1)",
-            description: "One (#1 only) ₱500",
-          },
-          {
-            value: "One (#0,2-9)",
-            description: "One (#0,2-9) ₱650",
-          },
-          {
-            value: "Two",
-            description: "Two ₱1300",
-          },
-        ],
-        defaultValue: "One",
-      },
-    ],
-    checkboxes: [],
-    images: [
-      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646518/cakes/number/341834905_1498533090677095_3457164394052989162_n_xm3bgk.jpg",
-      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646515/cakes/number/341304217_179998304967317_2555326214864869291_n_de1bcw.jpg",
-      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646516/cakes/number/277219267_442968567515418_1824336328314807633_n_rsmlov.jpg",
-      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646511/cakes/number/278021235_452035469942061_7410147973522467307_n_zmj7cw.jpg",
-    ],
-    sort: "custom",
-  },
-  {
-    _id: {
-      $oid: "6449ff07e0714355491b85d2",
-    },
-    route: "/cakes/mini-number-cake",
-    title: "Mini Number Cake",
-    type: "mini-number-cake",
-    pricing: "from ₱350 PHP",
-    info: ["🎂 Fondant Letters", "🧁 Whipped Cream Frosting"],
-    radios: [
-      {
-        name: "flavor",
-        options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-        ],
-        defaultValue: "Choco Moist",
-      },
-      {
-        name: "size",
-        options: [
-          {
-            value: "5 inches",
-            description: "5 inches",
-          },
-        ],
-        defaultValue: "5 inches",
-      },
-      {
-        name: "digits",
-        options: [
-          {
-            value: "One",
-            description: "One ₱350",
-          },
-          {
-            value: "Two",
-            description: "Two ₱800",
-          },
-        ],
-        defaultValue: "One",
-      },
-    ],
-    checkboxes: [],
-    images: [
-      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646535/cakes/number%20mini/307329446_499889612147933_8360939395956161884_n_whujzl.jpg",
-      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646538/cakes/number%20mini/311799526_524193863050841_4658357394904488448_n_fxcupw.jpg",
-      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646538/cakes/number%20mini/309531616_508676421269252_7211871897560183576_n_wd1mas.jpg",
-      "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646541/cakes/number%20mini/304750687_545021627310111_793404496071881732_n_dtlxsy.jpg",
-    ],
-    sort: "custom",
   },
   {
     _id: {

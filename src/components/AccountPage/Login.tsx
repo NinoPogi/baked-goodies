@@ -30,7 +30,7 @@ const Login = ({ register, handleSubmit, onSubmit, setLogin }: Props) => {
           colorScheme="pink"
           borderRadius="0 20px 0 20px"
         >
-          Submit
+          Login
         </Button>
         <Link fontSize="2xs" onClick={() => setLogin(false)}>
           Sign Up?

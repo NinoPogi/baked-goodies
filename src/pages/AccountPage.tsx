@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import {
   Button,
@@ -16,13 +22,10 @@ import Login from "../components/AccountPage/Login";
 import OrderTable from "../components/AccountPage/OrderTable";
 import useOrder, { Order } from "../hooks/useOrder";
 import OrderModal from "../components/AccountPage/OrderModal";
+import { CustomerContext } from "../contexts/CustomerProvider";
 
-interface Props {
-  customer: Customer;
-  setCustomer: Dispatch<SetStateAction<any>>;
-}
-
-const AccountPage = ({ customer, setCustomer }: Props) => {
+const AccountPage = () => {
+  const { customer, setCustomer } = useContext(CustomerContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { register, handleSubmit } = useForm();
   const [login, setLogin] = useState(false);
@@ -42,7 +45,7 @@ const AccountPage = ({ customer, setCustomer }: Props) => {
 
   const logout = () => {
     apiClient.get("/customer/logout");
-    setCustomer({ name: "" });
+    setCustomer({ ...customer, name: "" });
   };
 
   return customer?.name !== "" ? (

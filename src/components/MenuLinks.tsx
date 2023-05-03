@@ -1,13 +1,15 @@
 import { Box, Stack } from "@chakra-ui/react";
 import MenuItem from "./MenuItem";
-import { Customer } from "../hooks/useCustomer";
+import { useContext } from "react";
+import { CustomerContext } from "../contexts/CustomerProvider";
 
 interface Props {
   open: boolean;
-  customer: Customer;
 }
 
-const MenuLinks = ({ open, customer }: Props) => {
+const MenuLinks = ({ open }: Props) => {
+  const { customer } = useContext(CustomerContext);
+
   return (
     <Box
       display={{ base: open ? "block" : "none", xl: "block" }}

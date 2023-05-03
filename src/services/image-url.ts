@@ -9,7 +9,9 @@ const getCroppedImageUrl = (url: string | undefined) => {
     index = url.indexOf(target) + target.length;
   }
   return (
-    url?.slice(0, index) + "q_auto:best/c_scale,w_450/" + url?.slice(index)
+    url?.slice(0, index) +
+    "q_auto:best/c_scale,w_450,h_450/" +
+    url?.slice(index)
   );
 };
 

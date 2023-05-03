@@ -1,5 +1,12 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
-import { Stack, Link, Heading, Button, Box } from "@chakra-ui/react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Stack,
+  Link,
+  Heading,
+  Button,
+  Box,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { Link as ReactLink, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import CakeCheckbox from "../components/ProductPage/CakeCheckbox";
@@ -7,16 +14,14 @@ import CakeInfoAccordion from "../components/ProductPage/CakeInfoAccordion";
 import CakeRadio from "../components/ProductPage/CakeRadio";
 import useCakes from "../hooks/useCakes";
 import CakeCard from "../components/ShopPage/CakeCard";
+import ProductModal from "../components/ProductPage/ProductModal";
 
-interface Props {
-  onOpen: () => void;
-  setForm: Dispatch<SetStateAction<any>>;
-}
-
-const ProductPage = ({ onOpen, setForm }: Props) => {
+const ProductPage = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { data, isLoading, error } = useCakes();
   const { handleSubmit, control } = useForm();
   const params = useParams();
+  const [form, setForm] = useState({});
   const [cake] = data.filter((obj) => obj.type === params.type);
 
   useEffect(() => {
@@ -25,6 +30,12 @@ const ProductPage = ({ onOpen, setForm }: Props) => {
 
   return (
     <Stack>
+      <ProductModal
+        isOpen={isOpen}
+        onClose={onClose}
+        form={form}
+        setForm={setForm}
+      />
       <Stack
         direction={{ base: "column", lg: "row" }}
         spacing="50px"

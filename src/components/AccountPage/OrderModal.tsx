@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import logo from "../../images/logo.svg";
 import { Order } from "../../hooks/useOrder";
+import apiClient from "../../services/api-client";
 
 interface Props {
   order: Order | undefined;
@@ -21,7 +22,7 @@ interface Props {
   onClose: () => void;
 }
 
-const ProductModal = ({ order, isOpen, onClose }: Props) => {
+const OrderModal = ({ order, isOpen, onClose }: Props) => {
   return (
     <Modal
       size={{
@@ -63,7 +64,15 @@ const ProductModal = ({ order, isOpen, onClose }: Props) => {
           ))}
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="red">Cancel Order</Button>
+          <Button
+            colorScheme="red"
+            onClick={() => {
+              apiClient.put(`/customer/cancel/${order?._id}`);
+              onClose();
+            }}
+          >
+            Cancel Order
+          </Button>
           <Spacer />
         </ModalFooter>
       </ModalContent>
@@ -71,4 +80,4 @@ const ProductModal = ({ order, isOpen, onClose }: Props) => {
   );
 };
 
-export default ProductModal;
+export default OrderModal;

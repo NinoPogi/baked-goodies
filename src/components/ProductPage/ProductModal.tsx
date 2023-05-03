@@ -1,4 +1,10 @@
-import { BaseSyntheticEvent, Dispatch, SetStateAction, useState } from "react";
+import {
+  BaseSyntheticEvent,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 import {
   Image,
   Input,
@@ -28,17 +34,17 @@ import { FieldValues, useForm, Controller } from "react-hook-form";
 import dayjs from "dayjs";
 import logo from "../../images/logo.svg";
 import apiClient from "../../services/api-client";
-import { Customer } from "../../hooks/useCustomer";
+import { CustomerContext } from "../../contexts/CustomerProvider";
 
 interface Props {
-  customer: Customer;
   isOpen: boolean;
   onClose: () => void;
   form: {};
   setForm: Dispatch<SetStateAction<any>>;
 }
 
-const ProductModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
+const ProductModal = ({ isOpen, onClose, form, setForm }: Props) => {
+  const { customer } = useContext(CustomerContext);
   const { handleSubmit, register, control } = useForm();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
@@ -51,15 +57,15 @@ const ProductModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
   if (customer?.name !== "") {
     propsName = {
       value: customer?.name,
-      isDisabled: true,
+      isReadOnly: true,
     };
     propsEmail = {
       value: customer?.email,
-      isDisabled: true,
+      isReadOnly: true,
     };
     propsPhone = {
       value: customer?.phone,
-      isDisabled: true,
+      isReadOnly: true,
     };
   }
 
@@ -79,14 +85,15 @@ const ProductModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
 
   const handleOrder = async (submit: FieldValues) => {
     const req = { ...form, ...submit };
-    const response = await apiClient.post("/order", req);
-    toast({
-      title: `Order created. ${response.statusText}`,
-      description: "Order is now Processing!",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-    });
+    console.log(req);
+    // const response = await apiClient.post("/order", req);
+    // toast({
+    //   title: `Order created. ${response.statusText}`,
+    //   description: "Order is now Processing!",
+    //   status: "success",
+    //   duration: 5000,
+    //   isClosable: true,
+    // });
   };
 
   return (
@@ -117,7 +124,6 @@ const ProductModal = ({ isOpen, onClose, customer, form, setForm }: Props) => {
                   variant="filled"
                   type="text"
                   value={dayjs().format("YYYY-MM-DD")}
-                  isDisabled
                   {...register("orderDate")}
                 />
               </FormControl>

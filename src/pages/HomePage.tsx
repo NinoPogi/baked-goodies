@@ -41,9 +41,9 @@ const HomePage = () => {
       <Heading fontSize="1xl">Arayat, Pampanga</Heading>
       <Image
         srcSet={getCroppedImageUrl(
-          "https://res.cloudinary.com/dzobqin7p/image/upload/v1682951978/banners/pickup_bsmffc.jpg"
+          "https://res.cloudinary.com/dzobqin7p/image/upload/v1683104676/banners/pickup_on6jq4.jpg"
         )}
-        w="55%"
+        boxSize="400px"
       />
     </VStack>
   );
