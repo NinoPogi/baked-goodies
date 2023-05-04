@@ -1,29 +1,23 @@
-import { Box, Stack } from "@chakra-ui/react";
+import { useContext } from "react";
+import { Avatar, Badge, Box, HStack, Spacer } from "@chakra-ui/react";
+import { CustomerContext } from "../contexts/CustomerProvider";
 import MenuItem from "./MenuItem";
 
-interface Props {
-  open: boolean;
-}
-
-const MenuLinks = ({ open }: Props) => {
+const MenuLinks = () => {
+  const { orders } = useContext(CustomerContext);
   return (
-    <Box
-      display={{ base: open ? "block" : "none", xl: "block" }}
-      flexBasis={{ base: "100%", xl: "auto" }}
-    >
-      <Stack
-        spacing={5}
-        align="center"
-        justify={{ base: "center", lg: "end" }}
-        direction={{ base: "column", lg: "row" }}
-        pt={[3, 3, 5, 0]}
-      >
-        <MenuItem link="/">Home</MenuItem>
-        <MenuItem link="/about">About</MenuItem>
-        <MenuItem link="/shop">CakeShop</MenuItem>
-        <MenuItem link="/account">Account</MenuItem>
-      </Stack>
-    </Box>
+    <HStack display={{ base: "none", xl: "flex" }} spacing="40px">
+      <MenuItem link="/">Home</MenuItem>
+      <MenuItem link="/about">About</MenuItem>
+      <MenuItem link="/shop">Cake Shop</MenuItem>
+      <Spacer />
+      <HStack>
+        <MenuItem link="/account">
+          Account <Badge>{orders.length !== 0 ? orders.length : null}</Badge>
+        </MenuItem>
+        <Avatar />
+      </HStack>
+    </HStack>
   );
 };
 

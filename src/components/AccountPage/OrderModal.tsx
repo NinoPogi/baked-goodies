@@ -56,11 +56,7 @@ const OrderModal = ({ selectedOrder, isOpen, onClose }: Props) => {
             <p key={add}>{add}</p>
           ))}
           <p>{selectedOrder?.orderDetails}</p>
-          <p>{selectedOrder?.payment}</p>
           <p>{selectedOrder?.status}</p>
-          {selectedOrder?.images.map((image) => (
-            <Image key={image} src={image} boxSize="50px" />
-          ))}
         </ModalBody>
         <ModalFooter>
           <Button

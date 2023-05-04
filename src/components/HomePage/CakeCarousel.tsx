@@ -35,6 +35,7 @@ const CakeCarousel = () => {
       }}
       overflow="hidden"
       transform="auto"
+      borderRadius="20px"
     >
       <link
         rel="stylesheet"

@@ -7,10 +7,14 @@ const getCroppedImageUrl = (url: string | undefined) => {
   let index;
   if (isString(url)) {
     index = url.indexOf(target) + target.length;
+    const extIndex = url.lastIndexOf(".jpg");
+    if (extIndex !== -1 && extIndex === url.length - 4) {
+      url = url.slice(0, extIndex);
+    }
   }
   return (
     url?.slice(0, index) +
-    "q_auto/e_vectorize:corners:40:detail:5.0/" +
+    "f_auto/q_auto/c_scale,w_550,h_500/" +
     url?.slice(index)
   );
 };

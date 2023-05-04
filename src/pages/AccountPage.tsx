@@ -1,6 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
-import { Heading, Link, VStack, useDisclosure } from "@chakra-ui/react";
+import { ReactNode, useContext, useEffect, useState } from "react";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
+import {
+  Heading,
+  Text,
+  Link,
+  VStack,
+  useDisclosure,
+  Stack,
+} from "@chakra-ui/react";
 import apiClient from "../services/api-client";
 import { useNavigate } from "react-router-dom";
 import SignUp from "../components/AccountPage/SignUp";
@@ -15,9 +22,9 @@ const AccountPage = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { register, handleSubmit } = useForm();
+  const methods = useForm();
 
-  const [loginMode, setLoginMode] = useState<boolean>(false);
+  const [loginMode, setLoginMode] = useState<boolean>(true);
   const [selectedOrder, setSelectedOrder] = useState<Order>();
 
   const navigate = useNavigate();
@@ -45,10 +52,18 @@ const AccountPage = () => {
     }
   };
 
+  let element: ReactNode;
   if (customer?.name !== "") {
-    return (
+    element = (
       <VStack>
         <Heading>Welcome Back {customer?.name}</Heading>
+        <Stack>
+          <Text>Account Email: {customer?.email}</Text>
+          <Text>Account Phone: {customer?.phone}</Text>
+          <Link fontSize="2xs" onClick={logout}>
+            Log Out?
+          </Link>
+        </Stack>
         <OrderTable
           orders={orders}
           onOpen={onOpen}
@@ -59,30 +74,14 @@ const AccountPage = () => {
           isOpen={isOpen}
           onClose={onClose}
         />
-        <Link fontSize="2xs" onClick={logout}>
-          Log Out?
-        </Link>
       </VStack>
     );
   } else if (loginMode) {
-    return (
-      <Login
-        register={register}
-        handleSubmit={handleSubmit}
-        onSubmit={onSubmit}
-        setLoginMode={setLoginMode}
-      />
-    );
+    element = <Login onSubmit={onSubmit} setLoginMode={setLoginMode} />;
   } else {
-    return (
-      <SignUp
-        register={register}
-        handleSubmit={handleSubmit}
-        onSubmit={onSubmit}
-        setLoginMode={setLoginMode}
-      />
-    );
+    element = <SignUp onSubmit={onSubmit} setLoginMode={setLoginMode} />;
   }
+  return <FormProvider {...methods}>{element}</FormProvider>;
 };
 
 export default AccountPage;

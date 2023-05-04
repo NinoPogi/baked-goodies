@@ -14,9 +14,9 @@ import logo from "../images/logo.svg";
 export default function Footer() {
   return (
     <Box
-      bg="pink.100"
-      // bg={useColorModeValue("gray.50", "gray.900")}
-      // color={useColorModeValue("gray.700", "gray.200")}
+    // bg="pink.100"
+    // bg={useColorModeValue("gray.50", "gray.900")}
+    // color={useColorModeValue("gray.700", "gray.200")}
     >
       <Stack py={10} align="center">
         <Link as={ReactLink} to="/">

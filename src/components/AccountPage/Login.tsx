@@ -4,16 +4,21 @@ import {
   FieldValues,
   UseFormHandleSubmit,
   UseFormRegister,
+  useFormContext,
 } from "react-hook-form";
 
 interface Props {
-  register: UseFormRegister<FieldValues>;
-  handleSubmit: UseFormHandleSubmit<FieldValues>;
   onSubmit: (form: FieldValues) => Promise<void>;
   setLoginMode: Dispatch<SetStateAction<boolean>>;
 }
 
-const Login = ({ register, handleSubmit, onSubmit, setLoginMode }: Props) => {
+const Login = ({ onSubmit, setLoginMode }: Props) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useFormContext();
+
   return (
     <form id="login" onSubmit={handleSubmit(onSubmit)}>
       <VStack m="60px  0">
@@ -22,8 +27,17 @@ const Login = ({ register, handleSubmit, onSubmit, setLoginMode }: Props) => {
           borderColor="pink"
           type="text"
           placeholder="Email"
-          {...register("email")}
+          {...register("email", {
+            required: true,
+            pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+          })}
         />
+        {errors?.email && errors?.email.type === "required" && (
+          <p>This field is required</p>
+        )}
+        {errors?.email && errors?.email.type === "pattern" && (
+          <p>Please enter a valid email address</p>
+        )}
         <Button
           form="login"
           type="submit"

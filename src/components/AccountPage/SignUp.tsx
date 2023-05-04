@@ -4,16 +4,21 @@ import {
   UseFormRegister,
   FieldValues,
   UseFormHandleSubmit,
+  useFormContext,
 } from "react-hook-form";
 
 interface Props {
-  register: UseFormRegister<FieldValues>;
-  handleSubmit: UseFormHandleSubmit<FieldValues>;
   onSubmit: (form: FieldValues) => Promise<void>;
   setLoginMode: Dispatch<SetStateAction<boolean>>;
 }
 
-const SignUp = ({ register, handleSubmit, onSubmit, setLoginMode }: Props) => {
+const SignUp = ({ onSubmit, setLoginMode }: Props) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useFormContext();
+
   return (
     <form id="customer" onSubmit={handleSubmit(onSubmit)}>
       <VStack m="60px  0">
@@ -22,22 +27,41 @@ const SignUp = ({ register, handleSubmit, onSubmit, setLoginMode }: Props) => {
           borderColor="pink"
           type="text"
           placeholder="Name"
-          {...register("name")}
+          {...register("name", { required: true })}
         />
+        {errors.name && <p>This field is required</p>}
         <Input
           borderColor="pink"
           type="text"
           placeholder="Email"
-          {...register("email")}
+          {...register("email", {
+            required: true,
+            pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+          })}
         />
+        {errors.email && errors.email.type === "required" && (
+          <p>This field is required</p>
+        )}
+        {errors.email && errors.email.type === "pattern" && (
+          <p>Please enter a valid email address</p>
+        )}
         <Input
           borderColor="pink"
           type="text"
           placeholder="Phone"
-          {...register("phone")}
+          {...register("phone", {
+            required: true,
+            validate: (value) => {
+              return value.length === 11 || "Please enter a valid phone number";
+            },
+          })}
         />
-        {/* <Input type="text" placeholder="Password" /> */}
-        {/* <Link fontSize="2xs">Forgot your password?</Link> */}
+        {errors.phone && errors.phone.type === "required" && (
+          <p>This field is required</p>
+        )}
+        {errors.phone && errors.phone.type === "validate" && (
+          <p>{errors.phone.message?.toString()}</p>
+        )}
         <Button
           form="customer"
           type="submit"

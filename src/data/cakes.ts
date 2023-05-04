@@ -211,7 +211,7 @@ export default [
             description: "Two ₱1300",
           },
         ],
-        defaultValue: "One",
+        defaultValue: "One (#1)",
       },
     ],
     checkboxes: [],
@@ -329,7 +329,7 @@ export default [
       },
       {
         name: "bundle",
-        defaultValue: "w/ 2pcs cupcake",
+        defaultValue: "w/ 2pcs Cupcake",
         options: [
           {
             value: "w/ 2pcs Cupcake",

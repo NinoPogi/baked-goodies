@@ -1,41 +1,35 @@
 import { useEffect, useState } from "react";
-import {
-  Stack,
-  Link,
-  Heading,
-  Button,
-  Box,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Stack, Link, Heading, Button, Box, Input } from "@chakra-ui/react";
 import { Link as ReactLink, useParams } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, FieldValues } from "react-hook-form";
 import CakeCheckbox from "../components/ProductPage/CakeCheckbox";
 import CakeInfoAccordion from "../components/ProductPage/CakeInfoAccordion";
 import CakeRadio from "../components/ProductPage/CakeRadio";
 import useCakes from "../hooks/useCakes";
 import CakeCard from "../components/ShopPage/CakeCard";
-import ProductModal from "../components/ProductPage/ProductModal";
+import apiClient from "../services/api-client";
 
 const ProductPage = () => {
   const params = useParams();
   const { data } = useCakes();
   const [cake] = data.filter((obj) => obj.type === params.type);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { handleSubmit, control } = useForm();
-  const [form, setForm] = useState({});
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     document.title = `${cake?.title} | Baked Goodies by H`;
   }, []);
 
+  const handleOrder = (submit: FieldValues) => {
+    apiClient.post("/order", submit);
+  };
+
   return (
     <Stack>
-      <ProductModal
-        isOpen={isOpen}
-        onClose={onClose}
-        form={form}
-        setForm={setForm}
-      />
       <Stack
         direction={{ base: "column", lg: "row" }}
         spacing="50px"
@@ -62,15 +56,38 @@ const ProductPage = () => {
           </Box>
         </Box>
         <Box w="100%">
-          <Stack>
-            <Heading fontSize="5xl">{cake?.title.toUpperCase()}</Heading>
-            <Heading fontSize="2xl">{`price ${cake?.pricing}`}</Heading>
-          </Stack>
-          <form
-            onSubmit={handleSubmit((submit) =>
-              setForm({ ...submit, type: cake?.title })
+          <form onSubmit={handleSubmit(handleOrder)}>
+            <Stack>
+              <Heading fontSize="5xl">{cake?.title.toUpperCase()}</Heading>
+              <Heading fontSize="2xl">{`price ${cake?.pricing}`}</Heading>
+              <Input display="none" value={cake?.title} {...register("type")} />
+            </Stack>
+            <Heading fontSize="2xl">SELECT PROMISE DATE:</Heading>
+            <Input
+              borderRadius="0"
+              borderColor="pink.500"
+              bg="pink.400"
+              color="white"
+              fontSize="xl"
+              _hover={{}}
+              type="date"
+              {...register("promiseDate", {
+                required: true,
+                validate: (value) => {
+                  const currentDate = new Date();
+                  currentDate.setDate(currentDate.getDate() + 3);
+                  const inputDate = new Date(value);
+                  return inputDate >= currentDate || "Invalid date";
+                },
+              })}
+            />
+            {errors.promiseDate && errors.promiseDate.type === "required" && (
+              <p>This field is required</p>
             )}
-          >
+            {errors.promiseDate && errors.promiseDate.type === "validate" && (
+              <p>{errors.promiseDate.message?.toString()}</p>
+            )}
+
             {cake?.radios.map((radio) => (
               <Controller
                 key={radio.name}
@@ -98,7 +115,6 @@ const ProductPage = () => {
               width="100%"
               p="30px"
               m="30px 0"
-              onClick={onOpen}
               borderRadius="0 20px 0 20px"
             >
               OrderYourCakeNow

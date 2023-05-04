@@ -12,39 +12,43 @@ const HomePage = () => {
   return (
     <VStack spacing="20px">
       <CakeCarousel />
-      <Heading fontSize="2xl">BROWSE CAKES ={">"}</Heading>
+      <Heading fontSize="2xl">BROWSE CAKES</Heading>
       <CakeBrowse />
-      <Heading fontSize="2xl">ORDERING PROCESS GUIDE</Heading>
+      <Heading fontSize="2xl">ORDERING PROCESS GUIDE | PRE ORDERS ONLY</Heading>
       <Stack
         justify="space-evenly"
         spacing="100px"
         direction={{ base: "column", lg: "row" }}
       >
-        <Stack>
-          <Heading fontSize="1xl">Step 1</Heading>
-          <Heading fontSize="1xl">Choose Cake</Heading>
-        </Stack>
-        <Stack>
-          <Heading fontSize="1xl">Step 2</Heading>
-          <Heading fontSize="1xl">Choose Promise Date</Heading>
-        </Stack>
-        <Stack>
-          <Heading fontSize="1xl">Step 3</Heading>
-          <Heading fontSize="1xl">Design Your Cake</Heading>
-        </Stack>
-        <Stack>
-          <Heading fontSize="1xl">Step 4</Heading>
-          <Heading fontSize="1xl">Pick Up Cake</Heading>
-        </Stack>
+        <VStack>
+          <Stack>
+            <Heading fontSize="1xl">Step 1</Heading>
+            <Heading fontSize="1xl">Choose Cake</Heading>
+          </Stack>
+          <Stack>
+            <Heading fontSize="1xl">Step 2</Heading>
+            <Heading fontSize="1xl">Choose Promise Date</Heading>
+          </Stack>
+          <Stack>
+            <Heading fontSize="1xl">Step 3</Heading>
+            <Heading fontSize="1xl">Design Your Cake</Heading>
+          </Stack>
+          <Stack>
+            <Heading fontSize="1xl">Step 4</Heading>
+            <Heading fontSize="1xl">Pick Up Cake</Heading>
+          </Stack>
+        </VStack>
+        <VStack>
+          <Heading fontSize="1xl">Arayat, Pampanga</Heading>
+          <Image
+            srcSet={getCroppedImageUrl(
+              "https://res.cloudinary.com/dzobqin7p/image/upload/v1683104676/banners/pickup_on6jq4.jpg"
+            )}
+            boxSize="400px"
+            borderRadius="20px"
+          />
+        </VStack>
       </Stack>
-      <Heading fontSize="2xl">PRE ORDERS ONLY</Heading>
-      <Heading fontSize="1xl">Arayat, Pampanga</Heading>
-      <Image
-        srcSet={getCroppedImageUrl(
-          "https://res.cloudinary.com/dzobqin7p/image/upload/v1683104676/banners/pickup_on6jq4.jpg"
-        )}
-        boxSize="400px"
-      />
     </VStack>
   );
 };
