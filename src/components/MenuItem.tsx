@@ -1,6 +1,6 @@
-import { Heading, Link } from "@chakra-ui/react";
+import { Heading, HeadingProps } from "@chakra-ui/react";
 import { ReactNode } from "react";
-import { Link as ReactLink } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 
 interface Props {
   children: String | ReactNode | ReactNode[];
@@ -8,15 +8,22 @@ interface Props {
 }
 
 const NavLinks = ({ children, link }: Props) => {
+  const match = useMatch(link);
+  let theme: HeadingProps = {};
+
+  match &&
+    (theme = {
+      textDecoration: "underline",
+      textDecorationStyle: "wavy",
+      textDecorationColor: "teal",
+      color: "pink.500",
+    });
+
   return (
-    <Link
-      as={ReactLink}
-      to={link}
-      _active={{
-        textDecoration: "underline",
-      }}
-    >
-      <Heading fontSize="xl">{children}</Heading>
+    <Link to={link}>
+      <Heading fontSize="2xl" {...theme}>
+        {children}
+      </Heading>
     </Link>
   );
 };

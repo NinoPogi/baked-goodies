@@ -1,10 +1,10 @@
-import { Link as ReactLink } from "react-router-dom";
-import { Heading, Link, Image, HStack } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import { Heading, Image, HStack, Hide, Show } from "@chakra-ui/react";
 import logo from "../images/logo.svg";
 
 const NavLogo = (props: {}) => {
   return (
-    <Link as={ReactLink} to="/" {...props}>
+    <Link to="/" {...props}>
       <HStack spacing={0}>
         <Image
           src={logo}
@@ -16,7 +16,8 @@ const NavLogo = (props: {}) => {
           fontSize={{ base: "2xl", md: "3xl" }}
           color="pink.500"
         >
-          BakedGoodiesbyH
+          <Show below="lg">BGH</Show>
+          <Hide below="lg">BakeGoodiesbyH</Hide>
         </Heading>
       </HStack>
     </Link>

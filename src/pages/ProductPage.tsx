@@ -75,9 +75,12 @@ const ProductPage = () => {
                 required: true,
                 validate: (value) => {
                   const currentDate = new Date();
-                  currentDate.setDate(currentDate.getDate() + 3);
+                  currentDate.setDate(currentDate.getDate() + 2);
                   const inputDate = new Date(value);
-                  return inputDate >= currentDate || "Invalid date";
+                  return (
+                    inputDate >= currentDate ||
+                    "Date Must Be After 2 Days From Now"
+                  );
                 },
               })}
             />
@@ -117,7 +120,7 @@ const ProductPage = () => {
               m="30px 0"
               borderRadius="0 20px 0 20px"
             >
-              OrderYourCakeNow
+              ORDER
             </Button>
           </form>
 

@@ -23,7 +23,6 @@ const MenuToggle = ({ isOpen, onToggle }: Props) => {
           aria-label={"Toggle Navigation"}
         />
       </Flex>
-      <Spacer display={{ base: "block", lg: "none" }} />
     </>
   );
 };

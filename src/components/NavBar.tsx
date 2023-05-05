@@ -4,6 +4,7 @@ import {
   useColorModeValue,
   Collapse,
   Spacer,
+  FlexProps,
 } from "@chakra-ui/react";
 import NavLogo from "./NavLogo";
 import MenuLinks from "./MenuLinks";
@@ -12,6 +13,9 @@ import NavMobile from "./NavMobile";
 
 const NavBar = () => {
   const { isOpen, onToggle } = useDisclosure();
+
+  let theme: FlexProps = {};
+  isOpen ? (theme = { bg: "pink" }) : null;
 
   return (
     <>
@@ -22,13 +26,14 @@ const NavBar = () => {
         py={{ base: "20px", xl: "40px" }}
         px={{ base: "20px", xl: "80px" }}
         align={"center"}
+        {...theme}
       >
         <MenuToggle isOpen={isOpen} onToggle={onToggle} />
         <NavLogo />
         <Spacer />
         <MenuLinks />
       </Flex>
-      <Collapse in={isOpen} animateOpacity>
+      <Collapse in={isOpen}>
         <NavMobile />
       </Collapse>
     </>
