@@ -9,7 +9,7 @@ import {
   Td,
   Button,
 } from "@chakra-ui/react";
-import { Order } from "../../hooks/useOrders";
+import { Order } from "../../hooks/useCustomer";
 
 interface Props {
   orders: Order[] | undefined;
