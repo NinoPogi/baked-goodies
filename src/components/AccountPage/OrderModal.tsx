@@ -12,7 +12,7 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import logo from "../../images/logo.svg";
-import { Order } from "../../hooks/useOrders";
+import { Order } from "../../hooks/useCustomer";
 import apiClient from "../../services/api-client";
 
 interface Props {
