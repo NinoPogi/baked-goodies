@@ -1,7 +1,9 @@
 import cakes from "../data/cakes";
 
 export interface Cake {
-  _id: string;
+  _id: {
+    $oid: string;
+  };
   route: string;
   title: string;
   pricing: string;

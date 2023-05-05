@@ -5,6 +5,7 @@ import {
   Heading,
   Image,
   Text,
+  Flex,
   Stack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
@@ -97,21 +98,23 @@ const CakeCard = ({ route, image, children, pricing, boxSize }: Props) => {
       <Link to={route}>
         <Card
           variant="unstyled"
-          bg="white"
           borderRadius="20px"
           p={{ base: "0", md: "8px" }}
         >
           <CardBody p={{ base: "10px", md: "0px" }}>
-            <Image
-              position="relative"
-              src={getCroppedImageUrl(image)}
-              boxSize={{ ...boxSize }}
-              borderRadius="20px"
-              _groupHover={{
-                p: "2px",
-              }}
-            />
-            <Stack pt={7} align={"center"}>
+            <Card bg="gray.100" borderRadius="20px" height="250px" shadow="">
+              <Flex justifyContent="center" alignItems="center" height="100%">
+                <Image
+                  position="relative"
+                  src={getCroppedImageUrl(image)}
+                  boxSize={{ ...boxSize }}
+                  _groupHover={{
+                    scale: "20px",
+                  }}
+                />
+              </Flex>
+            </Card>
+            <Stack pt={2} align={"center"}>
               <Heading
                 fontSize={"2xl"}
                 fontFamily={"body"}
@@ -124,7 +127,7 @@ const CakeCard = ({ route, image, children, pricing, boxSize }: Props) => {
                 {children}
               </Heading>
               <Text fontWeight={800} fontSize={"lg"}>
-                {pricing}
+                {pricing.toUpperCase()}
               </Text>
             </Stack>
           </CardBody>

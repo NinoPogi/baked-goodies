@@ -8,7 +8,7 @@ import {
 } from "react-hook-form";
 
 interface Props {
-  onSubmit: (form: FieldValues) => Promise<void>;
+  onSubmit: (form: FieldValues) => void;
   setLoginMode: Dispatch<SetStateAction<boolean>>;
 }
 

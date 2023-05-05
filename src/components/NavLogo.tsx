@@ -11,11 +11,7 @@ const NavLogo = (props: {}) => {
           alt="Baked Goodies by H"
           boxSize={{ base: "50px", lg: "64px" }}
         />
-        <Heading
-          fontFamily="Alkatra"
-          fontSize={{ base: "2xl", md: "3xl" }}
-          color="pink.500"
-        >
+        <Heading fontSize={{ base: "2xl", md: "3xl" }} color="pink.500">
           <Show below="lg">BGH</Show>
           <Hide below="lg">BakeGoodiesbyH</Hide>
         </Heading>

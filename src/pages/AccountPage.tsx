@@ -22,34 +22,30 @@ const AccountPage = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const methods = useForm();
-
   const [loginMode, setLoginMode] = useState<boolean>(true);
   const [selectedOrder, setSelectedOrder] = useState<Order>();
 
   const navigate = useNavigate();
 
+  const methods = useForm();
+
   useEffect(() => {
     document.title = `Account | Baked Goodies by H`;
   }, []);
 
-  const onSubmit = async (form: FieldValues) => {
-    try {
-      const customerData = await apiClient.post("/customer", form);
-      setCustomer(customerData.data);
-      navigate("/");
-    } catch (error) {
-      console.error("Error submitting form: ", error);
-    }
+  const onSubmit = (form: FieldValues) => {
+    apiClient
+      .post("/customer", form)
+      .then((res) => setCustomer(res.data))
+      .catch((err) => console.error("Error submitting form: ", err.message));
+    navigate("/");
   };
 
   const logout = () => {
-    try {
-      setCustomer({ _id: "", name: "", email: "", phone: "", orders: [] });
-      apiClient.get("/customer/logout");
-    } catch (error) {
-      console.error("Error logging out: ", error);
-    }
+    setCustomer({ _id: "", name: "", email: "", phone: "", orders: [] });
+    apiClient
+      .get("/customer/logout")
+      .catch((err) => console.error("Error logging out: ", err.message));
   };
 
   let element: ReactNode;

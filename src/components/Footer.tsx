@@ -22,10 +22,7 @@ export default function Footer() {
         <Link as={ReactLink} to="/">
           <HStack>
             <Image src={logo} boxSize="45px" alt="Baked Goodies by H" />
-            <Heading
-              fontSize={{ "1sm": "2xl", sm: "3xl" }}
-              fontFamily="Alkatra"
-            >
+            <Heading fontSize={{ "1sm": "2xl", sm: "3xl" }}>
               BakedGoodiesbyH
             </Heading>
           </HStack>

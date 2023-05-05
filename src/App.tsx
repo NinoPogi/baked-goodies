@@ -1,8 +1,10 @@
 import { Flex, Grid, GridItem } from "@chakra-ui/react";
+import { useForm, FormProvider } from "react-hook-form";
 import CustomerProvider from "./contexts/CustomerProvider";
-import Routes from "./Routes";
 import NavBar from "./components/NavBar";
+import Routes from "./Routes";
 import Footer from "./components/Footer";
+import SignupModal from "./components/SignUpModal";
 
 function App() {
   return (
@@ -13,6 +15,7 @@ function App() {
         </GridItem>
         <GridItem area="main" px="20px">
           <Flex justify="center">
+            <SignupModal />
             <Routes />
           </Flex>
         </GridItem>
