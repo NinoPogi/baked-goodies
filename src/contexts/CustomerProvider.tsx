@@ -1,54 +1,35 @@
 import { Dispatch, ReactNode, SetStateAction, createContext } from "react";
-import useCustomer, { Customer } from "../hooks/useCustomer";
-import useOrders, { Order } from "../hooks/useOrders";
+import useCustomer, { CustomerOrdersData } from "../hooks/useCustomer";
 
-export interface CustomerContextInterface {
-  customer: Customer;
-  setCustomer: Dispatch<SetStateAction<Customer>>;
-  orders: Order[];
+interface CustomerContextInterface {
+  customer: CustomerOrdersData["customer"];
+  setData: Dispatch<SetStateAction<CustomerOrdersData>>;
+  orders: CustomerOrdersData["orders"];
 }
 
 interface Props {
   children: ReactNode;
 }
 
-const defaultState = {
-  customer: { name: "", _id: "", email: "", phone: "", orders: [] },
-  setCustomer: (customer: Customer) => {},
-  orders: [
-    {
-      _id: "",
-      orderDate: "",
-      promiseDate: "",
-      customer: { name: "", _id: "", email: "", phone: "", orders: [] },
-      type: "",
-      flavor: "",
-      shape: "",
-      size: "",
-      digits: "",
-      upgrades: [],
-      addons: [],
-      orderDetails: "",
-      images: [],
-      status: "",
-      isPaid: "",
-      payment: "",
-    },
-  ],
-} as CustomerContextInterface;
+const defaultState: CustomerContextInterface = {
+  customer: { _id: "", name: "", email: "", phone: "", orders: [] },
+  orders: [],
+  setData: () => {},
+};
 
 export const CustomerContext =
   createContext<CustomerContextInterface>(defaultState);
 
-export default ({ children }: Props) => {
-  const { data: customer, setData: setCustomer } = useCustomer({
-    ...defaultState.customer,
+export default function CustomerProvider({ children }: Props) {
+  const { data, setData } = useCustomer({
+    customer: { ...defaultState.customer },
+    orders: [],
   });
-  const { data: orders } = useOrders(customer);
-
   return (
-    <CustomerContext.Provider value={{ customer, setCustomer, orders }}>
+    <CustomerContext.Provider
+      value={{ customer: data.customer, orders: data.orders, setData }}
+    >
       {children}
     </CustomerContext.Provider>
   );
-};
+}

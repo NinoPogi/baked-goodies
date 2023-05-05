@@ -1,4 +1,4 @@
-import { Heading, HeadingProps } from "@chakra-ui/react";
+import { Heading, HeadingProps, useColorModeValue } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { Link, useMatch } from "react-router-dom";
 
@@ -9,14 +9,17 @@ interface Props {
 
 const NavLinks = ({ children, link }: Props) => {
   const match = useMatch(link);
+
   let theme: HeadingProps = {};
+  const textDecorationColor = useColorModeValue("teal.500", "teal.300");
+  const color = useColorModeValue("pink.500", "pink.300");
 
   match &&
     (theme = {
       textDecoration: "underline",
       textDecorationStyle: "wavy",
-      textDecorationColor: "teal",
-      color: "pink.500",
+      textDecorationColor,
+      color,
     });
 
   return (

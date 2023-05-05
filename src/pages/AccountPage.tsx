@@ -9,23 +9,20 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import apiClient from "../services/api-client";
-import { useNavigate } from "react-router-dom";
 import SignUp from "../components/AccountPage/SignUp";
 import Login from "../components/AccountPage/Login";
 import OrderTable from "../components/AccountPage/OrderTable";
-import { Order } from "../hooks/useOrders";
 import OrderModal from "../components/AccountPage/OrderModal";
 import { CustomerContext } from "../contexts/CustomerProvider";
+import { Order } from "../hooks/useCustomer";
 
 const AccountPage = () => {
-  const { customer, setCustomer, orders } = useContext(CustomerContext);
+  const { customer, setData, orders } = useContext(CustomerContext);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [loginMode, setLoginMode] = useState<boolean>(true);
   const [selectedOrder, setSelectedOrder] = useState<Order>();
-
-  const navigate = useNavigate();
 
   const methods = useForm();
 
@@ -33,16 +30,25 @@ const AccountPage = () => {
     document.title = `Account | Baked Goodies by H`;
   }, []);
 
-  const onSubmit = (form: FieldValues) => {
+  const signUp = (form: FieldValues) => {
     apiClient
       .post("/customer", form)
-      .then((res) => setCustomer(res.data))
-      .catch((err) => console.error("Error submitting form: ", err.message));
-    navigate("/");
+      .then((res) => setData({ customer: res.data, orders }))
+      .catch((err) => console.error("Error signing up: ", err.message));
+  };
+
+  const login = (form: FieldValues) => {
+    apiClient
+      .post("/customer/login", form)
+      .then((res) => setData({ customer: res.data, orders }))
+      .catch((err) => console.error("Error signing up: ", err.message));
   };
 
   const logout = () => {
-    setCustomer({ _id: "", name: "", email: "", phone: "", orders: [] });
+    setData({
+      customer: { _id: "", name: "", email: "", phone: "", orders: [] },
+      orders: [],
+    });
     apiClient
       .get("/customer/logout")
       .catch((err) => console.error("Error logging out: ", err.message));
@@ -73,9 +79,9 @@ const AccountPage = () => {
       </VStack>
     );
   } else if (loginMode) {
-    element = <Login onSubmit={onSubmit} setLoginMode={setLoginMode} />;
+    element = <Login onSubmit={login} setLoginMode={setLoginMode} />;
   } else {
-    element = <SignUp onSubmit={onSubmit} setLoginMode={setLoginMode} />;
+    element = <SignUp onSubmit={signUp} setLoginMode={setLoginMode} />;
   }
   return <FormProvider {...methods}>{element}</FormProvider>;
 };

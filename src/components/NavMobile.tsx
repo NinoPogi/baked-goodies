@@ -1,19 +1,16 @@
-import { useContext } from "react";
-import { Stack, Badge } from "@chakra-ui/react";
-import { CustomerContext } from "../contexts/CustomerProvider";
+import { Stack, useColorModeValue } from "@chakra-ui/react";
+
 import MenuItem from "./MenuItem";
-import ThemeSwitcher from "./ThemeSwitcher";
 
 const NavMobile = () => {
-  const { orders } = useContext(CustomerContext);
-
   return (
     <Stack
       display={{ base: "flex", xl: "none" }}
       align="center"
       marginBottom="20px"
-      bg="pink"
+      bg={useColorModeValue("pink", "gray.600")}
       borderBottomRadius="20px"
+      paddingBottom="50px"
     >
       <MenuItem link="/">Home</MenuItem>
       <MenuItem link="/about">About</MenuItem>

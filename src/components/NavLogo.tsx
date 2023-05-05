@@ -1,5 +1,12 @@
 import { Link } from "react-router-dom";
-import { Heading, Image, HStack, Hide, Show } from "@chakra-ui/react";
+import {
+  Heading,
+  Image,
+  HStack,
+  Hide,
+  Show,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import logo from "../images/logo.svg";
 
 const NavLogo = (props: {}) => {
@@ -11,9 +18,14 @@ const NavLogo = (props: {}) => {
           alt="Baked Goodies by H"
           boxSize={{ base: "50px", lg: "64px" }}
         />
-        <Heading fontSize={{ base: "2xl", md: "3xl" }} color="pink.500">
-          <Show below="lg">BGH</Show>
-          <Hide below="lg">BakeGoodiesbyH</Hide>
+        <Heading
+          fontSize={{ base: "2xl", md: "3xl" }}
+          color={useColorModeValue("pink.500", "pink.300")}
+        >
+          <Hide below="md">BakeGoodiesbyH</Hide>
+          <Hide below="sm">
+            <Hide above="lg">BGH</Hide>
+          </Hide>
         </Heading>
       </HStack>
     </Link>

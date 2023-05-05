@@ -62,7 +62,7 @@ const OrderModal = ({ selectedOrder, isOpen, onClose }: Props) => {
           <Button
             colorScheme="red"
             onClick={() => {
-              apiClient.put(`/customer/cancel/${selectedOrder?._id}`);
+              apiClient.patch(`/order/${selectedOrder?._id}/cancel`);
               onClose();
             }}
           >

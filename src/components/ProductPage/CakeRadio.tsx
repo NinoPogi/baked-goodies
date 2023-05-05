@@ -8,6 +8,8 @@ import {
   useRadio,
   useRadioGroup,
 } from "@chakra-ui/react";
+import { Control } from "react-hook-form";
+import { CakeFormValues } from "../../pages/ProductPage";
 
 const RadioCard = (props: any) => {
   const { getInputProps, getRadioProps } = useRadio(props);
@@ -41,15 +43,16 @@ interface Props {
     options: { value: string; description: string }[];
     defaultValue: string;
   };
-  onChange: (value: string) => void;
+  onChange: (value: keyof CakeFormValues) => void;
+  control: Control<CakeFormValues, any>;
 }
 
-const CakeRadio = ({ radio, onChange }: Props) => {
+const CakeRadio = ({ radio, onChange, control }: Props) => {
   const [display, setDisplay] = useState(radio.defaultValue);
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: radio.name,
     defaultValue: radio.defaultValue,
-    onChange: (value) => {
+    onChange: (value: keyof CakeFormValues) => {
       onChange(value);
       setDisplay(value);
     },

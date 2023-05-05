@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import apiClient from "../services/api-client";
-import { CanceledError } from "axios";
 import useData from "./useData";
 
 export interface Customer {
@@ -11,41 +8,31 @@ export interface Customer {
   orders: string[];
 }
 
-const useCustomer = (defaultValue: Customer) =>
-  useData<Customer>("get", "/customer", defaultValue);
-// {
-//   const [customer, setCustomer] = useState({
-//     _id: "",
-//     name: "",
-//     email: "",
-//     phone: "",
-//     orders: [""],
-//   });
-//   const [error, setError] = useState("");
-//   const [isLoading, setLoading] = useState(false);
+export interface Order {
+  _id: string;
+  orderDate: string;
+  promiseDate: string;
+  customer: Customer;
+  type: string;
+  flavor: string;
+  shape: string;
+  size: string;
+  digits: string;
+  upgrades: string[];
+  addons: string[];
+  orderDetails: string;
+  images: string[];
+  status: string;
+  isPaid: string;
+  payment: string;
+}
 
-//   useEffect(() => {
-//     const controller = new AbortController();
+export interface CustomerOrdersData {
+  customer: Customer;
+  orders: Order[];
+}
 
-//     setLoading(true);
-
-//     apiClient
-//       .get<FetchCustomerResponse>("/customer", { signal: controller.signal })
-//       .then((res) => {
-//         setCustomer(res.data);
-//         setLoading(false);
-//       })
-//       .catch((err) => {
-//         if (err instanceof CanceledError) return;
-//         if (err.response.status === 401) return;
-//         setError(err.message);
-//         setLoading(false);
-//       });
-
-//     return () => controller.abort();
-//   }, []);
-
-//   return { customer, setCustomer, error, isLoading };
-// };
+const useCustomer = (defaultValue: CustomerOrdersData) =>
+  useData<CustomerOrdersData>("get", "/customer", defaultValue);
 
 export default useCustomer;

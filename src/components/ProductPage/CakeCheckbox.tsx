@@ -7,6 +7,8 @@ import {
   useCheckbox,
   useCheckboxGroup,
 } from "@chakra-ui/react";
+import { Control } from "react-hook-form";
+import { CakeFormValues } from "../../pages/ProductPage";
 
 const Checkbox = (props: any) => {
   const { getInputProps, getCheckboxProps } = useCheckbox(props);
@@ -39,10 +41,11 @@ interface Props {
     name: string;
     options: { value: string; description: string }[];
   };
-  onChange: (value: (string | number)[]) => void;
+  onChange: (value: string[]) => void;
+  control: Control<CakeFormValues, any>;
 }
 
-const CakeCheckbox = ({ checkbox, onChange }: Props) => {
+const CakeCheckbox = ({ checkbox, onChange, control }: Props) => {
   const { value, getCheckboxProps } = useCheckboxGroup({
     onChange: onChange,
   });
