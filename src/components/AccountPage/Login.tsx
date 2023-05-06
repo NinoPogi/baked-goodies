@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import {
   Link,
   VStack,
@@ -20,22 +20,38 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { CustomerContext } from "../../contexts/CustomerProvider";
+import apiClient from "../../services/api-client";
 
 interface Props {
-  onSubmit: (form: FieldValues) => void;
   setLoginMode: Dispatch<SetStateAction<boolean>>;
 }
 
-const Login = ({ onSubmit, setLoginMode }: Props) => {
+const Login = ({ setLoginMode }: Props) => {
+  const { orders, setData } = useContext(CustomerContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useFormContext();
   const [showPassword, setShowPassword] = useState(false);
+  const [serverError, setServerError] = useState("");
+
+  const login = (form: FieldValues) => {
+    apiClient
+      .post("/customer/login", form)
+      .then((res) => setData({ customer: res.data, orders }))
+      .catch((err) => {
+        if (err.response && err.response.data) {
+          setServerError(err.response.data);
+        } else {
+          console.error("Error logging in: ", err.message);
+        }
+      });
+  };
 
   return (
-    <form id="login" onSubmit={handleSubmit(onSubmit)}>
+    <form id="login" onSubmit={handleSubmit(login)}>
       <VStack spacing={8} mt={8} mx="auto" maxWidth="md">
         <FormControl isInvalid={Boolean(errors.email)}>
           <FormLabel htmlFor="email">Email</FormLabel>
@@ -85,10 +101,17 @@ const Login = ({ onSubmit, setLoginMode }: Props) => {
               : "Password must be at least 5 characters long"}
           </FormErrorMessage>
         </FormControl>
+        <FormControl isInvalid={Boolean(serverError)}>
+          <VStack>
+            <FormErrorMessage>
+              {serverError !== "" ? serverError : null}
+            </FormErrorMessage>
+            <Button colorScheme="pink" type="submit">
+              Log in
+            </Button>
+          </VStack>
+        </FormControl>
 
-        <Button colorScheme="pink" type="submit">
-          Log in
-        </Button>
         <Box mt={4}>
           No account?{" "}
           <Link

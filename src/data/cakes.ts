@@ -7,7 +7,11 @@ export default [
     title: "Bento Cake",
     type: "bento-cake",
     pricing: "from ₱170 PHP",
-    info: ["🎂 Round or Heart Shape", "🥄 Comes W/ Spoon"],
+    info: [
+      "🚨 Price Increase Depends on Design & Add-Ons",
+      "🎂 Round or Heart Shape",
+      "🥄 Comes W/ Spoon",
+    ],
     images: [
       "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646335/cakes/bento/239599791_311216154023994_8336706390727573416_n_vhcsus.jpg",
       "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646336/cakes/bento/239013354_309436820868594_5236923271765667136_n_ju0ity.jpg",
@@ -98,7 +102,11 @@ export default [
       "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646362/cakes/bento%20number/273000328_414576917021250_5220234670774166260_n_wyycmb.jpg",
     ],
     pricing: "from ₱150 PHP",
-    info: ["🥄 Comes W/ Spoon", "🧁 Whipped Cream Frosting"],
+    info: [
+      "🚨 Price Increase Depends on Design & Add-Ons",
+      "🥄 Comes W/ Spoon",
+      "🧁 Whipped Cream Frosting",
+    ],
     radios: [
       {
         name: "flavor",
@@ -173,7 +181,11 @@ export default [
     title: "Number Cake",
     type: "number-cake",
     pricing: "from ₱500 PHP",
-    info: ["🎂 Fondant Letters", "🧁 Whipped Cream Frosting"],
+    info: [
+      "🚨 Price Increase Depends on Design & Add-Ons",
+      "🎂 Fondant Letters",
+      "🧁 Whipped Cream Frosting",
+    ],
     radios: [
       {
         name: "flavor",
@@ -231,7 +243,11 @@ export default [
     title: "Mini Number Cake",
     type: "mini-number-cake",
     pricing: "from ₱350 PHP",
-    info: ["🎂 Fondant Letters", "🧁 Whipped Cream Frosting"],
+    info: [
+      "🚨 Price Increase Depends on Design & Add-Ons",
+      "🎂 Fondant Letters",
+      "🧁 Whipped Cream Frosting",
+    ],
     radios: [
       {
         name: "flavor",
@@ -291,7 +307,7 @@ export default [
       "https://res.cloudinary.com/dzobqin7p/image/upload/v1682646404/cakes/bento%20bundle/274089221_422819286197013_8172837610161122914_n_qywebm.jpg",
     ],
     pricing: "from ₱250 PHP",
-    info: [],
+    info: ["🚨 Price Increase Depends on Design & Add-Ons"],
     radios: [
       {
         name: "flavor",
@@ -371,7 +387,7 @@ export default [
     title: "Minimalist Cake",
     type: "minimalist-cake",
     pricing: "from ₱300 PHP",
-    info: [],
+    info: ["🚨 Price Increase Depends on Design & Add-Ons"],
     radios: [
       {
         name: "flavor",
@@ -453,7 +469,7 @@ export default [
     title: "Money Cake",
     type: "money-cake",
     pricing: "from ₱750 PHP",
-    info: [],
+    info: ["🚨 Price Increase Depends on Design & Add-Ons"],
     radios: [
       {
         name: "flavor",
@@ -523,7 +539,7 @@ export default [
     title: "Theme Cake",
     type: "theme-cake",
     pricing: "from ₱350 PHP",
-    info: [],
+    info: ["🚨 Price Increase Depends on Design & Add-Ons"],
     radios: [
       {
         name: "flavor",
@@ -605,7 +621,7 @@ export default [
     title: "Baby Tier Cake",
     type: "baby-tier-cake",
     pricing: "from ₱350 PHP",
-    info: [],
+    info: ["🚨 Price Increase Depends on Design & Add-Ons"],
     radios: [
       {
         name: "flavor",
@@ -670,7 +686,7 @@ export default [
     title: "Mini Tier Cake",
     type: "mini-tier-cake",
     pricing: "from ₱650 PHP",
-    info: [],
+    info: ["🚨 Price Increase Depends on Design & Add-Ons"],
     radios: [
       {
         name: "flavor",
@@ -736,7 +752,7 @@ export default [
     title: "Small Tier Cake",
     type: "small-tier-cake",
     pricing: "from ₱1500 PHP",
-    info: [],
+    info: ["🚨 Price Increase Depends on Design & Add-Ons"],
     radios: [
       {
         name: "flavor",
@@ -802,7 +818,7 @@ export default [
     title: "Big Tier Cake",
     type: "big-tier-cake",
     pricing: "from ₱2600 PHP",
-    info: [],
+    info: ["🚨 Price Increase Depends on Design & Add-Ons"],
     radios: [
       {
         name: "flavor",
@@ -868,7 +884,7 @@ export default [
     title: "Small 3 Tier Cake",
     type: "small-3-tier-cake",
     pricing: "from ₱2200 PHP",
-    info: [],
+    info: ["🚨 Price Increase Depends on Design & Add-Ons"],
     radios: [
       {
         name: "flavor",
@@ -932,7 +948,7 @@ export default [
     title: "3 Tier Cake",
     type: "3-tier-cake",
     pricing: "from ₱3500 PHP",
-    info: [],
+    info: ["🚨 Price Increase Depends on Design & Add-Ons"],
     radios: [
       {
         name: "flavor",
@@ -998,7 +1014,11 @@ export default [
     title: "Pullapart Cupcake",
     type: "pullapart-cupcake",
     pricing: "depends on design",
-    info: ["🎂 Depends on Number", "🧁 Whipped Cream Frosting"],
+    info: [
+      "🚨 Price Increase Depends on Design & Add-Ons",
+      "🎂 Depends on Number",
+      "🧁 Whipped Cream Frosting",
+    ],
     radios: [
       {
         name: "flavor",
@@ -1047,7 +1067,7 @@ export default [
     title: "Cupcake",
     type: "cupcake",
     pricing: "from ₱100 PHP",
-    info: [],
+    info: ["🚨 Price Increase Depends on Design & Add-Ons"],
     radios: [
       {
         name: "flavor",

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Box,
   Button,
@@ -19,24 +19,43 @@ import {
 } from "@chakra-ui/react";
 import { FieldValues, useFormContext } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { CustomerContext } from "../../contexts/CustomerProvider";
+import apiClient from "../../services/api-client";
 
 interface Props {
-  onSubmit: (form: FieldValues) => void;
   setLoginMode: (loginMode: boolean) => void;
 }
 
-const SignUp = ({ onSubmit, setLoginMode }: Props) => {
+const SignUp = ({ setLoginMode }: Props) => {
+  const { orders, setData } = useContext(CustomerContext);
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setValue,
     getValues,
   } = useFormContext();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState({
+    pass: false,
+    confirm: false,
+  });
+  const [serverError, setServerError] = useState("");
+
+  const signUp = (form: FieldValues) => {
+    apiClient
+      .post("/customer", form)
+      .then((res) => setData({ customer: res.data, orders }))
+      .catch((err) => {
+        if (err.response && err.response.data) {
+          setServerError(err.response.data);
+        } else {
+          console.error("Error signing up: ", err.message);
+        }
+      });
+  };
 
   return (
-    <form id="customer" onSubmit={handleSubmit(onSubmit)}>
+    <form id="customer" onSubmit={handleSubmit(signUp)}>
       <VStack spacing={8} mt={8} mx="auto" maxWidth="md">
         <Heading size="lg">Tell Me About Yourself:</Heading>
         <FormControl isInvalid={Boolean(errors.name)}>
@@ -51,7 +70,7 @@ const SignUp = ({ onSubmit, setLoginMode }: Props) => {
           />
           <FormErrorMessage>This field is required</FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={Boolean(errors.email)}>
+        <FormControl isInvalid={Boolean(errors.email) || Boolean(serverError)}>
           <FormLabel htmlFor="email">Email</FormLabel>
           <Input
             id="email"
@@ -65,7 +84,9 @@ const SignUp = ({ onSubmit, setLoginMode }: Props) => {
             })}
           />
           <FormErrorMessage>
-            {errors.email?.type === "required"
+            {serverError !== ""
+              ? serverError
+              : errors.email?.type === "required"
               ? "This field is required"
               : "Please enter a valid email address"}
           </FormErrorMessage>
@@ -97,7 +118,7 @@ const SignUp = ({ onSubmit, setLoginMode }: Props) => {
           <InputGroup>
             <Input
               id="password"
-              type={showPassword ? "text" : "password"}
+              type={showPassword.pass ? "text" : "password"}
               placeholder="Enter your password"
               colorScheme="pink"
               borderColor="pink"
@@ -108,10 +129,14 @@ const SignUp = ({ onSubmit, setLoginMode }: Props) => {
             />
             <InputRightElement>
               <IconButton
-                aria-label={showPassword ? "Hide password" : "Show password"}
-                icon={showPassword ? <FaEyeSlash /> : <FaEye />}
+                aria-label={
+                  showPassword.pass ? "Hide password" : "Show password"
+                }
+                icon={showPassword.pass ? <FaEyeSlash /> : <FaEye />}
                 variant="ghost"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() =>
+                  setShowPassword({ ...showPassword, pass: !showPassword.pass })
+                }
               />
             </InputRightElement>
           </InputGroup>
@@ -123,25 +148,42 @@ const SignUp = ({ onSubmit, setLoginMode }: Props) => {
         </FormControl>
         <FormControl isInvalid={Boolean(errors.confirmPassword)}>
           <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
-          <Input
-            id="confirmPassword"
-            type="password"
-            placeholder="Confirm your password"
-            colorScheme="pink"
-            borderColor="pink"
-            {...register("confirmPassword", {
-              required: true,
-              validate: (value) =>
-                value === getValues("password") || "Passwords do not match",
-            })}
-          />
+          <InputGroup>
+            <Input
+              id="confirmPassword"
+              type={showPassword.confirm ? "text" : "password"}
+              placeholder="Confirm your password"
+              colorScheme="pink"
+              borderColor="pink"
+              {...register("confirmPassword", {
+                required: true,
+                validate: (value) =>
+                  value === getValues("password") || "Passwords do not match",
+              })}
+            />
+            <InputRightElement>
+              <IconButton
+                aria-label={
+                  showPassword.confirm ? "Hide password" : "Show password"
+                }
+                icon={showPassword.confirm ? <FaEyeSlash /> : <FaEye />}
+                variant="ghost"
+                onClick={() =>
+                  setShowPassword({
+                    ...showPassword,
+                    confirm: !showPassword.confirm,
+                  })
+                }
+              />
+            </InputRightElement>
+          </InputGroup>
           <FormErrorMessage>
             {errors.confirmPassword?.type === "required"
               ? "This field is required"
               : errors.confirmPassword?.message?.toString()}
           </FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={Boolean(errors.gender)}>
+        <FormControl>
           <FormLabel htmlFor="paymentMethod">Payment Method</FormLabel>
           <RadioGroup
             id="paymentMethod"
@@ -175,11 +217,9 @@ const SignUp = ({ onSubmit, setLoginMode }: Props) => {
               </Radio>
             </HStack>
           </RadioGroup>
-
-          <FormErrorMessage>This field is required</FormErrorMessage>
         </FormControl>
         <Box textAlign="center">
-          <Button colorScheme="pink" type="submit">
+          <Button colorScheme="pink" type="submit" isLoading={isSubmitting}>
             Sign Up
           </Button>
           <Box mt={4}>
