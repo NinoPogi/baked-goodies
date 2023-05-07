@@ -7,6 +7,7 @@ import ThemeSwitcher from "./ThemeSwitcher";
 
 const MenuLinks = () => {
   const { customer, orders } = useContext(CustomerContext);
+
   return (
     <>
       <HStack
@@ -22,13 +23,22 @@ const MenuLinks = () => {
         <ThemeSwitcher />
         <FiSearch size="26px" />
         <MenuItem link="/account">
-          <Button leftIcon={<Avatar size="xs" />} borderRadius="20px">
+          <Button
+            leftIcon={
+              <Avatar fontFamily="body" name={customer.name} size="xs" />
+            }
+            color="pink.400"
+            bg="navajowhite"
+            borderRadius="20px"
+          >
             <HStack>
               <Text display={{ base: "none", lg: "block" }}>
                 {customer.name ? customer.name : "Account"}
               </Text>
-              {orders.length !== 0 ? (
-                <Badge colorScheme="pink">{orders.length}</Badge>
+              {orders?.length !== 0 ? (
+                <Badge color="teal" bg="pink.200">
+                  {orders.length}
+                </Badge>
               ) : null}
             </HStack>
           </Button>

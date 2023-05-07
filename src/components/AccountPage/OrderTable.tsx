@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { useState, useContext } from "react";
 import {
   TableContainer,
   Table,
@@ -8,23 +8,23 @@ import {
   Tbody,
   Td,
   Button,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Order } from "../../hooks/useCustomer";
+import { CustomerContext } from "../../contexts/CustomerProvider";
 
-interface Props {
-  orders: Order[] | undefined;
-  setSelectedOrder: Dispatch<SetStateAction<any>>;
-  onOpen: () => void;
-}
+const OrderTable = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { orders } = useContext(CustomerContext);
+  const [selectedOrder, setSelectedOrder] = useState<Order>();
 
-const OrderTable = ({ orders, setSelectedOrder, onOpen }: Props) => {
   return (
     <TableContainer>
-      <Table size="lg" colorScheme="orange">
+      <Table size={{ base: "sm", md: "md" }} colorScheme="orange">
         <Thead border="1">
           <Tr>
             <Th>Order</Th>
-            <Th>Order Date</Th>
+            <Th display={{ base: "none", lg: "table-cell" }}>Order Date</Th>
             <Th>Status</Th>
             <Th></Th>
           </Tr>
@@ -33,11 +33,12 @@ const OrderTable = ({ orders, setSelectedOrder, onOpen }: Props) => {
           {orders?.map((order) => (
             <Tr key={order._id}>
               <Td>{order.type}</Td>
-              <Td>{order.orderDate}</Td>
+              <Td display={{ base: "none", lg: "table-cell" }}>
+                {order.orderDate}
+              </Td>
               <Td>{order.status}</Td>
               <Td>
                 <Button
-                  colorScheme="pink"
                   borderRadius="0 20px 0 20px"
                   onClick={() => {
                     setSelectedOrder(order);

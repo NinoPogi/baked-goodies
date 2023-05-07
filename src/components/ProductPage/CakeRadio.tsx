@@ -22,12 +22,12 @@ const RadioCard = (props: any) => {
       <input {...input} />
       <Box
         {...checkbox}
-        borderWidth="1px"
-        borderColor="pink.400"
         fontSize="2xl"
+        borderRadius="10px"
         _checked={{
-          bg: "pink.400",
-          color: "white",
+          color: "gray.700",
+          bg: "white",
+          shadow: "md",
         }}
         p="5px 10px"
       >

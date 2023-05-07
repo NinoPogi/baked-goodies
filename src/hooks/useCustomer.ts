@@ -5,7 +5,7 @@ export interface Customer {
   name: string;
   email: string;
   phone: string;
-  orders: string[];
+  paymentMethod: string;
 }
 
 export interface Order {
@@ -18,13 +18,13 @@ export interface Order {
   shape: string;
   size: string;
   digits: string;
+  bundle: string;
   upgrades: string[];
   addons: string[];
   orderDetails: string;
   images: string[];
   status: string;
   isPaid: string;
-  payment: string;
 }
 
 export interface CustomerOrdersData {

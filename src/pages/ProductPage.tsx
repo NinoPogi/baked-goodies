@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Stack,
   Link,
@@ -9,8 +9,15 @@ import {
   FormControl,
   FormErrorMessage,
   useColorModeValue,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Spinner,
 } from "@chakra-ui/react";
-import { Link as ReactLink, useParams } from "react-router-dom";
+import { Link as ReactLink, useNavigate, useParams } from "react-router-dom";
 import { FieldValues, useForm } from "react-hook-form";
 import CakeCheckbox from "../components/ProductPage/CakeCheckbox";
 import CakeInfoAccordion from "../components/ProductPage/CakeInfoAccordion";
@@ -18,6 +25,7 @@ import CakeRadio from "../components/ProductPage/CakeRadio";
 import CakeShowcase from "../components/ProductPage/CakeShowcase";
 import useCakes from "../hooks/useCakes";
 import apiClient from "../services/api-client";
+import { CustomerContext } from "../contexts/CustomerProvider";
 
 export type CakeCheckboxValues = {
   upgrades: string[];
@@ -37,6 +45,7 @@ export type CakeFormValues = {
 };
 
 const ProductPage = () => {
+  const { customer } = useContext(CustomerContext);
   const params = useParams();
   const { data } = useCakes();
   const [cake] = data.filter((obj) => obj.type === params.type);
@@ -53,15 +62,23 @@ const ProductPage = () => {
       type: cake?.title || "",
     },
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = `${cake?.title} | Baked Goodies by H`;
   }, []);
 
-  const handleOrder = (data: FieldValues) => {
-    apiClient.post("/order", data);
+  const handleOrder = async (data: FieldValues) => {
+    if (!customer._id) {
+      alert("please login first");
+    } else {
+      setIsSubmitting(true);
+      await apiClient.post("/order", data);
+      setIsSubmitting(false);
+      navigate("/account");
+    }
   };
-
   return (
     <Stack
       direction={{ base: "column", lg: "row" }}
@@ -156,12 +173,24 @@ const ProductPage = () => {
               </FormErrorMessage>
             </FormControl>
           ))}
-          <FormControl>
-            <CakeInfoAccordion heading={cake.title} info={cake.info} />
-          </FormControl>
+
           <Button type="submit" size="lg" mt="8">
             ORDER NOW
           </Button>
+          <CakeInfoAccordion heading={cake.title} info={cake.info} />
+          <Modal isOpen={isSubmitting} onClose={() => console.log("heelo")}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Submitting Order...</ModalHeader>
+              <ModalBody>
+                <Stack direction="row" justify="center" spacing="2">
+                  <Spinner />
+                  <Box>Processing your order. Please wait...</Box>
+                </Stack>
+              </ModalBody>
+              <ModalFooter />
+            </ModalContent>
+          </Modal>
         </form>
       </Box>
     </Stack>

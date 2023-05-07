@@ -5,6 +5,8 @@ import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProductPage from "./pages/ProductPage";
 import ShopPage from "./pages/ShopPage";
+import Login from "./components/AccountPage/Login";
+import SignUp from "./components/AccountPage/SignUp";
 
 const Routes = () => {
   const element = useRoutes([
@@ -26,6 +28,10 @@ const Routes = () => {
     {
       path: "/account",
       element: <AccountPage />,
+    },
+    {
+      path: "/account/signup",
+      element: <SignUp />,
     },
     {
       path: "/*",

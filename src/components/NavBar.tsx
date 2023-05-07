@@ -17,11 +17,7 @@ const NavBar = () => {
   return (
     <>
       <Flex
-        bg={
-          isOpen
-            ? useColorModeValue("pink", "gray.600")
-            : useColorModeValue("white", "gray.800")
-        }
+        bg={isOpen ? useColorModeValue("pink", "gray.600") : "transparent"}
         color={useColorModeValue("gray.600", "white")}
         minH={"60px"}
         py={{ base: "20px", xl: "40px" }}

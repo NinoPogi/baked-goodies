@@ -1,4 +1,4 @@
-import { Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, useColorModeValue } from "@chakra-ui/react";
 import { useForm, FormProvider } from "react-hook-form";
 import CustomerProvider from "./contexts/CustomerProvider";
 import NavBar from "./components/NavBar";

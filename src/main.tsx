@@ -8,7 +8,7 @@ import theme from "./theme";
 import "./main.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
+
     <ChakraProvider theme={theme}>
       <BrowserRouter>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
@@ -16,5 +16,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <App />
       </BrowserRouter>
     </ChakraProvider>
-  </React.StrictMode>
+
 );

@@ -11,9 +11,7 @@ import {
   Image,
   Text,
   Input,
-  Link,
   VStack,
-  Box,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -40,7 +38,7 @@ const SignupModal = () => {
     setValue,
     getValues,
   } = useForm();
-  const { customer, orders, setData } = useContext(CustomerContext);
+  const { customer } = useContext(CustomerContext);
   const [isOpen, setIsOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -59,7 +57,7 @@ const SignupModal = () => {
   const signUp = (form: FieldValues) => {
     apiClient
       .post("/customer", form)
-      .then((res) => setData({ customer: res.data, orders }))
+      .then(() => sessionStorage.setItem("isLoggedIn", "true"))
       .catch((err) => console.error("Error signing up: ", err.message));
   };
 
@@ -73,7 +71,7 @@ const SignupModal = () => {
           </ModalHeader>
           <ModalBody>
             <Heading pb="20px">Welcome.</Heading>
-            {customer.name === "" ? (
+            {customer._id === "" ? (
               <>
                 <Text>
                   Thank you for visiting our app. Please sign up to access all
@@ -86,7 +84,6 @@ const SignupModal = () => {
                       id="name"
                       type="text"
                       placeholder="Enter your name"
-                      colorScheme="pink"
                       borderColor="pink"
                       {...register("name", { required: true })}
                     />
@@ -98,7 +95,6 @@ const SignupModal = () => {
                       id="email"
                       type="email"
                       placeholder="Enter your email address"
-                      colorScheme="pink"
                       borderColor="pink"
                       {...register("email", {
                         required: true,
@@ -119,7 +115,6 @@ const SignupModal = () => {
                         id="phone"
                         type="tel"
                         placeholder="Enter your phone number"
-                        colorScheme="pink"
                         borderColor="pink"
                         {...register("phone", {
                           required: true,
@@ -140,7 +135,6 @@ const SignupModal = () => {
                         id="password"
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
-                        colorScheme="pink"
                         borderColor="pink"
                         {...register("password", {
                           required: true,
@@ -172,7 +166,6 @@ const SignupModal = () => {
                       id="confirmPassword"
                       type="password"
                       placeholder="Confirm your password"
-                      colorScheme="pink"
                       borderColor="pink"
                       {...register("confirmPassword", {
                         required: true,
@@ -200,7 +193,6 @@ const SignupModal = () => {
                         <Radio
                           {...register("paymentMethod")}
                           value="GCash"
-                          colorScheme="pink"
                           borderColor="pink"
                         >
                           GCash
@@ -208,7 +200,6 @@ const SignupModal = () => {
                         <Radio
                           {...register("paymentMethod")}
                           value="BDO"
-                          colorScheme="pink"
                           borderColor="pink"
                         >
                           BDO
@@ -216,7 +207,6 @@ const SignupModal = () => {
                         <Radio
                           {...register("paymentMethod")}
                           value="Cash on Pickup"
-                          colorScheme="pink"
                           borderColor="pink"
                         >
                           Cash on Pickup
@@ -233,10 +223,10 @@ const SignupModal = () => {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="pink" mr={3} onClick={onClose}>
+            <Button mr={3} onClick={onClose}>
               Close
             </Button>
-            {customer.name === "" ? (
+            {customer._id === "" ? (
               <Button type="submit" form="first" variant="ghost">
                 Submit
               </Button>

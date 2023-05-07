@@ -1,56 +1,14 @@
-import { useState, useEffect } from "react";
-import Pusher, { Channel, Options } from "pusher-js";
-import dotenv from "dotenv";
+import { useEffect, useState } from "react";
+import Pusher from "pusher-js";
 
-interface PusherEvent {
-  event: string;
-  data: unknown;
-}
+const usePusher = (customerId: string) => {
+  const channelName = `customer-${customerId}`;
 
-function usePusher(
-  channelName: string,
-  eventName: string,
-  options?: Options,
-  callback?: (data: unknown) => void
-): Channel | null {
-  dotenv.config();
-
-  const [channel, setChannel] = useState<Channel | null>(null);
-
-  useEffect(() => {
-    const pusher = new Pusher(process.env.PUSHER_API_KEY!, {
-      cluster: process.env.PUSHER_CLUSTER!,
-      ...options,
-    });
-
-    const channel = pusher.subscribe(channelName);
-    setChannel(channel);
-
-    return () => {
-      pusher.unsubscribe(channelName);
-      pusher.disconnect();
-    };
-  }, [channelName, options]);
-
-  useEffect(() => {
-    const eventHandler = ({ event, data }: PusherEvent) => {
-      if (eventName === event && callback) {
-        callback(data);
-      }
-    };
-
-    if (channel) {
-      channel.bind(eventName, eventHandler);
-    }
-
-    return () => {
-      if (channel) {
-        channel.unbind(eventName, eventHandler);
-      }
-    };
-  }, [channel, eventName, callback]);
-
-  return channel;
-}
+  const pusher = new Pusher(import.meta.env.VITE_PUSHER_API_KEY!, {
+    cluster: import.meta.env.VITE_PUSHER_CLUSTER!,
+  });
+  const channel = pusher.subscribe(channelName);
+  return { pusher, channel };
+};
 
 export default usePusher;

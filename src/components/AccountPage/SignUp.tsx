@@ -17,16 +17,13 @@ import {
   RadioGroup,
   VStack,
 } from "@chakra-ui/react";
-import { FieldValues, useFormContext } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { CustomerContext } from "../../contexts/CustomerProvider";
 import apiClient from "../../services/api-client";
+import { useNavigate } from "react-router-dom";
 
-interface Props {
-  setLoginMode: (loginMode: boolean) => void;
-}
-
-const SignUp = ({ setLoginMode }: Props) => {
+const SignUp = () => {
   const { orders, setData } = useContext(CustomerContext);
   const {
     register,
@@ -34,17 +31,23 @@ const SignUp = ({ setLoginMode }: Props) => {
     formState: { errors, isSubmitting },
     setValue,
     getValues,
-  } = useFormContext();
+    reset,
+  } = useForm();
   const [showPassword, setShowPassword] = useState({
     pass: false,
     confirm: false,
   });
   const [serverError, setServerError] = useState("");
+  const navigate = useNavigate();
 
   const signUp = (form: FieldValues) => {
     apiClient
       .post("/customer", form)
-      .then((res) => setData({ customer: res.data, orders }))
+      .then((res) => {
+        setData(res.data);
+        reset();
+        sessionStorage.setItem("isLoggedIn", "true");
+      })
       .catch((err) => {
         if (err.response && err.response.data) {
           setServerError(err.response.data);
@@ -64,7 +67,6 @@ const SignUp = ({ setLoginMode }: Props) => {
             id="name"
             type="text"
             placeholder="Enter your name"
-            colorScheme="pink"
             borderColor="pink"
             {...register("name", { required: true })}
           />
@@ -76,7 +78,6 @@ const SignUp = ({ setLoginMode }: Props) => {
             id="email"
             type="email"
             placeholder="Enter your email address"
-            colorScheme="pink"
             borderColor="pink"
             {...register("email", {
               required: true,
@@ -99,7 +100,6 @@ const SignUp = ({ setLoginMode }: Props) => {
               id="phone"
               type="tel"
               placeholder="Enter your phone number"
-              colorScheme="pink"
               borderColor="pink"
               {...register("phone", {
                 required: true,
@@ -120,7 +120,6 @@ const SignUp = ({ setLoginMode }: Props) => {
               id="password"
               type={showPassword.pass ? "text" : "password"}
               placeholder="Enter your password"
-              colorScheme="pink"
               borderColor="pink"
               {...register("password", {
                 required: true,
@@ -153,7 +152,6 @@ const SignUp = ({ setLoginMode }: Props) => {
               id="confirmPassword"
               type={showPassword.confirm ? "text" : "password"}
               placeholder="Confirm your password"
-              colorScheme="pink"
               borderColor="pink"
               {...register("confirmPassword", {
                 required: true,
@@ -194,7 +192,6 @@ const SignUp = ({ setLoginMode }: Props) => {
               <Radio
                 {...register("paymentMethod")}
                 value="GCash"
-                colorScheme="pink"
                 borderColor="pink"
               >
                 GCash
@@ -202,7 +199,6 @@ const SignUp = ({ setLoginMode }: Props) => {
               <Radio
                 {...register("paymentMethod")}
                 value="BDO"
-                colorScheme="pink"
                 borderColor="pink"
               >
                 BDO
@@ -210,7 +206,6 @@ const SignUp = ({ setLoginMode }: Props) => {
               <Radio
                 {...register("paymentMethod")}
                 value="Cash on Pickup"
-                colorScheme="pink"
                 borderColor="pink"
               >
                 Cash on Pickup
@@ -219,14 +214,17 @@ const SignUp = ({ setLoginMode }: Props) => {
           </RadioGroup>
         </FormControl>
         <Box textAlign="center">
-          <Button colorScheme="pink" type="submit" isLoading={isSubmitting}>
+          <Button type="submit" isLoading={isSubmitting}>
             Sign Up
           </Button>
           <Box mt={4}>
             Already have an account?{" "}
             <Link
               color="pink.500"
-              onClick={() => setLoginMode(true)}
+              onClick={() => {
+                navigate("/account");
+                reset();
+              }}
               cursor="pointer"
             >
               Log in here.

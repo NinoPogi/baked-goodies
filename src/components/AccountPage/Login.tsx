@@ -13,34 +13,32 @@ import {
   InputRightElement,
   Box,
 } from "@chakra-ui/react";
-import {
-  FieldValues,
-  UseFormHandleSubmit,
-  UseFormRegister,
-  useFormContext,
-} from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { CustomerContext } from "../../contexts/CustomerProvider";
 import apiClient from "../../services/api-client";
+import { useNavigate } from "react-router-dom";
 
-interface Props {
-  setLoginMode: Dispatch<SetStateAction<boolean>>;
-}
-
-const Login = ({ setLoginMode }: Props) => {
+const Login = () => {
   const { orders, setData } = useContext(CustomerContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useFormContext();
+    reset,
+  } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState("");
+  const navigate = useNavigate();
 
   const login = (form: FieldValues) => {
     apiClient
       .post("/customer/login", form)
-      .then((res) => setData({ customer: res.data, orders }))
+      .then((res) => {
+        setData(res.data);
+        reset();
+        sessionStorage.setItem("isLoggedIn", "true");
+      })
       .catch((err) => {
         if (err.response && err.response.data) {
           setServerError(err.response.data);
@@ -59,7 +57,6 @@ const Login = ({ setLoginMode }: Props) => {
             id="email"
             type="email"
             placeholder="Enter your email address"
-            colorScheme="pink"
             borderColor="pink"
             {...register("email", {
               required: true,
@@ -79,11 +76,9 @@ const Login = ({ setLoginMode }: Props) => {
               id="password"
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
-              colorScheme="pink"
               borderColor="pink"
               {...register("password", {
                 required: true,
-                minLength: 5,
               })}
             />
             <InputRightElement>
@@ -95,20 +90,14 @@ const Login = ({ setLoginMode }: Props) => {
               />
             </InputRightElement>
           </InputGroup>
-          <FormErrorMessage>
-            {errors.password?.type === "required"
-              ? "This field is required"
-              : "Password must be at least 5 characters long"}
-          </FormErrorMessage>
+          <FormErrorMessage>This field is required</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={Boolean(serverError)}>
           <VStack>
             <FormErrorMessage>
               {serverError !== "" ? serverError : null}
             </FormErrorMessage>
-            <Button colorScheme="pink" type="submit">
-              Log in
-            </Button>
+            <Button type="submit">Log in</Button>
           </VStack>
         </FormControl>
 
@@ -116,7 +105,10 @@ const Login = ({ setLoginMode }: Props) => {
           No account?{" "}
           <Link
             color="pink.500"
-            onClick={() => setLoginMode(false)}
+            onClick={() => {
+              navigate("/account/signup");
+              reset();
+            }}
             cursor="pointer"
           >
             Sign up here.
