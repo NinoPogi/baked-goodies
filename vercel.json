@@ -1,3 +1,9 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+  "env": {
+    "APP_ID": "1594344",
+    "KEY": "a83f7eea12e0ccc82561",
+    "SECRET": "e496db821b0306d47fe1",
+    "CLUSTER": "ap1"
+  }
 }

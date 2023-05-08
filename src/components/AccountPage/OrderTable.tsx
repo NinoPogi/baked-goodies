@@ -24,7 +24,7 @@ const OrderTable = () => {
         <Thead border="1">
           <Tr>
             <Th>Order</Th>
-            <Th display={{ base: "none", lg: "table-cell" }}>Order Date</Th>
+            <Th display={{ base: "none", xl: "table-cell" }}>Order Date</Th>
             <Th>Status</Th>
             <Th></Th>
           </Tr>
@@ -33,7 +33,7 @@ const OrderTable = () => {
           {orders?.map((order) => (
             <Tr key={order._id}>
               <Td>{order.type}</Td>
-              <Td display={{ base: "none", lg: "table-cell" }}>
+              <Td display={{ base: "none", xl: "table-cell" }}>
                 {order.orderDate}
               </Td>
               <Td>{order.status}</Td>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, IconButton } from "@chakra-ui/react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import Slider from "react-slick";
@@ -18,24 +18,34 @@ const settings = {
 
 const CakeCarousel = () => {
   const [slider, setSlider] = useState<Slider | null>(null);
+  const [windowSize, setWindowSize] = useState({
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight / 1.3,
+      });
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <Box
-      display={{ base: "block", lg: "block" }}
+      borderRadius="20px"
+      role="group"
       position="relative"
-      h={{ base: 500, lg: 600 }}
-      width="100%"
-      maxWidth={{
-        sm: 280,
-        md: 380,
-        lg: 704,
-        xl: 960,
-        "2xl": 1376,
-        "3xl": 1800,
-      }}
+      maxHeight={windowSize.height - 30}
+      maxWidth={windowSize.width - 50}
       overflow="hidden"
       transform="auto"
-      borderRadius="20px"
     >
       <link
         rel="stylesheet"
@@ -52,8 +62,8 @@ const CakeCarousel = () => {
         aria-label="left-arrow"
         variant="ghost"
         position="absolute"
-        left={{ base: "30%", lg: "20px" }}
-        top={{ base: "90%", lg: "50%" }}
+        left={{ base: "30%", xl: "20px" }}
+        top={{ base: "90%", xl: "50%" }}
         transform={"translate(0%, -50%)"}
         zIndex={2}
         onClick={() => slider?.slickPrev()}
@@ -64,8 +74,8 @@ const CakeCarousel = () => {
         aria-label="right-arrow"
         variant="ghost"
         position="absolute"
-        right={{ base: "30%", lg: "20px" }}
-        top={{ base: "90%", lg: "50%" }}
+        right={{ base: "30%", xl: "20px" }}
+        top={{ base: "90%", xl: "50%" }}
         transform={"translate(0%, -50%)"}
         zIndex={2}
         onClick={() => slider?.slickNext()}
@@ -76,12 +86,42 @@ const CakeCarousel = () => {
         {banners.map((banner, index) => (
           <Box
             key={index}
-            h="2xl"
-            backgroundPosition="center"
-            backgroundRepeat="no-repeat"
-            backgroundSize="cover"
-            backgroundImage={banner}
-          />
+            position="relative"
+            borderRadius="20px"
+            overflow="hidden"
+            paddingTop="20px"
+            _after={{
+              content: '""',
+              position: "absolute",
+              top: 10,
+              left: 5,
+              right: 5,
+              bottom: 0,
+              zIndex: -1,
+              filter: "blur(10px)",
+              backgroundImage: `url(${banner})`,
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              opacity: 0.8,
+              boxShadow: "0 0 15px 5px #fff, 0 0 20px 10px #fff",
+            }}
+            _groupHover={{
+              _after: {
+                filter: "blur(20px)",
+              },
+            }}
+          >
+            <Box
+              borderRadius="20px"
+              key={index}
+              h="2xl"
+              backgroundPosition="center"
+              backgroundRepeat="no-repeat"
+              backgroundSize="cover"
+              backgroundImage={banner}
+            />
+          </Box>
         ))}
       </Slider>
     </Box>

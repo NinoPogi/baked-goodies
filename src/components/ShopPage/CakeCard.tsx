@@ -7,6 +7,8 @@ import {
   Text,
   Flex,
   Stack,
+  Center,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import getCroppedImageUrl from "../../services/image-url";
@@ -30,110 +32,69 @@ const defaultProps: OptionalProps = {
   boxSize: { base: "normal" },
 };
 
-//  <Center py={12}>
-// <Box
-//   role={"group"}
-//   p={6}
-//   maxW={"330px"}
-//   w={"full"}
-//   bg={useColorModeValue("white", "gray.800")}
-//   boxShadow={"2xl"}
-//   rounded={"lg"}
-//   pos={"relative"}
-//   zIndex={1}
-// >
-//   <Box
-//     rounded={"lg"}
-//     mt={-12}
-//     pos={"relative"}
-//     height={"230px"}
-//     _after={{
-//       transition: "all .3s ease",
-//       content: '""',
-//       w: "full",
-//       h: "full",
-//       pos: "absolute",
-//       top: 5,
-//       left: 0,
-//       backgroundImage: `url(${getCroppedImageUrl(image)})`,
-//       filter: "blur(15px)",
-//       zIndex: -1,
-//     }}
-//     _groupHover={{
-//       _after: {
-//         filter: "blur(20px)",
-//       },
-//     }}
-//   >
-//     <Image
-//       rounded={"lg"}
-//       height={230}
-//       width={282}
-//       objectFit={"cover"}
-//       src={getCroppedImageUrl(image)}
-//     />
-//   </Box>
-//   <Stack pt={10} align={"center"}>
-//     <Text color={"gray.500"} fontSize={"2xs"} textTransform={"uppercase"}>
-//       BakedGoodiesByH
-//     </Text>
-//     <Heading
-//       fontSize={"2xl"}
-//       fontFamily={"body"}
-//       fontWeight={500}
-//       textAlign="center"
-//     >
-//       {children}
-//     </Heading>
-//     <Text fontWeight={800} fontSize={"lg"}>
-//       {pricing}
-//     </Text>
-//   </Stack>
-// </Box>
-// </Center>
-
 const CakeCard = ({ route, image, children, pricing, boxSize }: Props) => {
   return (
-    <Box flexShrink="0" role="group">
-      <Link to={route}>
-        <Card
-          variant="unstyled"
-          borderRadius="20px"
-          p={{ base: "0", md: "8px" }}
+    <Link to={route}>
+      <Center flexShrink="0" py={12}>
+        <Box
+          role={"group"}
+          p={6}
+          maxW={"330px"}
+          w={"full"}
+          bg={useColorModeValue("white", "gray.800")}
+          boxShadow={"md"}
+          borderRadius="40px"
+          pos={"relative"}
+          zIndex={1}
         >
-          <CardBody p={{ base: "10px", md: "0px" }}>
-            <Card bg="gray.100" borderRadius="20px" height="250px" shadow="">
-              <Flex justifyContent="center" alignItems="center" height="100%">
-                <Image
-                  position="relative"
-                  src={getCroppedImageUrl(image)}
-                  boxSize={{ ...boxSize }}
-                  _groupHover={{
-                    scale: "20px",
-                  }}
-                />
-              </Flex>
-            </Card>
-            <Stack pt={2} align={"center"}>
-              <Heading
-                fontSize={"2xl"}
-                fontFamily={"body"}
-                fontWeight={500}
-                textAlign="center"
-                _groupHover={{
-                  textDecoration: "underline",
-                }}
-              >
-                {children}
-              </Heading>
-              <Text fontWeight={800} fontSize={"lg"}>
-                {pricing.toUpperCase()}
-              </Text>
-            </Stack>
-          </CardBody>
-        </Card>
-      </Link>
-    </Box>
+          <Box
+            borderRadius="20px"
+            mt={"-48px"}
+            pos={"relative"}
+            height={"200px"}
+            _after={{
+              transition: "all .3s ease",
+              content: '""',
+              w: "full",
+              h: "full",
+              pos: "absolute",
+              top: 5,
+              left: 0,
+              backgroundImage: `url(${image})`,
+              filter: "blur(15px)",
+              zIndex: -1,
+            }}
+            _groupHover={{
+              pt: "1px",
+              _after: {
+                filter: "blur(20px)",
+              },
+            }}
+          >
+            <Image
+              borderRadius="20px"
+              height={230}
+              width={282}
+              objectFit={"cover"}
+              src={getCroppedImageUrl(image)}
+            />
+          </Box>
+          <Stack pt={10} align={"center"}>
+            <Heading
+              fontSize={"2xl"}
+              fontFamily={"body"}
+              fontWeight={500}
+              textAlign="center"
+            >
+              {children}
+            </Heading>
+            <Text fontWeight={800} fontSize={"lg"}>
+              {pricing}
+            </Text>
+          </Stack>
+        </Box>
+      </Center>
+    </Link>
   );
 };
 

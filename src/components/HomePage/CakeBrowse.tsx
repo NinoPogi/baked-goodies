@@ -25,7 +25,7 @@ const CakeGrid = () => {
             route={cake.route}
             image={cake.images[0]}
             pricing={cake.pricing}
-            boxSize={{ sm: "15em", md: "21em", lg: "17em", "2xl": "20em" }}
+            boxSize={{ sm: "15em", md: "21em", xl: "17em", "2xl": "20em" }}
           >
             {cake.title}
           </CakeCard>

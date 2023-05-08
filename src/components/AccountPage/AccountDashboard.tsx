@@ -36,7 +36,7 @@ const AccountProfile = () => {
 
   return (
     <VStack>
-      <Stack direction={{ base: "column", lg: "row" }} spacing={6}>
+      <Stack direction={{ base: "column", xl: "row" }} spacing={6}>
         <Avatar size="2xl" name={customer?.name} />
         <Stack spacing={3}>
           <Heading>Welcome, {customer?.name}</Heading>

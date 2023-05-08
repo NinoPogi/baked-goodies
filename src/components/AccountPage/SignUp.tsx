@@ -127,16 +127,27 @@ const SignUp = () => {
               })}
             />
             <InputRightElement>
-              <IconButton
-                aria-label={
-                  showPassword.pass ? "Hide password" : "Show password"
-                }
-                icon={showPassword.pass ? <FaEyeSlash /> : <FaEye />}
-                variant="ghost"
-                onClick={() =>
-                  setShowPassword({ ...showPassword, pass: !showPassword.pass })
-                }
-              />
+              {showPassword.pass ? (
+                <FaEyeSlash
+                  aria-label="Hide password"
+                  onClick={() =>
+                    setShowPassword({
+                      ...showPassword,
+                      pass: !showPassword.pass,
+                    })
+                  }
+                />
+              ) : (
+                <FaEye
+                  aria-label="Show password"
+                  onClick={() =>
+                    setShowPassword({
+                      ...showPassword,
+                      pass: !showPassword.pass,
+                    })
+                  }
+                />
+              )}
             </InputRightElement>
           </InputGroup>
           <FormErrorMessage>
@@ -160,19 +171,27 @@ const SignUp = () => {
               })}
             />
             <InputRightElement>
-              <IconButton
-                aria-label={
-                  showPassword.confirm ? "Hide password" : "Show password"
-                }
-                icon={showPassword.confirm ? <FaEyeSlash /> : <FaEye />}
-                variant="ghost"
-                onClick={() =>
-                  setShowPassword({
-                    ...showPassword,
-                    confirm: !showPassword.confirm,
-                  })
-                }
-              />
+              {showPassword.confirm ? (
+                <FaEyeSlash
+                  aria-label="Hide password"
+                  onClick={() =>
+                    setShowPassword({
+                      ...showPassword,
+                      confirm: !showPassword.confirm,
+                    })
+                  }
+                />
+              ) : (
+                <FaEye
+                  aria-label="Show password"
+                  onClick={() =>
+                    setShowPassword({
+                      ...showPassword,
+                      confirm: !showPassword.confirm,
+                    })
+                  }
+                />
+              )}
             </InputRightElement>
           </InputGroup>
           <FormErrorMessage>

@@ -7,7 +7,10 @@ const CakeGrid = () => {
   const { data } = useCakes();
 
   return (
-    <SimpleGrid columns={{ base: 1, md: 2, lg: 3, xl: 4 }} spacing="2px">
+    <SimpleGrid
+      columns={{ base: 1, md: 1, xl: 2, "1xl": 3 }}
+      spacing={{ base: "2px", xl: "25px", "2xl": "40px" }}
+    >
       {data.map((cake) => (
         <CakeCard
           key={cake._id.$oid}

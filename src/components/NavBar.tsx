@@ -14,11 +14,12 @@ import NavMobile from "./NavMobile";
 const NavBar = () => {
   const { isOpen, onToggle } = useDisclosure();
 
+  const bgColor = useColorModeValue("pink", "pink.900");
+
   return (
     <>
       <Flex
-        bg={isOpen ? useColorModeValue("pink", "gray.600") : "transparent"}
-        color={useColorModeValue("gray.600", "white")}
+        bg={isOpen ? bgColor : "transparent"}
         minH={"60px"}
         py={{ base: "20px", xl: "40px" }}
         px={{ base: "20px", xl: "80px" }}

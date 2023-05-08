@@ -39,8 +39,6 @@ const OrderCart = () => {
             <AccordionItem key={order._id}>
               <AccordionButton
                 py="4"
-                _hover={{ bg: "gray.100" }}
-                _expanded={{ bg: "gray.200" }}
                 onClick={() => toggleAccordion(order._id)}
               >
                 <Box flex="1" textAlign="left">

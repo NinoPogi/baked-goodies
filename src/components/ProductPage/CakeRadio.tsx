@@ -51,7 +51,7 @@ const CakeRadio = ({ radio, onChange, control }: Props) => {
   const [display, setDisplay] = useState(radio.defaultValue);
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: radio.name,
-    defaultValue: radio.defaultValue,
+    // defaultValue: radio.defaultValue,
     onChange: (value: keyof CakeFormValues) => {
       onChange(value);
       setDisplay(value);

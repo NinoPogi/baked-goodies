@@ -16,6 +16,8 @@ import {
   ModalHeader,
   ModalOverlay,
   Spinner,
+  HStack,
+  VStack,
 } from "@chakra-ui/react";
 import { Link as ReactLink, useNavigate, useParams } from "react-router-dom";
 import { FieldValues, useForm } from "react-hook-form";
@@ -81,7 +83,7 @@ const ProductPage = () => {
   };
   return (
     <Stack
-      direction={{ base: "column", lg: "row" }}
+      direction={{ base: "column", xl: "row" }}
       spacing="40px"
       justify="center"
     >
@@ -93,91 +95,98 @@ const ProductPage = () => {
       </Box>
       <Box w="100%">
         <form onSubmit={handleSubmit(handleOrder)}>
-          <Stack>
-            <Heading fontSize="5xl">{cake?.title.toUpperCase()}</Heading>
-            <Heading fontSize="2xl">{`price ${cake?.pricing}`}</Heading>
-            <Input display="none" value={cake?.title} {...register("type")} />
-          </Stack>
-          <FormControl isInvalid={errors.promiseDate ? true : false}>
-            <Stack direction="row" alignItems="center">
-              <Heading fontSize="2xl">SELECT PROMISE DATE:</Heading>
-              {errors.promiseDate && (
-                <FormErrorMessage>
-                  {errors.promiseDate.message}
-                </FormErrorMessage>
-              )}
+          <VStack spacing="40px">
+            <Stack>
+              <Heading fontSize="5xl" p="20px">
+                {cake?.title.toUpperCase()}
+              </Heading>
+              <Input display="none" value={cake?.title} {...register("type")} />
             </Stack>
-            <Input
-              borderRadius="0"
-              borderColor="pink.500"
-              bg={watch("promiseDate") ? "pink.400" : "transparent"}
-              color={
-                watch("promiseDate")
-                  ? "white"
-                  : useColorModeValue("black", "white")
-              }
-              fontSize="xl"
-              type="date"
-              {...register("promiseDate", {
-                required: "This field is required",
-                validate: (value) => {
-                  const currentDate = new Date();
-                  currentDate.setDate(currentDate.getDate() + 2);
-                  const inputDate = new Date(value);
-                  return (
-                    inputDate >= currentDate ||
-                    "Date must be after 2 days from now"
-                  );
-                },
-              })}
-            />
-          </FormControl>
-
-          {cake?.radios.map((radio) => (
-            <FormControl
-              key={radio.name}
-              isInvalid={
-                errors[radio.name as keyof typeof errors] ? true : false
-              }
-            >
-              <CakeRadio
-                radio={radio}
-                onChange={(value) =>
-                  setValue(radio.name as keyof CakeFormValues, value)
+            <FormControl isInvalid={errors.promiseDate ? true : false}>
+              <Stack direction="row" alignItems="center">
+                <Heading fontSize="2xl">SELECT PROMISE DATE:</Heading>
+                {errors.promiseDate && (
+                  <FormErrorMessage>
+                    {errors.promiseDate.message}
+                  </FormErrorMessage>
+                )}
+              </Stack>
+              <Input
+                borderRadius="10px"
+                borderWidth="0"
+                bg={watch("promiseDate") ? "white" : "transparent"}
+                color={
+                  watch("promiseDate")
+                    ? "black"
+                    : useColorModeValue("black", "white")
                 }
-                control={control}
+                fontSize="xl"
+                type="date"
+                shadow={watch("promiseDate") ? "md" : undefined}
+                {...register("promiseDate", {
+                  required: "This field is required",
+                  validate: (value) => {
+                    const currentDate = new Date();
+                    currentDate.setDate(currentDate.getDate() + 2);
+                    const inputDate = new Date(value);
+                    return (
+                      inputDate >= currentDate ||
+                      "Date must be after 2 days from now"
+                    );
+                  },
+                })}
               />
-              <FormErrorMessage>
-                {errors[radio.name as keyof typeof errors]?.message?.toString()}
-              </FormErrorMessage>
             </FormControl>
-          ))}
-          {cake?.checkboxes.map((checkbox) => (
-            <FormControl
-              key={checkbox.name}
-              isInvalid={
-                errors[checkbox.name as keyof typeof errors] ? true : false
-              }
-            >
-              <CakeCheckbox
-                checkbox={checkbox}
-                onChange={(value) =>
-                  setValue(checkbox.name as keyof CakeCheckboxValues, value)
+            {cake?.radios.map((radio) => (
+              <FormControl
+                key={radio.name}
+                isInvalid={
+                  errors[radio.name as keyof typeof errors] ? true : false
                 }
-                control={control}
-              />
-              <FormErrorMessage>
-                {errors[
-                  checkbox.name as keyof typeof errors
-                ]?.message?.toString()}
-              </FormErrorMessage>
-            </FormControl>
-          ))}
-
-          <Button type="submit" size="lg" mt="8">
-            ORDER NOW
-          </Button>
-          <CakeInfoAccordion heading={cake.title} info={cake.info} />
+              >
+                <CakeRadio
+                  radio={radio}
+                  onChange={(value) =>
+                    setValue(radio.name as keyof CakeFormValues, value)
+                  }
+                  control={control}
+                />
+                <FormErrorMessage>
+                  {errors[
+                    radio.name as keyof typeof errors
+                  ]?.message?.toString()}
+                </FormErrorMessage>
+              </FormControl>
+            ))}
+            {cake?.checkboxes.map((checkbox) => (
+              <FormControl
+                key={checkbox.name}
+                isInvalid={
+                  errors[checkbox.name as keyof typeof errors] ? true : false
+                }
+              >
+                <CakeCheckbox
+                  checkbox={checkbox}
+                  onChange={(value) =>
+                    setValue(checkbox.name as keyof CakeCheckboxValues, value)
+                  }
+                  control={control}
+                />
+                <FormErrorMessage>
+                  {errors[
+                    checkbox.name as keyof typeof errors
+                  ]?.message?.toString()}
+                </FormErrorMessage>
+              </FormControl>
+            ))}
+            <HStack p="20px" spacing="60px">
+              <Button type="submit" size="lg">
+                ORDER NOW
+              </Button>
+              <Heading fontSize="2xl">{`price ${cake?.pricing}`}</Heading>
+            </HStack>
+            <CakeInfoAccordion heading={cake.title} info={cake.info} />
+          </VStack>
           <Modal isOpen={isSubmitting} onClose={() => console.log("heelo")}>
             <ModalOverlay />
             <ModalContent>

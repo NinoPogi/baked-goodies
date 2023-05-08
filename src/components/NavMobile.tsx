@@ -8,7 +8,7 @@ const NavMobile = () => {
       display={{ base: "flex", xl: "none" }}
       align="center"
       marginBottom="20px"
-      bg={useColorModeValue("pink", "gray.600")}
+      bg={useColorModeValue("pink", "pink.900")}
       borderBottomRadius="20px"
       paddingBottom="50px"
     >

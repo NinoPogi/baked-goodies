@@ -9,12 +9,12 @@ interface Props {
 const CakeShowcase = ({ cake }: Props) => {
   return (
     <Box
-      h={{ sm: "230px", md: "335px", lg: "625px", xl: "550px" }}
+      h={{ sm: "230px", md: "335px", xl: "625px", "1xl": "550px" }}
       w={{ sm: "280px", md: "385px", xl: "500px" }}
       overflow="auto"
       borderRadius="20px"
     >
-      <Stack direction={{ base: "row", lg: "column" }}>
+      <Stack direction={{ base: "row", xl: "column" }}>
         {cake?.images.map((url) => (
           <Card key={url} borderRadius="20px" overflow="hidden" flexShrink="0">
             <Image

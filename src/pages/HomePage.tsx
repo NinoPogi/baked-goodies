@@ -13,12 +13,12 @@ const HomePage = () => {
     <VStack spacing="20px">
       <CakeCarousel />
       <Heading fontSize="2xl">BROWSE CAKES</Heading>
-      <CakeBrowse />
+      {/* <CakeBrowse /> */}
       <Heading fontSize="2xl">ORDERING PROCESS GUIDE | PRE ORDERS ONLY</Heading>
       <Stack
         justify="space-evenly"
         spacing="100px"
-        direction={{ base: "column", lg: "row" }}
+        direction={{ base: "column", xl: "row" }}
       >
         <VStack>
           <Stack>

@@ -7,9 +7,10 @@ const theme = extendTheme(
     useSystemColorMode: true,
     breakpoints: {
       sm: "320px",
-      md: "425px",
-      lg: "640px",
-      xl: "1024px",
+      md: "375px",
+      lg: "390px",
+      xl: "820px",
+      "1xl": "1024px",
       "2xl": "1366px",
       "3xl": "1920px",
     },
@@ -34,7 +35,7 @@ const theme = extendTheme(
     styles: {
       global: (props: any) => ({
         body: {
-          bg: mode("#f3f3f3", "gray.900")(props),
+          bg: mode("#f3f3f3", "gray.700")(props),
           color: mode("#544d4d", "white")(props),
         },
       }),

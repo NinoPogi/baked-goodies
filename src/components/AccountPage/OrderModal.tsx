@@ -26,8 +26,8 @@ const OrderModal = ({ selectedOrder, isOpen, onClose }: Props) => {
     <Modal
       size={{
         md: "xl",
-        lg: "2xl",
-        xl: "3xl",
+        xl: "2xl",
+        "1xl": "3xl",
         "2xl": "4xl",
       }}
       closeOnOverlayClick={false}

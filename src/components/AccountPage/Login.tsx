@@ -82,12 +82,17 @@ const Login = () => {
               })}
             />
             <InputRightElement>
-              <IconButton
-                aria-label={showPassword ? "Hide password" : "Show password"}
-                icon={showPassword ? <FaEyeSlash /> : <FaEye />}
-                variant="ghost"
-                onClick={() => setShowPassword(!showPassword)}
-              />
+              {showPassword ? (
+                <FaEyeSlash
+                  aria-label="Hide password"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              ) : (
+                <FaEye
+                  aria-label="Show password"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              )}
             </InputRightElement>
           </InputGroup>
           <FormErrorMessage>This field is required</FormErrorMessage>
