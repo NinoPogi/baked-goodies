@@ -26,7 +26,14 @@ interface Props {
 }
 
 const defaultState: CustomerContextInterface = {
-  customer: { _id: "", name: "", email: "", phone: "", paymentMethod: "" },
+  customer: {
+    _id: "",
+    avatar: "",
+    name: "",
+    email: "",
+    phone: "",
+    paymentMethod: "",
+  },
   orders: [],
   setData: () => {},
 };
