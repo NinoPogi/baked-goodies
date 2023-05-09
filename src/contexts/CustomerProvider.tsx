@@ -49,8 +49,6 @@ export default function CustomerProvider({ children }: Props) {
   });
 
   channel.bind("order-event", ({ type, payload }: any) => {
-    console.log(type, payload);
-
     if (type === "create") {
       data.orders.push(payload);
     } else if (type === "update") {

@@ -22,67 +22,31 @@ export default [
       {
         defaultValue: "Choco Moist",
         name: "flavor",
-        options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-        ],
+        options: ["Choco Moist"],
       },
       {
         name: "shape",
         defaultValue: "Round",
-        options: [
-          {
-            value: "Round",
-            description: "Round",
-          },
-          {
-            value: "Heart",
-            description: "Heart",
-          },
-        ],
+        options: ["Round", "Heart"],
       },
       {
         name: "size",
-        defaultValue: "4x2",
-        options: [
-          {
-            value: "4x2",
-            description: "4x2 ₱170",
-          },
-        ],
+        defaultValue: "4x2 ₱170",
+        options: ["4x2 ₱170"],
       },
     ],
     checkboxes: [
       {
         name: "upgrades",
-        options: [
-          {
-            value: "Kraft Box",
-            description: "Kraft Box ₱30",
-          },
-        ],
+        options: ["Kraft Box ₱30"],
       },
       {
         name: "addons",
         options: [
-          {
-            value: "Sprinkles/Dragees",
-            description: "Sprinkles/Dragees ₱10",
-          },
-          {
-            value: "Printed Topper",
-            description: "Sprinkles/Dragees ₱10",
-          },
-          {
-            value: "Polaroid Photo",
-            description: "Polaroid Photo ₱20",
-          },
-          {
-            value: "Fondant Letters",
-            description: "Fondant Letters ₱20-30",
-          },
+          "Sprinkles/Dragees ₱10",
+          "Printed Topper ₱10",
+          "Polaroid Photo ₱20",
+          "Fondant Letters ₱20-30",
         ],
       },
     ],
@@ -110,65 +74,29 @@ export default [
     radios: [
       {
         name: "flavor",
-        options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-        ],
+        options: ["Choco Moist"],
         defaultValue: "Choco Moist",
       },
       {
         name: "size",
-        options: [
-          {
-            value: "4 inches",
-            description: "4 inches",
-          },
-        ],
+        options: ["4 inches"],
+
         defaultValue: "4 inches",
       },
       {
         name: "digits",
-        options: [
-          {
-            value: "One",
-            description: "One ₱150",
-          },
-          {
-            value: "Two",
-            description: "Two ₱300",
-          },
-        ],
-        defaultValue: "One",
+        options: ["One ₱150", "Two ₱300"],
+        defaultValue: "One ₱150",
       },
     ],
     checkboxes: [
       {
         name: "upgrades",
-        options: [
-          {
-            value: "Kraft Box",
-            description: "Kraft Box ₱30 ",
-          },
-          {
-            value: "w/ 4pcs Cupcake",
-            description: "w/ 4pcs Cupcake ₱100",
-          },
-        ],
+        options: ["Kraft Box ₱30", "w/ 4pcs Cupcake ₱100"],
       },
       {
         name: "addons",
-        options: [
-          {
-            value: "Printed Topper",
-            description: "Printed Topper ₱20-30",
-          },
-          {
-            value: "Fondant Letters",
-            description: "Fondant Letters ₱20-30",
-          },
-        ],
+        options: ["Printed Topper ₱20-30", "Fondant Letters ₱20-30"],
       },
     ],
     sort: "bento",
@@ -189,41 +117,20 @@ export default [
     radios: [
       {
         name: "flavor",
-        options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-        ],
+        options: ["Choco Moist"],
+
         defaultValue: "Choco Moist",
       },
       {
         name: "size",
-        options: [
-          {
-            value: "10 inches",
-            description: "10 inches",
-          },
-        ],
+        options: ["10 inches"],
+
         defaultValue: "10 inches",
       },
       {
         name: "digits",
-        options: [
-          {
-            value: "One (#1)",
-            description: "One (#1 only) ₱500",
-          },
-          {
-            value: "One (#0,2-9)",
-            description: "One (#0,2-9) ₱650",
-          },
-          {
-            value: "Two",
-            description: "Two ₱1300",
-          },
-        ],
-        defaultValue: "One (#1)",
+        options: ["One (#1) ₱500", "One (#0,2-9) ₱650", "Two ₱1300"],
+        defaultValue: "One (#1) ₱500",
       },
     ],
     checkboxes: [],
@@ -251,37 +158,19 @@ export default [
     radios: [
       {
         name: "flavor",
-        options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-        ],
+        options: ["Choco Moist"],
         defaultValue: "Choco Moist",
       },
       {
         name: "size",
-        options: [
-          {
-            value: "5 inches",
-            description: "5 inches",
-          },
-        ],
+        options: ["5 inches"],
+
         defaultValue: "5 inches",
       },
       {
         name: "digits",
-        options: [
-          {
-            value: "One",
-            description: "One ₱350",
-          },
-          {
-            value: "Two",
-            description: "Two ₱800",
-          },
-        ],
-        defaultValue: "One",
+        options: ["One ₱350", "Two ₱800"],
+        defaultValue: "One ₱350",
       },
     ],
     checkboxes: [],
@@ -312,69 +201,32 @@ export default [
       {
         name: "flavor",
         defaultValue: "Choco Moist",
-        options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-        ],
+        options: ["Choco Moist"],
       },
       {
         name: "shape",
         defaultValue: "Round",
-        options: [
-          {
-            value: "Round",
-            description: "Round",
-          },
-          {
-            value: "Heart",
-            description: "Heart",
-          },
-        ],
+        options: ["Round", "Heart"],
       },
       {
         name: "size",
-        defaultValue: "4x2",
-        options: [
-          {
-            value: "4x2",
-            description: "4x2 ₱ 170",
-          },
-        ],
+        defaultValue: "4x2 ₱ 170",
+        options: ["4x2 ₱ 170"],
       },
       {
         name: "bundle",
-        defaultValue: "w/ 2pcs Cupcake",
+        defaultValue: "w/ 2pcs Cupcake ₱80",
         options: [
-          {
-            value: "w/ 2pcs Cupcake",
-            description: "w/ 2pcs Cupcake ₱80",
-          },
-          {
-            value: "w/ 5pcs Cupcake",
-            description: "w/ 5pcs Cupcake ₱200",
-          },
-          {
-            value: "w/ 8pcs Cupcake",
-            description: "w/ 8pcs Cupcake ₱300",
-          },
+          "w/ 2pcs Cupcake ₱80",
+          "w/ 5pcs Cupcake ₱200",
+          "w/ 8pcs Cupcake ₱300",
         ],
       },
     ],
     checkboxes: [
       {
         name: "addons",
-        options: [
-          {
-            value: "Printed Topper",
-            description: "Printed Topper ₱20-30",
-          },
-          {
-            value: "Fondant Letters/Details",
-            description: "Fondant Letters/Details  ₱20 & up",
-          },
-        ],
+        options: ["Printed Topper ₱20-30", "Fondant Letters/Details  ₱20 & up"],
       },
     ],
     sort: "bento",
@@ -393,63 +245,22 @@ export default [
         name: "flavor",
         defaultValue: "Choco Moist",
         options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-          {
-            value: "Choco Chiffon",
-            description: "Choco Chiffon",
-          },
-          {
-            value: "Vanilla Chiffon",
-            description: "Vanilla Chiffon",
-          },
-          {
-            value: "Ube Chiffon",
-            description: "Ube Chiffon",
-          },
-          {
-            value: "Mocha Chiffon",
-            description: "Mocha Chiffon",
-          },
+          "Choco Moist",
+          "Choco Chiffon",
+          "Vanilla Chiffon",
+          "Ube Chiffon",
+          "Mocha Chiffon",
         ],
       },
       {
         name: "shape",
         defaultValue: "Round",
-        options: [
-          {
-            value: "Round",
-            description: "Round",
-          },
-          {
-            value: "Heart",
-            description: "Heart",
-          },
-        ],
+        options: ["Round", "Heart"],
       },
       {
         name: "size",
-        defaultValue: "5x2",
-        options: [
-          {
-            value: "5x2",
-            description: "5x2 ₱300",
-          },
-          {
-            value: "5x4",
-            description: "5x4 ₱450",
-          },
-          {
-            value: "7x2",
-            description: "7x2 ₱450",
-          },
-          {
-            value: "7x4",
-            description: "7x4 ₱850",
-          },
-        ],
+        defaultValue: "5x2 ₱300",
+        options: ["5x2 ₱300", "5x4 ₱450", "7x2 ₱450", "7x4 ₱850"],
       },
     ],
     checkboxes: [],
@@ -475,51 +286,22 @@ export default [
         name: "flavor",
         defaultValue: "Choco Moist",
         options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-          {
-            value: "Choco Chiffon",
-            description: "Choco Chiffon",
-          },
-          {
-            value: "Vanilla Chiffon",
-            description: "Vanilla Chiffon",
-          },
-          {
-            value: "Ube Chiffon",
-            description: "Ube Chiffon",
-          },
-          {
-            value: "Mocha Chiffon",
-            description: "Mocha Chiffon",
-          },
+          "Choco Moist",
+          "Choco Chiffon",
+          "Vanilla Chiffon",
+          "Ube Chiffon",
+          "Mocha Chiffon",
         ],
       },
       {
         name: "shape",
         defaultValue: "Round",
-        options: [
-          {
-            value: "Round",
-            description: "Round",
-          },
-        ],
+        options: ["Round"],
       },
       {
         name: "size",
-        defaultValue: "7x3",
-        options: [
-          {
-            value: "7x3",
-            description: "7x3 ₱750 (30pcs max bill)",
-          },
-          {
-            value: "7x5",
-            description: "7x5 ₱1200 (50pcs max bill)",
-          },
-        ],
+        defaultValue: "7x3 ₱750 (30pcs max bill)",
+        options: ["7x3 ₱750 (30pcs max bill)", "7x5 ₱1200 (50pcs max bill)"],
       },
     ],
     checkboxes: [],
@@ -545,63 +327,22 @@ export default [
         name: "flavor",
         defaultValue: "Choco Moist",
         options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-          {
-            value: "Choco Chiffon",
-            description: "Choco Chiffon",
-          },
-          {
-            value: "Vanilla Chiffon",
-            description: "Vanilla Chiffon",
-          },
-          {
-            value: "Ube Chiffon",
-            description: "Ube Chiffon",
-          },
-          {
-            value: "Mocha Chiffon",
-            description: "Mocha Chiffon",
-          },
+          "Choco Moist",
+          "Choco Chiffon",
+          "Vanilla Chiffon",
+          "Ube Chiffon",
+          "Mocha Chiffon",
         ],
       },
       {
         name: "shape",
         defaultValue: "Round",
-        options: [
-          {
-            value: "Round",
-            description: "Round",
-          },
-          {
-            value: "Heart",
-            description: "Heart",
-          },
-        ],
+        options: ["Round", "Heart"],
       },
       {
         name: "size",
-        defaultValue: "5x2",
-        options: [
-          {
-            value: "5x2",
-            description: "5x2 ₱350",
-          },
-          {
-            value: "5x4",
-            description: "5x4 ₱500",
-          },
-          {
-            value: "7x4",
-            description: "7x4 ₱900",
-          },
-          {
-            value: "9x4",
-            description: "9x4 ₱1600",
-          },
-        ],
+        defaultValue: "5x2 ₱350",
+        options: ["5x2 ₱350", "5x4 ₱500", "7x4 ₱900", "9x4 ₱1600"],
       },
     ],
     checkboxes: [],
@@ -627,47 +368,22 @@ export default [
         name: "flavor",
         defaultValue: "Choco Moist",
         options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-          {
-            value: "Choco Chiffon",
-            description: "Choco Chiffon",
-          },
-          {
-            value: "Vanilla Chiffon",
-            description: "Vanilla Chiffon",
-          },
-          {
-            value: "Ube Chiffon",
-            description: "Ube Chiffon",
-          },
-          {
-            value: "Mocha Chiffon",
-            description: "Mocha Chiffon",
-          },
+          "Choco Moist",
+          "Choco Chiffon",
+          "Vanilla Chiffon",
+          "Ube Chiffon",
+          "Mocha Chiffon",
         ],
       },
       {
         name: "shape",
         defaultValue: "Round",
-        options: [
-          {
-            value: "Round",
-            description: "Round",
-          },
-        ],
+        options: ["Round"],
       },
       {
         name: "size",
-        defaultValue: "4x3 | 2x2.25",
-        options: [
-          {
-            value: "4x3 | 2x2.25",
-            description: "4x3 | 2x2.25 ₱350",
-          },
-        ],
+        defaultValue: "4x3 | 2x2.25 ₱350",
+        options: ["4x3 | 2x2.25 ₱350"],
       },
     ],
     checkboxes: [],
@@ -692,47 +408,22 @@ export default [
         name: "flavor",
         defaultValue: "Choco Moist",
         options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-          {
-            value: "Choco Chiffon",
-            description: "Choco Chiffon",
-          },
-          {
-            value: "Vanilla Chiffon",
-            description: "Vanilla Chiffon",
-          },
-          {
-            value: "Ube Chiffon",
-            description: "Ube Chiffon",
-          },
-          {
-            value: "Mocha Chiffon",
-            description: "Mocha Chiffon",
-          },
+          "Choco Moist",
+          "Choco Chiffon",
+          "Vanilla Chiffon",
+          "Ube Chiffon",
+          "Mocha Chiffon",
         ],
       },
       {
         name: "shape",
         defaultValue: "Round",
-        options: [
-          {
-            value: "Round",
-            description: "Round",
-          },
-        ],
+        options: ["Round"],
       },
       {
         name: "size",
-        defaultValue: "5x3 | 3x2.5",
-        options: [
-          {
-            value: "5x3 | 3x2.5",
-            description: "5x3 | 3x2.5 ₱650",
-          },
-        ],
+        defaultValue: "5x3 | 3x2.5 ₱650",
+        options: ["5x3 | 3x2.5 ₱650"],
       },
     ],
     checkboxes: [],
@@ -758,47 +449,22 @@ export default [
         name: "flavor",
         defaultValue: "Choco Moist",
         options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-          {
-            value: "Choco Chiffon",
-            description: "Choco Chiffon",
-          },
-          {
-            value: "Vanilla Chiffon",
-            description: "Vanilla Chiffon",
-          },
-          {
-            value: "Ube Chiffon",
-            description: "Ube Chiffon",
-          },
-          {
-            value: "Mocha Chiffon",
-            description: "Mocha Chiffon",
-          },
+          "Choco Moist",
+          "Choco Chiffon",
+          "Vanilla Chiffon",
+          "Ube Chiffon",
+          "Mocha Chiffon",
         ],
       },
       {
         name: "shape",
         defaultValue: "Round",
-        options: [
-          {
-            value: "Round",
-            description: "Round",
-          },
-        ],
+        options: ["Round"],
       },
       {
         name: "size",
-        defaultValue: "7x5 | 5x3",
-        options: [
-          {
-            value: "7x5 | 5x3",
-            description: "7x5 | 5x3 ₱1500",
-          },
-        ],
+        defaultValue: "7x5 | 5x3 ₱1500",
+        options: ["7x5 | 5x3 ₱1500"],
       },
     ],
     checkboxes: [],
@@ -824,47 +490,22 @@ export default [
         name: "flavor",
         defaultValue: "Choco Moist",
         options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-          {
-            value: "Choco Chiffon",
-            description: "Choco Chiffon",
-          },
-          {
-            value: "Vanilla Chiffon",
-            description: "Vanilla Chiffon",
-          },
-          {
-            value: "Ube Chiffon",
-            description: "Ube Chiffon",
-          },
-          {
-            value: "Mocha Chiffon",
-            description: "Mocha Chiffon",
-          },
+          "Choco Moist",
+          "Choco Chiffon",
+          "Vanilla Chiffon",
+          "Ube Chiffon",
+          "Mocha Chiffon",
         ],
       },
       {
         name: "shape",
         defaultValue: "Round",
-        options: [
-          {
-            value: "Round",
-            description: "Round",
-          },
-        ],
+        options: ["Round"],
       },
       {
         name: "size",
-        defaultValue: "9x4 | 7x4",
-        options: [
-          {
-            value: "9x4 | 7x4",
-            description: "9x4 | 7x4 ₱2600",
-          },
-        ],
+        defaultValue: "9x4 | 7x4 ₱2600",
+        options: ["9x4 | 7x4 ₱2600"],
       },
     ],
     checkboxes: [],
@@ -890,47 +531,22 @@ export default [
         name: "flavor",
         defaultValue: "Choco Moist",
         options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-          {
-            value: "Choco Chiffon",
-            description: "Choco Chiffon",
-          },
-          {
-            value: "Vanilla Chiffon",
-            description: "Vanilla Chiffon",
-          },
-          {
-            value: "Ube Chiffon",
-            description: "Ube Chiffon",
-          },
-          {
-            value: "Mocha Chiffon",
-            description: "Mocha Chiffon",
-          },
+          "Choco Moist",
+          "Choco Chiffon",
+          "Vanilla Chiffon",
+          "Ube Chiffon",
+          "Mocha Chiffon",
         ],
       },
       {
         name: "shape",
         defaultValue: "Round",
-        options: [
-          {
-            value: "Round",
-            description: "Round",
-          },
-        ],
+        options: ["Round"],
       },
       {
         name: "size",
-        defaultValue: "7x4 | 5x4 | 4x4",
-        options: [
-          {
-            value: "7x4 | 5x4 | 4x4",
-            description: "7x4 | 5x4 | 4x4 ₱2200",
-          },
-        ],
+        defaultValue: "7x4 | 5x4 | 4x4 ₱2200",
+        options: ["7x4 | 5x4 | 4x4 ₱2200"],
       },
     ],
     checkboxes: [],
@@ -954,47 +570,22 @@ export default [
         name: "flavor",
         defaultValue: "Choco Moist",
         options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-          {
-            value: "Choco Chiffon",
-            description: "Choco Chiffon",
-          },
-          {
-            value: "Vanilla Chiffon",
-            description: "Vanilla Chiffon",
-          },
-          {
-            value: "Ube Chiffon",
-            description: "Ube Chiffon",
-          },
-          {
-            value: "Mocha Chiffon",
-            description: "Mocha Chiffon",
-          },
+          "Choco Moist",
+          "Choco Chiffon",
+          "Vanilla Chiffon",
+          "Ube Chiffon",
+          "Mocha Chiffon",
         ],
       },
       {
         name: "shape",
         defaultValue: "Round",
-        options: [
-          {
-            value: "Round",
-            description: "Round",
-          },
-        ],
+        options: ["Round"],
       },
       {
         name: "size",
-        defaultValue: "9x4 |  7x4 | 5x4",
-        options: [
-          {
-            value: "9x4 |  7x4 | 5x4",
-            description: "9x4 |  7x4 | 5x4 ₱3500",
-          },
-        ],
+        defaultValue: "9x4 |  7x4 | 5x4 ₱3500",
+        options: ["9x4 |  7x4 | 5x4 ₱3500"],
       },
     ],
     checkboxes: [],
@@ -1023,33 +614,18 @@ export default [
       {
         name: "flavor",
         defaultValue: "Choco Moist",
-        options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-        ],
+        options: ["Choco Moist"],
       },
       {
         name: "size",
-        defaultValue: "40pcs",
-        options: [
-          {
-            value: "40pcs",
-            description: "40pcs (Select Number)",
-          },
-        ],
+        defaultValue: "40pcs (Select Number)",
+        options: ["40pcs (Select Number)"],
       },
     ],
     checkboxes: [
       {
         name: "addons",
-        options: [
-          {
-            value: "Printed Topper & Candies",
-            description: "Printed Topper & Candies ₱50",
-          },
-        ],
+        options: ["Printed Topper & Candies ₱50"],
       },
     ],
     images: [
@@ -1072,64 +648,32 @@ export default [
       {
         name: "flavor",
         defaultValue: "Choco Moist",
-        options: [
-          {
-            value: "Choco Moist",
-            description: "Choco Moist",
-          },
-        ],
+        options: ["Choco Moist"],
       },
       {
         name: "shape",
         defaultValue: "Round",
-        options: [
-          {
-            value: "Round",
-            description: "Round",
-          },
-        ],
+        options: ["Round"],
       },
       {
         name: "size",
-        defaultValue: "3/4 oz (Bite Size)",
+        defaultValue: "3/4 oz ₱100 (Bite Size) *dozen*",
         options: [
-          {
-            value: "3/4 oz (Bite Size)",
-            description: "3/4 oz (Bite Size) *dozen* ₱100",
-          },
-          {
-            value: "1 oz (Mini Size)",
-            description: "1 oz (Mini Size) *dozen* ₱180",
-          },
-          {
-            value: "*dozen* 3 oz (Reg. Size)",
-            description: "3 oz (Reg. Size) *dozen* ₱350",
-          },
-          {
-            value: "*half dozen* 3 oz (Reg. Size)",
-            description: "3 oz (Reg. Size) *half dozen* ₱180",
-          },
+          "3/4 oz ₱100 (Bite Size) *dozen*",
+          "1 oz ₱180 (Mini Size) *dozen*",
+          "3 oz ₱350 (Reg. Size) *dozen*",
+          "3 oz ₱180 (Reg. Size) *half dozen*",
         ],
       },
     ],
     checkboxes: [
       {
         name: "upgrades",
-        options: [
-          {
-            value: "w/ Topper",
-            description: "w/ Topper ₱60",
-          },
-        ],
+        options: ["w/ Topper ₱60"],
       },
       {
         name: "addons",
-        options: [
-          {
-            value: "Fondant Details",
-            description: "Fondant Details ₱100 & up",
-          },
-        ],
+        options: ["Fondant Details ₱100 & up"],
       },
     ],
     images: [

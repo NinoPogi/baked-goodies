@@ -25,14 +25,19 @@ const MenuLinks = () => {
         <MenuItem link="/account">
           <Button
             leftIcon={
-              <Avatar fontFamily="body" name={customer.name} size="xs" />
+              <Avatar
+                fontFamily="body"
+                name={customer.name}
+                src={customer.avatar}
+                size="xs"
+              />
             }
             color="pink.400"
-            bg="navajowhite"
+            bg="teal"
             borderRadius="20px"
           >
             <HStack>
-              <Text display={{ base: "none", xl: "block" }}>
+              <Text display={{ base: "none", xl: "block" }} color="black">
                 {customer.name ? customer.name : "Account"}
               </Text>
               {orders?.length !== 0 ? (

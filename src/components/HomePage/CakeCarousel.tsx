@@ -42,7 +42,9 @@ const CakeCarousel = () => {
       borderRadius="20px"
       role="group"
       position="relative"
-      maxHeight={windowSize.height - 30}
+      width="full"
+      height="full"
+      maxHeight={windowSize.height - 50}
       maxWidth={windowSize.width - 50}
       overflow="hidden"
       transform="auto"

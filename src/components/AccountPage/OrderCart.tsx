@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { CustomerContext } from "../../contexts/CustomerProvider";
+import apiClient from "../../services/api-client";
 
 const OrderCart = () => {
   const { orders } = useContext(CustomerContext);
@@ -48,7 +49,12 @@ const OrderCart = () => {
                   {order.status && <Text>Status: {order.status}</Text>}
                   {order.orderDate && (
                     <Text>
-                      Order Date: {new Date(order.orderDate).toLocaleString()}
+                      Order Date:{" "}
+                      {new Date(order.orderDate).toLocaleString([], {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                      })}
                     </Text>
                   )}
                 </Box>
@@ -59,7 +65,11 @@ const OrderCart = () => {
                   {order.promiseDate && (
                     <Text>
                       Promise Date:{" "}
-                      {new Date(order.promiseDate).toLocaleString()}
+                      {new Date(order.promiseDate).toLocaleString([], {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                      })}
                     </Text>
                   )}
                   {order._id && <Text>Order ID: {order._id}</Text>}
@@ -83,7 +93,14 @@ const OrderCart = () => {
                       ))}
                     </Text>
                   )}
-                  <Button colorScheme="red">Cancel Order</Button>
+                  <Button
+                    colorScheme="red"
+                    onClick={() => {
+                      apiClient.patch(`/order/${order._id}/cancel`);
+                    }}
+                  >
+                    Cancel Order
+                  </Button>
                 </Box>
               </AccordionPanel>
             </AccordionItem>

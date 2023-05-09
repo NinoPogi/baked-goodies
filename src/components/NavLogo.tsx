@@ -21,7 +21,9 @@ const NavLogo = (props: {}) => {
         />
         <Heading
           fontSize={{ base: "2xl", md: "3xl" }}
-          color={useColorModeValue("pink.500", "pink.300")}
+          bgGradient="linear(to-r, #ff94c2, #ff6c9d)"
+          bgClip="text"
+          // color={useColorModeValue("pink.500", "pink.300")}
         >
           <Box display={{ base: "none", "1xl": "block" }}>BakeGoodiesbyH</Box>
           <Box display={{ base: "none", md: "block", "1xl": "none" }}>BGH</Box>

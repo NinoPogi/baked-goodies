@@ -9,12 +9,12 @@ export interface Cake {
   pricing: string;
   radios: {
     name: string;
-    options: { value: string; description: string }[];
+    options: string[];
     defaultValue: string;
   }[];
   checkboxes: {
     name: string;
-    options: { value: string; description: string }[];
+    options: string[];
   }[];
   images: string[];
   info: string[];

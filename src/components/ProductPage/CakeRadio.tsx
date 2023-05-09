@@ -1,10 +1,8 @@
 import { useState } from "react";
 import {
   Box,
-  HStack,
-  Heading,
+  FormControl,
   SimpleGrid,
-  Stack,
   useRadio,
   useRadioGroup,
 } from "@chakra-ui/react";
@@ -40,43 +38,45 @@ const RadioCard = (props: any) => {
 interface Props {
   radio: {
     name: string;
-    options: { value: string; description: string }[];
+    options: string[];
     defaultValue: string;
   };
   onChange: (value: keyof CakeFormValues) => void;
   control: Control<CakeFormValues, any>;
 }
 
-const CakeRadio = ({ radio, onChange, control }: Props) => {
+const CakeRadio = ({ radio, onChange }: Props) => {
   const [display, setDisplay] = useState(radio.defaultValue);
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: radio.name,
     // defaultValue: radio.defaultValue,
-    onChange: (value: keyof CakeFormValues) => {
-      onChange(value);
-      setDisplay(value);
-    },
+    onChange: onChange,
   });
-
   const group = getRootProps();
-
   return (
-    <Stack>
-      <HStack>
-        <Heading fontSize="2xl">SELECT {radio.name.toUpperCase()}:</Heading>
-        <Heading fontSize="2xl">{display.toUpperCase()}</Heading>
-      </HStack>
-      <SimpleGrid columns={2} spacing="10px" {...group}>
-        {radio.options.map((option) => {
-          const radio = getRadioProps({ value: option.value });
+    <FormControl>
+      {/* <FormLabel fontSize="2xl">SELECT {radio.name.toUpperCase()}:</FormLabel> */}
+      {/* <Heading fontSize="2xl">{display.toUpperCase()}</Heading> */}
+      <SimpleGrid columns={2} spacing="35px" {...group}>
+        {radio.options.map((option, index) => {
+          const radio = getRadioProps({ value: option });
           return (
-            <RadioCard key={option.value} {...radio}>
-              {option.description}
-            </RadioCard>
+            <Box
+              key={index}
+              minW={{ base: "100%", md: "50%" }}
+              maxW={{ base: "100%", md: "50%" }}
+              minH="50px"
+              maxH="50px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <RadioCard {...radio}>{option.replace(/₱.*/, "")}</RadioCard>
+            </Box>
           );
         })}
       </SimpleGrid>
-    </Stack>
+    </FormControl>
   );
 };
 

@@ -2,6 +2,7 @@ import useData from "./useData";
 
 export interface Customer {
   _id: string;
+  avatar: string;
   name: string;
   email: string;
   phone: string;

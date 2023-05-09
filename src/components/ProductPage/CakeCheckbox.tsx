@@ -1,5 +1,7 @@
 import {
   Box,
+  FormControl,
+  FormLabel,
   HStack,
   Heading,
   SimpleGrid,
@@ -39,7 +41,7 @@ const Checkbox = (props: any) => {
 interface Props {
   checkbox: {
     name: string;
-    options: { value: string; description: string }[];
+    options: string[];
   };
   onChange: (value: string[]) => void;
   control: Control<CakeFormValues, any>;
@@ -49,24 +51,40 @@ const CakeCheckbox = ({ checkbox, onChange, control }: Props) => {
   const { value, getCheckboxProps } = useCheckboxGroup({
     onChange: onChange,
   });
+  //   <Heading fontSize="2xl">
+  //   {(value as unknown as string[])
+  //     .map((v) => v.replace(/₱.*/, ""))
+  //     .sort()
+  //     .join(", ")}
+  // </Heading>
 
   return (
-    <Stack>
-      <HStack>
-        <Heading fontSize="2xl">SELECT {checkbox.name.toUpperCase()}:</Heading>
-        <Heading fontSize="2xl">{value.sort().join(", ")}</Heading>
-      </HStack>
-      <SimpleGrid columns={2} spacing="10px">
-        {checkbox.options.map((option) => {
-          const checkbox = getCheckboxProps({ value: option.value });
+    <FormControl>
+      {/* <FormLabel fontSize="2xl">
+        SELECT {checkbox.name.toUpperCase()}:
+      </FormLabel> */}
+      <SimpleGrid columns={2} spacing="35px">
+        {checkbox.options.map((option, index) => {
+          const checkbox = getCheckboxProps({ value: option });
           return (
-            <Checkbox key={option.value} {...checkbox}>
-              {option.description}
-            </Checkbox>
+            <Box
+              key={index}
+              minW={{ base: "100%", md: "50%" }}
+              maxW={{ base: "100%", md: "50%" }}
+              minH="50px"
+              maxH="50px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Checkbox key={option} {...checkbox}>
+                {option.replace(/₱.*/, "")}
+              </Checkbox>
+            </Box>
           );
         })}
       </SimpleGrid>
-    </Stack>
+    </FormControl>
   );
 };
 
