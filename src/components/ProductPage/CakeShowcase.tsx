@@ -22,7 +22,7 @@ const CakeShowcase = ({ cake }: Props) => {
   return (
     <Box
       h={{ sm: "230px", md: "335px", xl: "625px", "1xl": "550px" }}
-      w={{ sm: "280px", md: "385px", xl: "500px" }}
+      w={{ sm: "280px", md: "335px", xl: "500px" }}
       overflow="auto"
       borderRadius="20px"
     >
@@ -35,6 +35,7 @@ const CakeShowcase = ({ cake }: Props) => {
             />
           </Card>
         ))}
+
         <Card borderRadius="20px" bg={useColorModeValue("white", "gray.800")}>
           <Link as={ReactLink} to={cake.album} isExternal>
             <Flex

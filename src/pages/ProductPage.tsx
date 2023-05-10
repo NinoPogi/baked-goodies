@@ -151,6 +151,7 @@ const ProductPage = () => {
       direction={{ base: "column", xl: "row" }}
       spacing="40px"
       justify="center"
+      w="full"
     >
       <Box w="100%">
         <Link as={ReactLink} to="/shop">
@@ -323,20 +324,20 @@ const ProductPage = () => {
                       <Input
                         id="promiseDate"
                         borderRadius="10px"
-                        borderWidth="0"
-                        bg={watch("promiseDate") ? "white" : "transparent"}
-                        color={
-                          watch("promiseDate")
-                            ? "black"
-                            : useColorModeValue("black", "white")
-                        }
+                        // borderWidth="0"
+                        // bg={watch("promiseDate") ? "white" : "transparent"}
+                        // color={
+                        //   watch("promiseDate")
+                        //     ? "black"
+                        //     : useColorModeValue("black", "white")
+                        // }
                         fontSize="xl"
                         type="date"
-                        shadow={watch("promiseDate") ? "md" : undefined}
-                        _focus={{
-                          boxShadow: "none",
-                          borderColor: "transparent",
-                        }}
+                        // shadow={watch("promiseDate") ? "md" : undefined}
+                        // _focus={{
+                        //   boxShadow: "none",
+                        //   borderColor: "transparent",
+                        // }}
                         {...register("promiseDate", {
                           required: "Select your Pickup Date",
                           validate: (value) => {
