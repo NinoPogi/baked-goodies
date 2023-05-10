@@ -73,6 +73,12 @@ const OrderCart = () => {
                     </Text>
                   )}
                   {order._id && <Text>Order ID: {order._id}</Text>}
+                  {order.dedication && (
+                    <Text>Dedication: {order.dedication}</Text>
+                  )}
+                  {order.orderDetails && (
+                    <Text>Order Details: {order.orderDetails}</Text>
+                  )}
                   {order.flavor && <Text>Flavor: {order.flavor}</Text>}
                   {order.shape && <Text>Shape: {order.shape}</Text>}
                   {order.digits && <Text>Digits: {order.digits}</Text>}

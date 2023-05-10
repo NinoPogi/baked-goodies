@@ -22,6 +22,7 @@ export interface Order {
   bundle: string;
   upgrades: string[];
   addons: string[];
+  dedication: string;
   orderDetails: string;
   images: string[];
   status: string;

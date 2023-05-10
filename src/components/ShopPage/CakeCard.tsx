@@ -38,7 +38,7 @@ const CakeCard = ({ route, image, children, pricing, boxSize }: Props) => {
       <Center flexShrink="0" py={12}>
         <Box
           role={"group"}
-          p={6}
+          p={4}
           maxW={"330px"}
           w={"full"}
           bg={useColorModeValue("white", "gray.800")}
@@ -65,7 +65,6 @@ const CakeCard = ({ route, image, children, pricing, boxSize }: Props) => {
               zIndex: -1,
             }}
             _groupHover={{
-              pt: "1px",
               _after: {
                 filter: "blur(20px)",
               },

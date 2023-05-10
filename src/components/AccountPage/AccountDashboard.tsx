@@ -80,7 +80,7 @@ const AccountProfile = () => {
           </Button>
           <Button
             onClick={() => {
-              navigate("/cakeshop");
+              navigate("/shop");
             }}
           >
             Order Now{" "}

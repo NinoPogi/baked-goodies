@@ -6,7 +6,7 @@ import {
   useRadio,
   useRadioGroup,
 } from "@chakra-ui/react";
-import { Control } from "react-hook-form";
+import { Control, UseFormWatch } from "react-hook-form";
 import { CakeFormValues } from "../../pages/ProductPage";
 
 const RadioCard = (props: any) => {
@@ -42,19 +42,20 @@ interface Props {
     defaultValue: string;
   };
   onChange: (value: keyof CakeFormValues) => void;
-  control: Control<CakeFormValues, any>;
+  watch: UseFormWatch<CakeFormValues>;
 }
 
-const CakeRadio = ({ radio, onChange }: Props) => {
+const CakeRadio = ({ radio, onChange, watch }: Props) => {
   const [display, setDisplay] = useState(radio.defaultValue);
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: radio.name,
-    // defaultValue: radio.defaultValue,
     onChange: onChange,
   });
   const group = getRootProps();
   return (
-    <FormControl>
+    <FormControl
+    // isDisabled={watch(radio.name as keyof CakeFormValues) ? false : true}
+    >
       {/* <FormLabel fontSize="2xl">SELECT {radio.name.toUpperCase()}:</FormLabel> */}
       {/* <Heading fontSize="2xl">{display.toUpperCase()}</Heading> */}
       <SimpleGrid columns={2} spacing="35px" {...group}>

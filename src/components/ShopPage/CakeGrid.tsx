@@ -8,7 +8,7 @@ const CakeGrid = () => {
 
   return (
     <SimpleGrid
-      columns={{ base: 1, md: 1, xl: 2, "1xl": 3 }}
+      columns={{ base: 1, xl: 2, "1xl": 3 }}
       spacing={{ base: "2px", xl: "25px", "2xl": "40px" }}
     >
       {data.map((cake) => (

@@ -15,8 +15,7 @@ const theme = extendTheme(
       "3xl": "1920px",
     },
     fonts: {
-      heading: `'Alkatra', sans-serif`,
-      // body: `'Body Font Name', sans-serif`,
+      heading: `'Pacifico', sans-serif`,
     },
     colors: {
       gray: {

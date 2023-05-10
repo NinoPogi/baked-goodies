@@ -1,4 +1,16 @@
-import { Box, Image, Stack, Card } from "@chakra-ui/react";
+import {
+  Box,
+  Image,
+  Stack,
+  Card,
+  Heading,
+  useColorModeValue,
+  Flex,
+  Link,
+} from "@chakra-ui/react";
+import { Link as ReactLink } from "react-router-dom";
+import { BsFacebook } from "react-icons/bs";
+import { BiLinkExternal } from "react-icons/bi";
 import { Cake } from "../../hooks/useCakes";
 import getCroppedImageUrl from "../../services/image-url";
 
@@ -23,6 +35,20 @@ const CakeShowcase = ({ cake }: Props) => {
             />
           </Card>
         ))}
+        <Card borderRadius="20px" bg={useColorModeValue("white", "gray.800")}>
+          <Link as={ReactLink} to={cake.album} isExternal>
+            <Flex
+              alignItems="center"
+              justifyContent="center"
+              boxSize={{ base: "230px", md: "335px", xl: "500px" }}
+              gap="20px"
+            >
+              <BsFacebook size="35px" />
+              <Heading>Click for more</Heading>
+              <BiLinkExternal size="25px" />
+            </Flex>
+          </Link>
+        </Card>
       </Stack>
     </Box>
   );

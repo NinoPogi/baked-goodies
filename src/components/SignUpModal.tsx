@@ -180,7 +180,7 @@ const SignupModal = () => {
                         : errors.confirmPassword?.message?.toString()}
                     </FormErrorMessage>
                   </FormControl>
-                  <FormControl isInvalid={Boolean(errors.gender)}>
+                  <FormControl>
                     <FormLabel htmlFor="paymentMethod">
                       Payment Method
                     </FormLabel>
@@ -213,8 +213,6 @@ const SignupModal = () => {
                         </Radio>
                       </HStack>
                     </RadioGroup>
-
-                    <FormErrorMessage>This field is required</FormErrorMessage>
                   </FormControl>
                 </VStack>
               </>

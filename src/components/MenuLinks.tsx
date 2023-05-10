@@ -33,7 +33,7 @@ const MenuLinks = () => {
               />
             }
             color="pink.400"
-            bg="teal"
+            bg="teal.200"
             borderRadius="20px"
           >
             <HStack>

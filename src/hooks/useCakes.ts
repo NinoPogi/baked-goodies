@@ -18,6 +18,7 @@ export interface Cake {
   }[];
   images: string[];
   info: string[];
+  album: string;
 }
 
 const useCakes = () => ({ data: cakes, isLoading: false, error: null });

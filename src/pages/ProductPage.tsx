@@ -23,6 +23,9 @@ import {
   TabPanels,
   TabPanel,
   Tab,
+  FormLabel,
+  Radio,
+  RadioGroup,
 } from "@chakra-ui/react";
 import { Link as ReactLink, useNavigate, useParams } from "react-router-dom";
 import { FieldValues, useForm } from "react-hook-form";
@@ -30,7 +33,7 @@ import CakeCheckbox from "../components/ProductPage/CakeCheckbox";
 import CakeInfoAccordion from "../components/ProductPage/CakeInfoAccordion";
 import CakeRadio from "../components/ProductPage/CakeRadio";
 import CakeShowcase from "../components/ProductPage/CakeShowcase";
-import useCakes from "../hooks/useCakes";
+import useCakes, { Cake } from "../hooks/useCakes";
 import apiClient from "../services/api-client";
 import { CustomerContext } from "../contexts/CustomerProvider";
 
@@ -42,7 +45,6 @@ export type CakeCheckboxValues = {
 export type CakeFormValues = {
   type: string;
   price: string | undefined;
-  promiseDate: string;
   flavor: string;
   shape: string;
   size: string;
@@ -50,6 +52,10 @@ export type CakeFormValues = {
   bundle: string;
   upgrades: CakeCheckboxValues["upgrades"];
   addons: CakeCheckboxValues["addons"];
+  promiseDate: string;
+  dedication: string;
+  orderDetails: string;
+  paymentMethod: string;
 };
 
 const ProductPage = () => {
@@ -73,6 +79,7 @@ const ProductPage = () => {
   });
   const [radio, setRadio] = useState([0]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [total, setTotal] = useState<string>();
   const navigate = useNavigate();
 
@@ -83,6 +90,7 @@ const ProductPage = () => {
 
     const addons = getValues("addons");
     const upgrades = getValues("upgrades");
+
     const ranges =
       addons && upgrades
         ? [...addons, ...upgrades]
@@ -123,16 +131,21 @@ const ProductPage = () => {
   }, [getValues()]);
 
   const handleOrder = async (data: FieldValues) => {
-    setValue("price", total);
     if (!customer._id) {
       alert("please login first");
     } else {
-      setIsSubmitting(true);
+      setIsLoading(true);
       await apiClient.post("/order", data);
-      setIsSubmitting(false);
+      setIsLoading(false);
       navigate("/account");
     }
   };
+
+  const onConfirm = () => {
+    setValue("price", total);
+    setIsSubmitting(true);
+  };
+
   return (
     <Stack
       direction={{ base: "column", xl: "row" }}
@@ -143,10 +156,10 @@ const ProductPage = () => {
         <Link as={ReactLink} to="/shop">
           <Heading fontSize="2xl">Back to Cake Shop</Heading>
         </Link>
-        <CakeShowcase cake={cake} />
+        <CakeShowcase cake={cake as Cake} />
       </Box>
       <Box w="100%">
-        <form onSubmit={handleSubmit(handleOrder)}>
+        <form id="order" onSubmit={handleSubmit(handleOrder)}>
           <Stack>
             <Heading fontSize="5xl" p="10px">
               {cake?.title.toUpperCase()}
@@ -181,7 +194,7 @@ const ProductPage = () => {
                           const match = value.match(/₱(\d+)/);
                           match ? setRadio([parseInt(match[1])]) : null;
                         }}
-                        control={control}
+                        watch={watch}
                       />
                       <FormErrorMessage>
                         {errors[
@@ -205,7 +218,6 @@ const ProductPage = () => {
                     Select {checkbox.name}
                   </Tab>
                 ))}
-                <Tab>Select Pickup Date</Tab>
               </TabList>
               <TabPanels>
                 {cake?.checkboxes.map((checkbox, index) => (
@@ -236,45 +248,6 @@ const ProductPage = () => {
                     </FormControl>
                   </TabPanel>
                 ))}
-                <TabPanel>
-                  <FormControl isInvalid={errors.promiseDate ? true : false}>
-                    <Stack direction="row" alignItems="center">
-                      {/* <Heading fontSize="2xl">SELECT PROMISE DATE:</Heading> */}
-                    </Stack>
-                    <Input
-                      borderRadius="10px"
-                      borderWidth="0"
-                      bg={watch("promiseDate") ? "white" : "transparent"}
-                      color={
-                        watch("promiseDate")
-                          ? "black"
-                          : useColorModeValue("black", "white")
-                      }
-                      fontSize="xl"
-                      type="date"
-                      shadow={watch("promiseDate") ? "md" : undefined}
-                      _focus={{ boxShadow: "none", borderColor: "transparent" }}
-                      {...register("promiseDate", {
-                        required: "Select your Pickup Date",
-                        validate: (value) => {
-                          const currentDate = new Date();
-                          currentDate.setDate(currentDate.getDate() + 2);
-                          const inputDate = new Date(value);
-                          return (
-                            inputDate >= currentDate ||
-                            `Date must be after 2 days from now (${new Date(
-                              Date.now()
-                            ).toLocaleString([], {
-                              year: "numeric",
-                              month: "numeric",
-                              day: "numeric",
-                            })})`
-                          );
-                        },
-                      })}
-                    />
-                  </FormControl>
-                </TabPanel>
               </TabPanels>
             </Tabs>
             {cake.radios.map((radio, index) =>
@@ -287,20 +260,13 @@ const ProductPage = () => {
                 <p key={index}>Select your {checkbox.name} (optional)</p>
               )
             )}
-            {watch("promiseDate") ? (
-              errors.promiseDate ? (
-                <p>{errors.promiseDate?.message}</p>
-              ) : null
-            ) : (
-              <p>Select your Pickup Date</p>
-            )}
             <HStack p="20px" spacing="60px">
               <Button
-                type="submit"
                 size="lg"
                 bgGradient="linear(to-r, #ff94c2, #ff6c9d)"
                 color="white"
                 _hover={{ bgGradient: "linear(to-l, #FF0080, #fc7ebe)" }}
+                onClick={onConfirm}
               >
                 ORDER NOW
               </Button>
@@ -310,17 +276,189 @@ const ProductPage = () => {
             </HStack>
             <CakeInfoAccordion heading={cake.title} info={cake.info} />
           </Stack>
-          <Modal isOpen={isSubmitting} onClose={() => setIsSubmitting}>
+          <Modal
+            isOpen={isSubmitting}
+            onClose={() => setIsSubmitting(false)}
+            size="lg"
+          >
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Submitting Order...</ModalHeader>
+              <ModalHeader>Confirm Order</ModalHeader>
               <ModalBody>
-                <Stack direction="row" justify="center" spacing="2">
-                  <Spinner />
-                  <Box>Processing your order. Please wait...</Box>
-                </Stack>
+                {isLoading ? (
+                  <>
+                    <Heading>Submitting..</Heading>
+                    <Spinner />
+                  </>
+                ) : (
+                  <>
+                    <VStack>
+                      <Heading fontSize="xl" mt="10px">
+                        {cake.title.toUpperCase()}
+                      </Heading>
+                      <Heading fontSize="xl" mt="10px">
+                        Your Selections
+                      </Heading>
+                      <ul>
+                        {cake.radios.map((radio, index) => (
+                          <li key={index}>
+                            {radio.name.toUpperCase()}:{" "}
+                            {getValues(radio.name as keyof CakeFormValues)}
+                          </li>
+                        ))}
+                        {cake.checkboxes.map((checkbox, index) => (
+                          <li key={index}>
+                            {checkbox.name.toUpperCase()}:{" "}
+                            {getValues(
+                              checkbox.name as keyof CakeCheckboxValues
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </VStack>
+                    <FormControl isInvalid={errors.promiseDate ? true : false}>
+                      <FormLabel htmlFor="promiseDate">
+                        Select Pickup Date:
+                      </FormLabel>
+                      <Input
+                        id="promiseDate"
+                        borderRadius="10px"
+                        borderWidth="0"
+                        bg={watch("promiseDate") ? "white" : "transparent"}
+                        color={
+                          watch("promiseDate")
+                            ? "black"
+                            : useColorModeValue("black", "white")
+                        }
+                        fontSize="xl"
+                        type="date"
+                        shadow={watch("promiseDate") ? "md" : undefined}
+                        _focus={{
+                          boxShadow: "none",
+                          borderColor: "transparent",
+                        }}
+                        {...register("promiseDate", {
+                          required: "Select your Pickup Date",
+                          validate: (value) => {
+                            const currentDate = new Date();
+                            currentDate.setDate(currentDate.getDate() + 2);
+                            const inputDate = new Date(value);
+                            return (
+                              inputDate >= currentDate ||
+                              `Date must be after 2 days from now (${new Date(
+                                Date.now()
+                              ).toLocaleString([], {
+                                year: "numeric",
+                                month: "numeric",
+                                day: "numeric",
+                              })})`
+                            );
+                          },
+                        })}
+                      />
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel htmlFor="dedication">Dedication</FormLabel>
+                      <Input
+                        id="dedication"
+                        type="textarea"
+                        {...register("dedication")}
+                      />
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel htmlFor="orderDetails">
+                        Describe Your Order
+                      </FormLabel>
+                      <Input
+                        id="orderDetails"
+                        type="textarea"
+                        {...register("orderDetails")}
+                      />
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel htmlFor="paymentMethod">
+                        Payment Method
+                      </FormLabel>
+                      {customer.paymentMethod ? (
+                        <RadioGroup
+                          id="paymentMethod"
+                          defaultValue={customer.paymentMethod}
+                          isDisabled
+                        >
+                          <HStack align="start">
+                            <Radio
+                              {...register("paymentMethod")}
+                              value="GCash"
+                              borderColor="pink"
+                            >
+                              GCash
+                            </Radio>
+                            <Radio
+                              {...register("paymentMethod")}
+                              value="BDO"
+                              borderColor="pink"
+                            >
+                              BDO
+                            </Radio>
+                            <Radio
+                              {...register("paymentMethod")}
+                              value="Cash on Pickup"
+                              borderColor="pink"
+                            >
+                              Cash on Pickup
+                            </Radio>
+                          </HStack>
+                        </RadioGroup>
+                      ) : (
+                        <RadioGroup id="paymentMethod" defaultValue="GCash">
+                          <HStack align="start">
+                            <Radio
+                              {...register("paymentMethod")}
+                              value="GCash"
+                              borderColor="pink"
+                            >
+                              GCash
+                            </Radio>
+                            <Radio
+                              {...register("paymentMethod")}
+                              value="BDO"
+                              borderColor="pink"
+                            >
+                              BDO
+                            </Radio>
+                            <Radio
+                              {...register("paymentMethod")}
+                              value="Cash on Pickup"
+                              borderColor="pink"
+                            >
+                              Cash on Pickup
+                            </Radio>
+                          </HStack>
+                        </RadioGroup>
+                      )}
+                    </FormControl>
+                    {watch("promiseDate") ? (
+                      errors.promiseDate ? (
+                        <p>{errors.promiseDate?.message}</p>
+                      ) : null
+                    ) : (
+                      <p>Select your Pickup Date</p>
+                    )}
+                  </>
+                )}
               </ModalBody>
-              <ModalFooter />
+              <ModalFooter>
+                <Button
+                  type="button"
+                  mr="20px"
+                  onClick={() => setIsSubmitting(false)}
+                >
+                  Cancel
+                </Button>
+                <Button form="order" type="submit" variant="ghost">
+                  Confirm
+                </Button>
+              </ModalFooter>
             </ModalContent>
           </Modal>
         </form>

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Heading, Image, Stack, VStack } from "@chakra-ui/react";
+import { Heading, Text, Image, Stack, VStack } from "@chakra-ui/react";
 
 import CakeCarousel from "../components/HomePage/CakeCarousel";
 import CakeBrowse from "../components/HomePage/CakeBrowse";
@@ -17,7 +17,7 @@ const HomePage = () => {
       <Heading fontSize="2xl">BROWSE CAKES</Heading>
       {/* <CakeBrowse /> */}
 
-      <Heading fontSize="2xl">ORDERING PROCESS GUIDE | PRE ORDERS ONLY</Heading>
+      <Text fontSize="2xl">ORDERING PROCESS GUIDE | PRE ORDERS ONLY</Text>
 
       <Stack
         justify="space-evenly"
@@ -32,33 +32,33 @@ const HomePage = () => {
           color="white"
         >
           <Stack>
-            <Heading fontSize="1xl">Step 1</Heading>
-            <Heading fontSize="1xl">Place Cake Order</Heading>
+            <Text fontSize="1xl">Step 1</Text>
+            <Text fontSize="1xl">Place Cake Order</Text>
           </Stack>
 
           <Stack>
-            <Heading fontSize="1xl">Step 2</Heading>
-            <Heading fontSize="1xl">Wait For Acceptance</Heading>
+            <Text fontSize="1xl">Step 2</Text>
+            <Text fontSize="1xl">Wait For Acceptance</Text>
           </Stack>
 
           <Stack>
-            <Heading fontSize="1xl">Step 3</Heading>
-            <Heading fontSize="1xl">Pay Your Cake</Heading>
+            <Text fontSize="1xl">Step 3</Text>
+            <Text fontSize="1xl">Pay Your Cake</Text>
           </Stack>
 
           <Stack>
-            <Heading fontSize="1xl">Step 4</Heading>
-            <Heading fontSize="1xl">Wait For Your Cake</Heading>
+            <Text fontSize="1xl">Step 4</Text>
+            <Text fontSize="1xl">Wait For Your Cake</Text>
           </Stack>
 
           <Stack>
-            <Heading fontSize="1xl">Step 5</Heading>
-            <Heading fontSize="1xl">Pick Up Cake</Heading>
+            <Text fontSize="1xl">Step 5</Text>
+            <Text fontSize="1xl">Pick Up Cake</Text>
           </Stack>
         </VStack>
 
         <VStack>
-          <Heading fontSize="1xl">Arayat, Pampanga</Heading>
+          <Text fontSize="1xl">Arayat, Pampanga</Text>
 
           <Image
             srcSet={getCroppedImageUrl(
