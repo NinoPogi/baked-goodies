@@ -1,6 +1,18 @@
-import { Button, Center, Link, Stack, Text, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  Card,
+  Center,
+  Image,
+  Link,
+  SimpleGrid,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { BsInstagram } from "react-icons/bs";
 import { FaFacebook, FaTiktok } from "react-icons/fa";
+import aboutcakes from "../data/aboutcakes";
+import getCroppedImageUrl from "../services/image-url";
 
 const AboutPage = () => {
   return (
@@ -18,6 +30,14 @@ const AboutPage = () => {
           <Text textAlign="right"> -H</Text>
         </Text>
       </Stack>
+
+      <SimpleGrid columns={6}>
+        {aboutcakes.map((cake) => (
+          <Card>
+            <Image src={getCroppedImageUrl(cake)} boxSize="65px" />
+          </Card>
+        ))}
+      </SimpleGrid>
 
       <Text>
         Baked Goodies by H is a cake business founded by Ms. Marjorie Hazel
