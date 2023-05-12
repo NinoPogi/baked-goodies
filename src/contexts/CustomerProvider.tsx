@@ -13,6 +13,7 @@ import useCustomer, {
 } from "../hooks/useCustomer";
 import { Channel } from "pusher-js";
 import usePusher from "../hooks/usePusher";
+import { useToast } from "@chakra-ui/react";
 
 interface CustomerContextInterface {
   customer: CustomerOrdersData["customer"];
@@ -49,28 +50,61 @@ export default function CustomerProvider({ children }: Props) {
 
   data.customer._id ? sessionStorage.setItem("isLoggedIn", "true") : null;
 
-  const { channel } = usePusher(data.customer._id);
+  const { pusher, channel } = usePusher(data.customer._id);
+  const toast = useToast();
 
-  channel.bind("customer-event", (data: any) => {
-    setData(data);
-  });
+  useEffect(() => {
+    channel.bind("customer-event", (data: any) => {
+      setData(data);
+    });
 
-  channel.bind("order-event", ({ type, payload }: any) => {
-    if (type === "create") {
-      data.orders.push(payload);
-    } else if (type === "update") {
-      const index = data.orders.findIndex((o) => o._id === payload._id);
-      if (index !== -1) {
-        data.orders[index] = payload;
+    channel.bind("order-event", ({ type, payload }: any) => {
+      if (type === "create") {
+        data.orders.push(payload);
+      } else if (type === "update") {
+        const index = data.orders.findIndex((o) => o._id === payload._id);
+        if (index !== -1) {
+          data.orders[index] = payload;
+        }
+      } else if (type === "delete") {
+        const index = data.orders.findIndex((o) => o._id === payload._id);
+        if (index !== -1) {
+          data.orders.splice(index, 1);
+        }
       }
-    } else if (type === "delete") {
-      const index = data.orders.findIndex((o) => o._id === payload._id);
-      if (index !== -1) {
-        data.orders.splice(index, 1);
+      setData({ ...data });
+
+      if (type === "create") {
+        toast({
+          title: "New order created!",
+          description: `Order ID: ${payload._id}`,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      } else if (type === "update") {
+        toast({
+          title: "Order updated!",
+          description: `Order ID: ${payload._id}`,
+          status: "info",
+          duration: 3000,
+          isClosable: true,
+        });
+      } else if (type === "delete") {
+        toast({
+          title: "Order deleted!",
+          description: `Order ID: ${payload._id}`,
+          status: "warning",
+          duration: 3000,
+          isClosable: true,
+        });
       }
-    }
-    setData({ ...data });
-  });
+    });
+
+    return () => {
+      pusher.unsubscribe(`customer-${data.customer._id}`);
+    };
+  }, []);
 
   return (
     <CustomerContext.Provider
