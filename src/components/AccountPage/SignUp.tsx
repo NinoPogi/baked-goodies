@@ -24,7 +24,7 @@ import apiClient from "../../services/api-client";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const { orders, setData } = useContext(CustomerContext);
+  const { customer, setData } = useContext(CustomerContext);
   const {
     register,
     handleSubmit,
@@ -55,204 +55,160 @@ const SignUp = () => {
           console.error("Error signing up: ", err.message);
         }
       });
+    navigate("/account");
   };
 
-  return (
-    <form id="customer" onSubmit={handleSubmit(signUp)}>
-      <VStack spacing={8} mt={8} mx="auto" maxWidth="md">
-        <Heading size="lg">Tell Me About Yourself:</Heading>
-        <FormControl isInvalid={Boolean(errors.name)}>
-          <FormLabel htmlFor="name">Name</FormLabel>
-          <Input
-            id="name"
-            type="text"
-            placeholder="Enter your name"
-            borderColor="pink"
-            {...register("name", { required: true })}
-          />
-          <FormErrorMessage>This field is required</FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={Boolean(errors.email) || Boolean(serverError)}>
-          <FormLabel htmlFor="email">Email</FormLabel>
-          <Input
-            id="email"
-            type="email"
-            placeholder="Enter your email address"
-            borderColor="pink"
-            {...register("email", {
-              required: true,
-              pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-            })}
-          />
-          <FormErrorMessage>
-            {serverError !== ""
-              ? serverError
-              : errors.email?.type === "required"
-              ? "This field is required"
-              : "Please enter a valid email address"}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={Boolean(errors.phone)}>
-          <FormLabel htmlFor="phone">Phone</FormLabel>
-          <InputGroup>
-            <InputLeftElement pointerEvents="none" children="+63" />
-            <Input
-              id="phone"
-              type="tel"
-              placeholder="Enter your phone number"
-              borderColor="pink"
-              {...register("phone", {
-                required: true,
-                pattern: /^[1-9]{1}[0-9]{9}$/i,
-              })}
-            />
-          </InputGroup>
-          <FormErrorMessage>
-            {errors.phone?.type === "required"
-              ? "This field is required"
-              : "Please enter a valid phone number"}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={Boolean(errors.password)}>
-          <FormLabel htmlFor="password">Password</FormLabel>
-          <InputGroup>
-            <Input
-              id="password"
-              type={showPassword.pass ? "text" : "password"}
-              placeholder="Enter your password"
-              borderColor="pink"
-              {...register("password", {
-                required: true,
-                minLength: 5,
-              })}
-            />
-            <InputRightElement>
-              {showPassword.pass ? (
-                <FaEyeSlash
-                  aria-label="Hide password"
-                  onClick={() =>
-                    setShowPassword({
-                      ...showPassword,
-                      pass: !showPassword.pass,
-                    })
-                  }
-                />
-              ) : (
-                <FaEye
-                  aria-label="Show password"
-                  onClick={() =>
-                    setShowPassword({
-                      ...showPassword,
-                      pass: !showPassword.pass,
-                    })
-                  }
-                />
-              )}
-            </InputRightElement>
-          </InputGroup>
-          <FormErrorMessage>
-            {errors.password?.type === "required"
-              ? "This field is required"
-              : "Password must be at least 5 characters long"}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={Boolean(errors.confirmPassword)}>
-          <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
-          <InputGroup>
-            <Input
-              id="confirmPassword"
-              type={showPassword.confirm ? "text" : "password"}
-              placeholder="Confirm your password"
-              borderColor="pink"
-              {...register("confirmPassword", {
-                required: true,
-                validate: (value) =>
-                  value === getValues("password") || "Passwords do not match",
-              })}
-            />
-            <InputRightElement>
-              {showPassword.confirm ? (
-                <FaEyeSlash
-                  aria-label="Hide password"
-                  onClick={() =>
-                    setShowPassword({
-                      ...showPassword,
-                      confirm: !showPassword.confirm,
-                    })
-                  }
-                />
-              ) : (
-                <FaEye
-                  aria-label="Show password"
-                  onClick={() =>
-                    setShowPassword({
-                      ...showPassword,
-                      confirm: !showPassword.confirm,
-                    })
-                  }
-                />
-              )}
-            </InputRightElement>
-          </InputGroup>
-          <FormErrorMessage>
-            {errors.confirmPassword?.type === "required"
-              ? "This field is required"
-              : errors.confirmPassword?.message?.toString()}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl>
-          <FormLabel htmlFor="paymentMethod">Payment Method</FormLabel>
-          <RadioGroup
-            id="paymentMethod"
-            defaultValue="GCash"
-            onChange={(value) => setValue("paymentMethod", value)}
+  if (customer._id) {
+    return <Heading> Hello {customer.name}</Heading>;
+  } else {
+    return (
+      <form id="customer" onSubmit={handleSubmit(signUp)}>
+        <VStack spacing={8} mt={8} mx="auto" maxWidth="md">
+          <Heading size="lg">Sign Up:</Heading>
+
+          <FormControl
+            isInvalid={Boolean(errors.email) || Boolean(serverError)}
           >
-            <HStack align="start">
-              <Radio
-                {...register("paymentMethod")}
-                value="GCash"
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <Input
+              id="email"
+              type="email"
+              placeholder="Enter your email address"
+              borderColor="pink"
+              {...register("email", {
+                required: true,
+                pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              })}
+            />
+            <FormErrorMessage>
+              {serverError !== ""
+                ? serverError
+                : errors.email?.type === "required"
+                ? "This field is required"
+                : "Please enter a valid email address"}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={Boolean(errors.name)}>
+            <FormLabel htmlFor="name">Name</FormLabel>
+            <Input
+              id="name"
+              type="text"
+              placeholder="Enter your name"
+              borderColor="pink"
+              {...register("name", { required: true })}
+            />
+            <FormErrorMessage>This field is required</FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={Boolean(errors.password)}>
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <InputGroup>
+              <Input
+                id="password"
+                type={showPassword.pass ? "text" : "password"}
+                placeholder="Enter your password"
                 borderColor="pink"
-              >
-                GCash
-              </Radio>
-              <Radio
-                {...register("paymentMethod")}
-                value="BDO"
+                {...register("password", {
+                  required: true,
+                  minLength: 5,
+                })}
+              />
+              <InputRightElement>
+                {showPassword.pass ? (
+                  <FaEyeSlash
+                    aria-label="Hide password"
+                    onClick={() =>
+                      setShowPassword({
+                        ...showPassword,
+                        pass: !showPassword.pass,
+                      })
+                    }
+                  />
+                ) : (
+                  <FaEye
+                    aria-label="Show password"
+                    onClick={() =>
+                      setShowPassword({
+                        ...showPassword,
+                        pass: !showPassword.pass,
+                      })
+                    }
+                  />
+                )}
+              </InputRightElement>
+            </InputGroup>
+            <FormErrorMessage>
+              {errors.password?.type === "required"
+                ? "This field is required"
+                : "Password must be at least 5 characters long"}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={Boolean(errors.confirmPassword)}>
+            <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
+            <InputGroup>
+              <Input
+                id="confirmPassword"
+                type={showPassword.confirm ? "text" : "password"}
+                placeholder="Confirm your password"
                 borderColor="pink"
+                {...register("confirmPassword", {
+                  required: true,
+                  validate: (value) =>
+                    value === getValues("password") || "Passwords do not match",
+                })}
+              />
+              <InputRightElement>
+                {showPassword.confirm ? (
+                  <FaEyeSlash
+                    aria-label="Hide password"
+                    onClick={() =>
+                      setShowPassword({
+                        ...showPassword,
+                        confirm: !showPassword.confirm,
+                      })
+                    }
+                  />
+                ) : (
+                  <FaEye
+                    aria-label="Show password"
+                    onClick={() =>
+                      setShowPassword({
+                        ...showPassword,
+                        confirm: !showPassword.confirm,
+                      })
+                    }
+                  />
+                )}
+              </InputRightElement>
+            </InputGroup>
+            <FormErrorMessage>
+              {errors.confirmPassword?.type === "required"
+                ? "This field is required"
+                : errors.confirmPassword?.message?.toString()}
+            </FormErrorMessage>
+          </FormControl>
+
+          <Box textAlign="center">
+            <Button type="submit" isLoading={isSubmitting}>
+              Sign Up
+            </Button>
+            <Box mt={4}>
+              Already have an account?{" "}
+              <Link
+                color="pink.500"
+                onClick={() => {
+                  navigate("/account");
+                  reset();
+                }}
+                cursor="pointer"
               >
-                BDO
-              </Radio>
-              <Radio
-                {...register("paymentMethod")}
-                value="Cash on Pickup"
-                borderColor="pink"
-              >
-                Cash on Pickup
-              </Radio>
-            </HStack>
-          </RadioGroup>
-        </FormControl>
-        <Box textAlign="center">
-          <Button type="submit" isLoading={isSubmitting}>
-            Sign Up
-          </Button>
-          <Box mt={4}>
-            Already have an account?{" "}
-            <Link
-              color="pink.500"
-              onClick={() => {
-                navigate("/account");
-                reset();
-              }}
-              cursor="pointer"
-            >
-              Log in here.
-            </Link>
+                Log in here.
+              </Link>
+            </Box>
           </Box>
-        </Box>
-      </VStack>
-    </form>
-  );
+        </VStack>
+      </form>
+    );
+  }
 };
 
 export default SignUp;

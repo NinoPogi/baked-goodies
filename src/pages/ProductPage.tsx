@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import {
   Stack,
   Link,
@@ -26,6 +26,8 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
+  InputGroup,
+  InputLeftElement,
 } from "@chakra-ui/react";
 import { Link as ReactLink, useNavigate, useParams } from "react-router-dom";
 import { FieldValues, useForm } from "react-hook-form";
@@ -56,6 +58,7 @@ export type CakeFormValues = {
   dedication: string;
   orderDetails: string;
   paymentMethod: string;
+  phone: string;
 };
 
 const ProductPage = () => {
@@ -84,6 +87,14 @@ const ProductPage = () => {
   const navigate = useNavigate();
 
   const tabIndicatorColor = useColorModeValue("gray.700", "white");
+
+  useEffect(() => {
+    cake.radios.map((radio) => {
+      const match = radio.defaultValue.match(/₱(\d+)/);
+      match ? setRadio([parseInt(match[1])]) : null;
+    });
+    sessionStorage.setItem("initializeProduct", "true");
+  }, []);
 
   useEffect(() => {
     document.title = `${cake?.title} | Baked Goodies by H`;
@@ -127,23 +138,33 @@ const ProductPage = () => {
         ? `${total + minSum}-${total + maxSum}`
         : total.toString();
 
-    setTotal(result);
+    setTotal(`₱${result}`);
   }, [getValues()]);
 
   const handleOrder = async (data: FieldValues) => {
-    if (!customer._id) {
-      alert("please login first");
-    } else {
-      setIsLoading(true);
-      await apiClient.post("/order", data);
-      setIsLoading(false);
-      navigate("/account");
-    }
+    setIsLoading(true);
+
+    await apiClient.put("/customer", {
+      phone: data?.phone,
+      paymentMethod: data?.paymentMethod,
+    });
+    await apiClient.post("/order", data);
+
+    setIsLoading(false);
+    window.location.reload();
+    setIsSubmitting(false);
   };
 
   const onConfirm = () => {
-    setValue("price", total);
-    setIsSubmitting(true);
+    cake.radios.map((radio) =>
+      setValue(radio.name as keyof CakeFormValues, radio.defaultValue)
+    );
+    if (!customer._id) {
+      alert("Please Login or Signup First");
+    } else {
+      setValue("price", total);
+      setIsSubmitting(true);
+    }
   };
 
   return (
@@ -252,12 +273,18 @@ const ProductPage = () => {
               </TabPanels>
             </Tabs>
             {cake.radios.map((radio, index) =>
-              watch(radio.name as keyof CakeFormValues) ? null : (
-                <p key={index}>Select your {radio.name}</p>
-              )
+              watch(radio.name as keyof CakeFormValues) ? (
+                <Box display="none" key={index}>
+                  {sessionStorage.removeItem("initializeProduct") as ReactNode}
+                </Box>
+              ) : null
             )}
             {cake.checkboxes.map((checkbox, index) =>
-              watch(checkbox.name as keyof CakeFormValues) ? null : (
+              watch(checkbox.name as keyof CakeFormValues) ? (
+                <Box display="none" key={index}>
+                  {sessionStorage.removeItem("initializeProduct") as ReactNode}
+                </Box>
+              ) : (
                 <p key={index}>Select your {checkbox.name} (optional)</p>
               )
             )}
@@ -272,7 +299,9 @@ const ProductPage = () => {
                 ORDER NOW
               </Button>
               <Heading fontSize="2xl">{`${
-                total !== "0" ? `₱${total}` : `Price ${cake?.pricing}`
+                sessionStorage.getItem("initializeProduct") === "true"
+                  ? `Price ${cake?.pricing}`
+                  : total
               }`}</Heading>
             </HStack>
             <CakeInfoAccordion heading={cake.title} info={cake.info} />
@@ -312,7 +341,11 @@ const ProductPage = () => {
                             {checkbox.name.toUpperCase()}:{" "}
                             {getValues(
                               checkbox.name as keyof CakeCheckboxValues
-                            )}
+                            )?.length !== 0
+                              ? getValues(
+                                  checkbox.name as keyof CakeCheckboxValues
+                                )
+                              : "none"}
                           </li>
                         ))}
                       </ul>
@@ -357,6 +390,13 @@ const ProductPage = () => {
                           },
                         })}
                       />
+                      <FormErrorMessage>
+                        {errors.promiseDate?.type === "required"
+                          ? errors.promiseDate.message
+                          : errors.promiseDate?.type === "validate"
+                          ? errors.promiseDate.message
+                          : "Please enter a valid Date"}
+                      </FormErrorMessage>
                     </FormControl>
                     <FormControl>
                       <FormLabel htmlFor="dedication">Dedication</FormLabel>
@@ -377,74 +417,102 @@ const ProductPage = () => {
                       />
                     </FormControl>
                     <FormControl>
-                      <FormLabel htmlFor="paymentMethod">
-                        Payment Method
-                      </FormLabel>
-                      {customer.paymentMethod ? (
-                        <RadioGroup
-                          id="paymentMethod"
-                          defaultValue={customer.paymentMethod}
-                          isDisabled
-                        >
-                          <HStack align="start">
-                            <Radio
-                              {...register("paymentMethod")}
-                              value="GCash"
-                              borderColor="pink"
-                            >
-                              GCash
-                            </Radio>
-                            <Radio
-                              {...register("paymentMethod")}
-                              value="BDO"
-                              borderColor="pink"
-                            >
-                              BDO
-                            </Radio>
-                            <Radio
-                              {...register("paymentMethod")}
-                              value="Cash on Pickup"
-                              borderColor="pink"
-                            >
-                              Cash on Pickup
-                            </Radio>
-                          </HStack>
-                        </RadioGroup>
-                      ) : (
-                        <RadioGroup id="paymentMethod" defaultValue="GCash">
-                          <HStack align="start">
-                            <Radio
-                              {...register("paymentMethod")}
-                              value="GCash"
-                              borderColor="pink"
-                            >
-                              GCash
-                            </Radio>
-                            <Radio
-                              {...register("paymentMethod")}
-                              value="BDO"
-                              borderColor="pink"
-                            >
-                              BDO
-                            </Radio>
-                            <Radio
-                              {...register("paymentMethod")}
-                              value="Cash on Pickup"
-                              borderColor="pink"
-                            >
-                              Cash on Pickup
-                            </Radio>
-                          </HStack>
-                        </RadioGroup>
+                      {customer.paymentMethod ? //   isDisabled //   defaultValue={customer.paymentMethod} //   id="paymentMethod" // <RadioGroup // </FormLabel> //   Payment Method //   <FormLabel htmlFor="paymentMethod">
+                      // >
+                      //   <HStack align="start">
+                      //     <Radio
+                      //       {...register("paymentMethod")}
+                      //       value="GCash"
+                      //       borderColor="pink"
+                      //     >
+                      //       GCash
+                      //     </Radio>
+                      //     <Radio
+                      //       {...register("paymentMethod")}
+                      //       value="BDO"
+                      //       borderColor="pink"
+                      //     >
+                      //       BDO
+                      //     </Radio>
+                      //     <Radio
+                      //       {...register("paymentMethod")}
+                      //       value="Cash on Pickup"
+                      //       borderColor="pink"
+                      //     >
+                      //       Cash on Pickup
+                      //     </Radio>
+                      //   </HStack>
+                      // </RadioGroup>
+                      null : (
+                        <>
+                          <FormLabel htmlFor="paymentMethod">
+                            Payment Method
+                          </FormLabel>
+                          <RadioGroup id="paymentMethod" defaultValue="GCash">
+                            <HStack align="start">
+                              <Radio
+                                {...register("paymentMethod")}
+                                value="GCash"
+                                borderColor="pink"
+                              >
+                                GCash
+                              </Radio>
+                              <Radio
+                                {...register("paymentMethod")}
+                                value="BDO"
+                                borderColor="pink"
+                              >
+                                BDO
+                              </Radio>
+                              <Radio
+                                {...register("paymentMethod")}
+                                value="Cash on Pickup"
+                                borderColor="pink"
+                              >
+                                Cash on Pickup
+                              </Radio>
+                            </HStack>
+                          </RadioGroup>
+                        </>
                       )}
                     </FormControl>
-                    {watch("promiseDate") ? (
-                      errors.promiseDate ? (
-                        <p>{errors.promiseDate?.message}</p>
-                      ) : null
-                    ) : (
-                      <p>Select your Pickup Date</p>
-                    )}
+                    <FormControl isInvalid={Boolean(errors.phone)}>
+                      {customer.phone ? //   <Input //   /> //     children="+63" //     pointerEvents="none" //   <InputLeftElement // <InputGroup> //   <FormLabel htmlFor="phone">Phone</FormLabel>
+                      //     isDisabled
+                      //     value={customer.phone}
+                      //     id="phone"
+                      //     type="tel"
+                      //     placeholder="Enter your phone number"
+                      //     borderColor="pink"
+                      //   />
+                      // </InputGroup>
+                      null : (
+                        <>
+                          <FormLabel htmlFor="phone">Phone</FormLabel>
+                          <InputGroup>
+                            <InputLeftElement
+                              pointerEvents="none"
+                              children="+63"
+                            />
+                            <Input
+                              id="phone"
+                              type="tel"
+                              placeholder="Enter your phone number"
+                              borderColor="pink"
+                              {...register("phone", {
+                                // required: true,
+                                pattern: /^[1-9]{1}[0-9]{9}$/i,
+                              })}
+                            />
+                          </InputGroup>
+                        </>
+                      )}
+                      <FormErrorMessage>
+                        {errors.phone?.type === "required"
+                          ? "This field is required"
+                          : "Please enter a valid phone number"}
+                      </FormErrorMessage>
+                    </FormControl>
                   </>
                 )}
               </ModalBody>

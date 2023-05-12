@@ -214,16 +214,16 @@ export default [
       },
       {
         name: "size",
-        defaultValue: "4x2 ₱ 170",
-        options: ["4x2 ₱ 170"],
+        defaultValue: "4x2",
+        options: ["4x2"],
       },
       {
         name: "bundle",
         defaultValue: "w/ 2pcs Cupcake ₱80",
         options: [
-          "w/ 2pcs Cupcake ₱80",
-          "w/ 5pcs Cupcake ₱200",
-          "w/ 8pcs Cupcake ₱300",
+          "w/ 2pcs Cupcake ₱250",
+          "w/ 5pcs Cupcake ₱370",
+          "w/ 8pcs Cupcake ₱470",
         ],
       },
     ],

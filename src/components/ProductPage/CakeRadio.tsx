@@ -49,6 +49,7 @@ const CakeRadio = ({ radio, onChange, watch }: Props) => {
   const [display, setDisplay] = useState(radio.defaultValue);
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: radio.name,
+    defaultValue: radio.defaultValue,
     onChange: onChange,
   });
   const group = getRootProps();
