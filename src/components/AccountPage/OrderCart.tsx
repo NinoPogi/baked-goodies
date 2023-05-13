@@ -31,9 +31,7 @@ const OrderCart = () => {
 
   return (
     <Stack>
-      <Heading as="h2" size="md" mb="4">
-        Orders
-      </Heading>
+      <Text mb="4">Orders</Text>
       {orders.length > 0 ? (
         <Accordion allowToggle>
           {orders.map((order) => (
@@ -51,8 +49,8 @@ const OrderCart = () => {
                     <Text>
                       Order Date:{" "}
                       {new Date(order.orderDate).toLocaleString([], {
-                        year: "numeric",
-                        month: "numeric",
+                        // year: "numeric",
+                        month: "long",
                         day: "numeric",
                       })}
                     </Text>
@@ -66,8 +64,8 @@ const OrderCart = () => {
                     <Text>
                       Promise Date:{" "}
                       {new Date(order.promiseDate).toLocaleString([], {
-                        year: "numeric",
-                        month: "numeric",
+                        // year: "numeric",
+                        month: "long",
                         day: "numeric",
                       })}
                     </Text>
@@ -83,30 +81,36 @@ const OrderCart = () => {
                   {order.shape && <Text>Shape: {order.shape}</Text>}
                   {order.digits && <Text>Digits: {order.digits}</Text>}
                   {order.bundle && <Text>Bundle: {order.bundle}</Text>}
-                  {order.upgrades && (
+                  {order.upgrades ? (
                     <Text>
                       Upgrade/s:{" "}
                       {order.upgrades.map((up, index) => (
                         <span key={index}>{up}</span>
                       ))}
                     </Text>
+                  ) : (
+                    <Text>Upgrade/s: None</Text>
                   )}
-                  {order.addons && (
+                  {order.addons ? (
                     <Text>
                       Addon/s:{" "}
                       {order.addons.map((add, index) => (
                         <span key={index}>{add}</span>
                       ))}
                     </Text>
+                  ) : (
+                    <Text>Addon/s: None</Text>
                   )}
-                  <Button
-                    colorScheme="red"
-                    onClick={() => {
-                      apiClient.patch(`/order/${order._id}/cancel`);
-                    }}
-                  >
-                    Cancel Order
-                  </Button>
+                  {order.status !== "canceled" ? (
+                    <Button
+                      colorScheme="red"
+                      onClick={() => {
+                        apiClient.patch(`/order/${order._id}/cancel`);
+                      }}
+                    >
+                      Cancel Order
+                    </Button>
+                  ) : null}
                 </Box>
               </AccordionPanel>
             </AccordionItem>

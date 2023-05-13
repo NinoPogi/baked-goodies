@@ -74,7 +74,7 @@ const AccountProfile = () => {
           </Avatar>
         </Box>
         <Stack spacing={3}>
-          <Heading>Welcome, {customer?.name}</Heading>
+          <Text>Welcome, {customer?.name}</Text>
           <Button onClick={updateProfile} isDisabled>
             Edit Account
           </Button>

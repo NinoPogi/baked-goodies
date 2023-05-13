@@ -35,7 +35,7 @@ const defaultProps: OptionalProps = {
 const CakeCard = ({ route, image, children, pricing, boxSize }: Props) => {
   return (
     <Link to={route}>
-      <Center flexShrink="0" py={12}>
+      <Center flexShrink="0" py={7}>
         <Box
           role={"group"}
           p={4}
@@ -43,7 +43,7 @@ const CakeCard = ({ route, image, children, pricing, boxSize }: Props) => {
           w={"full"}
           bg={useColorModeValue("white", "gray.800")}
           boxShadow={"md"}
-          borderRadius="40px"
+          borderRadius="20px"
           pos={"relative"}
           zIndex={1}
         >

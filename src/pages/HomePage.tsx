@@ -58,7 +58,8 @@ const HomePage = () => {
         </VStack>
 
         <VStack>
-          <Text fontSize="1xl">Arayat, Pampanga</Text>
+          <Text fontSize="1xl">Contact Number: 09276863682</Text>
+          <Text fontSize="1xl">27 Alcala St. Poblacion, Arayat, Pampanga</Text>
 
           <Image
             srcSet={getCroppedImageUrl(

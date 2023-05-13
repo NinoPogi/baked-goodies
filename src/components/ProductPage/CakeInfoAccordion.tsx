@@ -6,6 +6,7 @@ import {
   AccordionPanel,
   Heading,
   ListItem,
+  Text,
   UnorderedList,
 } from "@chakra-ui/react";
 
@@ -19,9 +20,9 @@ const CakeInfoAccordion = ({ heading, info }: Props) => {
     <Accordion defaultIndex={[0]} allowToggle>
       <AccordionItem>
         <AccordionButton>
-          <Heading textAlign="left" flex="1" fontSize="2xl">
+          <Text textAlign="left" flex="1" fontSize="2xl">
             {heading}
-          </Heading>
+          </Text>
           <AccordionIcon />
         </AccordionButton>
         <AccordionPanel pb={4}>
