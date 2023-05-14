@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { AxiosProgressEvent } from "axios";
 import useCustomer, {
   Customer,
   CustomerOrdersData,
@@ -19,6 +20,8 @@ interface CustomerContextInterface {
   customer: CustomerOrdersData["customer"];
   setData: Dispatch<SetStateAction<CustomerOrdersData>>;
   orders: CustomerOrdersData["orders"];
+  progress: number;
+  handleProgress: (event: AxiosProgressEvent) => void;
   // channel: Channel | null;
 }
 
@@ -37,72 +40,86 @@ const defaultState: CustomerContextInterface = {
   },
   orders: [],
   setData: () => {},
+  progress: 0,
+  handleProgress: () => 0,
 };
 
 export const CustomerContext =
   createContext<CustomerContextInterface>(defaultState);
 
 export default function CustomerProvider({ children }: Props) {
+  const [progress, setProgress] = useState(defaultState.progress);
   const { data, setData } = useCustomer({
     customer: defaultState.customer,
     orders: defaultState.orders,
   });
 
-  data.customer._id ? sessionStorage.setItem("isLoggedIn", "true") : null;
+  useEffect(() => {
+    if (data.customer._id) sessionStorage.setItem("isLoggedIn", "true");
+  }, [data.customer._id]);
 
-  // const { pusher, channel } = usePusher(data.customer._id);
-  // const toast = useToast();
+  const handleProgress = (event: AxiosProgressEvent) => {
+    const progress = Math.round((event.loaded / event.total!) * 100);
+    setProgress(progress);
+  };
 
-  // channel.bind("customer-event", (data: any) => {
-  //   setData(data);
-  // });
+  const { pusher, channel } = usePusher(data.customer._id);
+  const toast = useToast();
 
-  // channel.bind("order-event", ({ type, payload }: any) => {
-  //   if (type === "create") {
-  //     data.orders.push(payload);
-  //   } else if (type === "update") {
-  //     const index = data.orders.findIndex((o) => o._id === payload._id);
-  //     if (index !== -1) {
-  //       data.orders[index] = payload;
-  //     }
-  //   } else if (type === "delete") {
-  //     const index = data.orders.findIndex((o) => o._id === payload._id);
-  //     if (index !== -1) {
-  //       data.orders.splice(index, 1);
-  //     }
-  //   }
-  //   setData({ ...data });
+  useEffect(() => {
+    channel.bind("customer-event", (data: any) => {
+      setData(data);
+    });
 
-  // if (type === "create") {
-  //   toast({
-  //     title: "New order created!",
-  //     description: `Order ID: ${payload._id}`,
-  //     status: "success",
-  //     duration: 1000,
-  //     isClosable: true,
-  //   });
-  // } else if (type === "update") {
-  //   toast({
-  //     title: "Order updated!",
-  //     description: `Order ID: ${payload._id}`,
-  //     status: "info",
-  //     duration: 3000,
-  //     isClosable: true,
-  //   });
-  // } else if (type === "delete") {
-  //   toast({
-  //     title: "Order deleted!",
-  //     description: `Order ID: ${payload._id}`,
-  //     status: "warning",
-  //     duration: 3000,
-  //     isClosable: true,
-  //   });
-  // }
-  // });
+    channel.bind("order-event", ({ type, payload }: any) => {
+      const orders = [...data.orders];
+
+      if (type === "create") {
+        orders.push(payload);
+        toast({
+          title: "New order created!",
+          description: `Order ID: ${payload._id}`,
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+        });
+      } else if (type === "update") {
+        const index = orders.findIndex((o) => o._id === payload._id);
+        if (index !== -1) {
+          orders[index] = payload;
+          toast({
+            title: "Order updated!",
+            description: `Order ID: ${payload._id}`,
+            status: "info",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      } else if (type === "delete") {
+        const index = orders.findIndex((o) => o._id === payload._id);
+        if (index !== -1) {
+          orders.splice(index, 1);
+        }
+      }
+
+      setData({ customer: data.customer, orders });
+
+      return () => {
+        pusher.unsubscribe(`customer-${data.customer._id}`);
+        pusher.disconnect();
+      };
+    });
+  }, [channel, data, setData, toast]);
 
   return (
     <CustomerContext.Provider
-      value={{ customer: data.customer, orders: data.orders, setData }}
+      value={{
+        customer: data.customer,
+        orders: data.orders,
+        setData,
+        progress,
+        handleProgress,
+      }}
     >
       {children}
     </CustomerContext.Provider>

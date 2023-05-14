@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   Modal,
   ModalOverlay,
@@ -11,10 +17,13 @@ import {
   Box,
   ButtonGroup,
   Image,
+  Text,
   Progress,
   Stack,
   Spinner,
+  HStack,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import { FieldValues, UseFormGetValues, useForm } from "react-hook-form";
 import { CakeFormValues } from "../../pages/ProductPage";
 import { Cake } from "../../hooks/useCakes";
@@ -23,6 +32,7 @@ import logo from "../../images/logo.svg";
 import OrderDetails from "./ConfirmModal/OrderDetails";
 import OrderReview from "./ConfirmModal/OrderReview";
 import apiClient from "../../services/api-client";
+import { CustomerContext } from "../../contexts/CustomerProvider";
 
 export interface ConfirmFormValues {
   promiseDate: string;
@@ -41,6 +51,12 @@ interface Props {
   getValues: UseFormGetValues<CakeFormValues>;
 }
 
+interface StepInstructions {
+  1: string;
+  2: string;
+  3: string;
+}
+
 const ConfirmModal = ({
   cake,
   form,
@@ -49,15 +65,31 @@ const ConfirmModal = ({
 
   getValues,
 }: Props) => {
+  const { handleProgress } = useContext(CustomerContext);
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
   const [isLoading, setIsLoading] = useState(false);
+  const [stock, setStock] = useState<number>(10);
   const {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<ConfirmFormValues>();
+  const navigate = useNavigate();
+
+  const stepInstructions = {
+    1: "Review Your Order",
+    2: "Select Pickup Date",
+    3: "Give Cake Details",
+  };
+
+  useEffect(() => {
+    apiClient.get("/stock").then((res) => {
+      setStock(res.data.stock);
+    });
+  }, []);
 
   const handleConfirm = async (data: FieldValues) => {
     const orderForm = { ...form, ...data };
@@ -66,8 +98,18 @@ const ConfirmModal = ({
       phone: data?.phone,
       paymentMethod: data?.paymentMethod,
     });
-    await apiClient.post("/order", orderForm);
-    setIsLoading(false);
+    await apiClient
+      .post("/order", orderForm, {
+        onUploadProgress: handleProgress,
+      })
+      .then((res) => {
+        setIsSubmitting(false);
+        navigate("/account");
+      })
+      .catch((err) => {
+        alert(err.response.data);
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -83,26 +125,30 @@ const ConfirmModal = ({
           <Stack>
             <Image src={logo} alt="Baked Goodies by H" boxSize="2.3em" />
             <Heading>ConfirmYouOrder</Heading>
-            <Progress
+            <Text padding="10px 10px">
+              Step {step} of 3:{" "}
+              {stepInstructions[step as keyof StepInstructions]}
+            </Text>
+            {/* <Progress
               borderRadius="20px"
               hasStripe
               value={progress}
               isAnimated
-            />
+            /> */}
           </Stack>
         </ModalHeader>
         <ModalBody>
           <form id="confirm" onSubmit={handleSubmit(handleConfirm)}>
-            <Box maxWidth={800} p={6} m="10px auto">
+            <Box maxWidth={800} p={2}>
               {isLoading ? (
-                <>
-                  <Heading>Submitting..</Heading>
+                <HStack>
                   <Spinner />
-                </>
+                  <Text>Submitting..</Text>
+                </HStack>
               ) : step === 1 ? (
                 <OrderReview cake={cake} getValues={getValues} />
               ) : step === 2 ? (
-                <OrderCalendar setValue={setValue} />
+                <OrderCalendar stock={stock} setValue={setValue} />
               ) : (
                 <OrderDetails register={register} errors={errors} />
               )}
@@ -110,6 +156,11 @@ const ConfirmModal = ({
           </form>
         </ModalBody>
         <ModalFooter>
+          <Text>
+            {errors.promiseDate && !watch("promiseDate")
+              ? "Select Pickup Date First"
+              : null}
+          </Text>
           <ButtonGroup>
             {step === 1 ? (
               <Button type="button" onClick={() => setIsSubmitting(false)}>
@@ -142,7 +193,12 @@ const ConfirmModal = ({
               Next
             </Button>
             {step === 3 ? (
-              <Button form="confirm" type="submit" variant="ghost">
+              <Button
+                form="confirm"
+                type="submit"
+                variant="ghost"
+                isDisabled={isLoading}
+              >
                 Submit
               </Button>
             ) : null}

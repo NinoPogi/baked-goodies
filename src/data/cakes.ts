@@ -219,7 +219,7 @@ export default [
       },
       {
         name: "bundle",
-        defaultValue: "w/ 2pcs Cupcake ₱80",
+        defaultValue: "w/ 2pcs Cupcake ₱250",
         options: [
           "w/ 2pcs Cupcake ₱250",
           "w/ 5pcs Cupcake ₱370",

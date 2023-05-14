@@ -5,20 +5,28 @@ import {
   Text,
   Button,
   Accordion,
+  AccordionIcon,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
   Flex,
   Spacer,
   Stack,
+  useColorModeValue,
+  ButtonGroup,
+  Image,
 } from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
-import { CustomerContext } from "../../contexts/CustomerProvider";
 import apiClient from "../../services/api-client";
+import { WindowSizeContext } from "../../contexts/WindowSizeProvider";
+import { Order } from "../../hooks/useCustomer";
 
-const OrderCart = () => {
-  const { orders } = useContext(CustomerContext);
+interface Props {
+  orders: Order[];
+  children: string;
+}
 
+const OrderCart = ({ orders, children }: Props) => {
+  const { windowSize } = useContext(WindowSizeContext);
   const [expandedOrderId, setExpandedOrderId] = useState<string>("");
 
   const toggleAccordion = (orderId: string) => {
@@ -30,12 +38,19 @@ const OrderCart = () => {
   };
 
   return (
-    <Stack>
-      <Text mb="4">Orders</Text>
+    <Stack
+      width={{ base: windowSize.width - 50, xl: windowSize.width - 400 }}
+      height={windowSize.height}
+      overflow="auto"
+      borderRadius="20px"
+      background={useColorModeValue("white", "gray.600")}
+      padding="20px"
+    >
+      <Text mb="4">{children}</Text>
       {orders.length > 0 ? (
         <Accordion allowToggle>
           {orders.map((order) => (
-            <AccordionItem key={order._id}>
+            <AccordionItem key={order._id} border="none">
               <AccordionButton
                 py="4"
                 onClick={() => toggleAccordion(order._id)}
@@ -56,7 +71,7 @@ const OrderCart = () => {
                     </Text>
                   )}
                 </Box>
-                <ChevronDownIcon />
+                <AccordionIcon />
               </AccordionButton>
               <AccordionPanel pb="4">
                 <Box>
@@ -81,36 +96,66 @@ const OrderCart = () => {
                   {order.shape && <Text>Shape: {order.shape}</Text>}
                   {order.digits && <Text>Digits: {order.digits}</Text>}
                   {order.bundle && <Text>Bundle: {order.bundle}</Text>}
-                  {order.upgrades ? (
-                    <Text>
-                      Upgrade/s:{" "}
-                      {order.upgrades.map((up, index) => (
-                        <span key={index}>{up}</span>
-                      ))}
-                    </Text>
+                  {order.upgrades.length !== 0 ? (
+                    <>
+                      <Text>Upgrade/s: </Text>
+                      <ul>
+                        {order.upgrades.map((up, index) => (
+                          <li key={index}>{up}</li>
+                        ))}
+                      </ul>
+                    </>
                   ) : (
                     <Text>Upgrade/s: None</Text>
                   )}
-                  {order.addons ? (
-                    <Text>
-                      Addon/s:{" "}
-                      {order.addons.map((add, index) => (
-                        <span key={index}>{add}</span>
-                      ))}
-                    </Text>
+                  {order.addons.length !== 0 ? (
+                    <>
+                      <Text>Addon/s: </Text>
+                      <ul>
+                        {order.addons.map((add, index) => (
+                          <li key={index}>{add}</li>
+                        ))}
+                      </ul>
+                    </>
                   ) : (
                     <Text>Addon/s: None</Text>
                   )}
-                  {order.status !== "canceled" ? (
-                    <Button
-                      colorScheme="red"
-                      onClick={() => {
-                        apiClient.patch(`/order/${order._id}/cancel`);
-                      }}
-                    >
-                      Cancel Order
-                    </Button>
+                  {order.endImage ? (
+                    <>
+                      <Image src={order.endImage} boxSize="150px" />
+                      <Text>Payment QR Code HERE</Text>
+                    </>
                   ) : null}
+                  <ButtonGroup>
+                    {/* {order.status === "pickup" ? (
+                      <Button isDisabled>View Results</Button>
+                    ) : null} */}
+                    {order.status !== "canceled" &&
+                    order.status === "processing" ? (
+                      <Button
+                        colorScheme="red"
+                        onClick={() => {
+                          apiClient.patch(`/order/${order._id}/cancel`);
+                        }}
+                      >
+                        Cancel Order
+                      </Button>
+                    ) : null}
+                    {order.status === "processing" ? (
+                      <Button isDisabled>Edit Order</Button>
+                    ) : null}
+                    {order.status === "canceled" ||
+                    order.status === "decline" ? (
+                      <Button
+                        colorScheme="red"
+                        onClick={() => {
+                          apiClient.delete(`/order/${order._id}`);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    ) : null}
+                  </ButtonGroup>
                 </Box>
               </AccordionPanel>
             </AccordionItem>

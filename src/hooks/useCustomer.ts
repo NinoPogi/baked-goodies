@@ -26,6 +26,7 @@ export interface Order {
   orderDetails: string;
   images: string[];
   status: string;
+  endImage: string;
   isPaid: string;
 }
 

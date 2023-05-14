@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Box, IconButton } from "@chakra-ui/react";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 import Slider from "react-slick";
 import banners from "../../data/banners";
+import { WindowSizeContext } from "../../contexts/WindowSizeProvider";
 
 const settings = {
   dots: true,
@@ -17,25 +18,8 @@ const settings = {
 };
 
 const CakeCarousel = () => {
+  const { windowSize } = useContext(WindowSizeContext);
   const [slider, setSlider] = useState<Slider | null>(null);
-  const [windowSize, setWindowSize] = useState({
-    width: document.documentElement.clientWidth,
-    height: document.documentElement.clientHeight,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({
-        width: document.documentElement.clientWidth,
-        height: document.documentElement.clientHeight / 1.3,
-      });
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <Box

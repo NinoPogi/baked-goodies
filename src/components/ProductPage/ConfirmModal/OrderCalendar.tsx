@@ -9,22 +9,15 @@ import { ConfirmFormValues } from "../ConfirmModal";
 import apiClient from "../../../services/api-client";
 
 interface Props {
+  stock: number;
   setValue: UseFormSetValue<ConfirmFormValues>;
 }
 
-const OrderCalendar = ({ setValue }: Props) => {
+const OrderCalendar = ({ stock, setValue }: Props) => {
   const [selectedDate, setSelectedDate] = useState<Value>();
   const [isRush, setIsRush] = useState<boolean>(false);
-  const [stock, setStock] = useState<number>(10);
-
   const bgColor = useColorModeValue("gray.800", "black");
   const textColor = useColorModeValue("black", "white");
-
-  useEffect(() => {
-    apiClient.get("/stock").then((res) => {
-      setStock(res.data.stock);
-    });
-  }, []);
 
   const handleDateChange = (value: Value) => {
     const isDateRush = (dateString: string) => {

@@ -1,4 +1,4 @@
-import { VStack, Text } from "@chakra-ui/react";
+import { Stack, Text } from "@chakra-ui/react";
 import { UseFormGetValues } from "react-hook-form";
 import { CakeFormValues, CakeCheckboxValues } from "../../../pages/ProductPage";
 import { Cake } from "../../../hooks/useCakes";
@@ -10,13 +10,9 @@ interface Props {
 
 const OrderReview = ({ cake, getValues }: Props) => {
   return (
-    <VStack>
-      <Text fontSize="xl" mt="10px">
-        {cake.title.toUpperCase()}
-      </Text>
-      <Text fontSize="xl" mt="10px">
-        Your Selections
-      </Text>
+    <Stack paddingX="20px">
+      <Text fontSize="xl">{cake.title.toUpperCase()}</Text>
+      <Text fontSize="xl">Your Selections</Text>
       <ul>
         {cake.radios.map((radio, index) => (
           <li key={index}>
@@ -36,7 +32,7 @@ const OrderReview = ({ cake, getValues }: Props) => {
           </li>
         ))}
       </ul>
-    </VStack>
+    </Stack>
   );
 };
 

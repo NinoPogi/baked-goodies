@@ -24,16 +24,27 @@ const OrderDetails = ({ register, errors }: Props) => {
   const { customer } = useContext(CustomerContext);
   return (
     <VStack>
-      <Input display="none" {...register("promiseDate")} />
+      <Input
+        display="none"
+        {...register("promiseDate", {
+          required: true,
+        })}
+      />
       <FormControl>
         <FormLabel htmlFor="dedication">Dedication</FormLabel>
-        <Input id="dedication" type="textarea" {...register("dedication")} />
+        <Input
+          id="dedication"
+          type="textarea"
+          size="lg"
+          {...register("dedication")}
+        />
       </FormControl>
       <FormControl>
         <FormLabel htmlFor="orderDetails">Describe Your Order</FormLabel>
         <Input
           id="orderDetails"
           type="textarea"
+          size="lg"
           {...register("orderDetails")}
         />
       </FormControl>

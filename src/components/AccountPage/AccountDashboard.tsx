@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, useContext, useState } from "react";
+import { BaseSyntheticEvent, useContext, useEffect, useState } from "react";
 import {
   VStack,
   Text,
@@ -18,15 +18,22 @@ import OrderCart from "./OrderCart";
 import { useNavigate } from "react-router-dom";
 import { FaCamera } from "react-icons/fa";
 import getCroppedImageUrl from "../../services/image-url";
+import { Order } from "../../hooks/useCustomer";
 
 const AccountProfile = () => {
-  const { customer } = useContext(CustomerContext);
+  const { customer, orders } = useContext(CustomerContext);
+  const [historyOrders, setHistoryOrders] = useState([]);
   const [name, setName] = useState(customer.name);
   const [email, setEmail] = useState(customer.email);
   const [phone, setPhone] = useState(customer.phone);
   const [password, setPassword] = useState("");
+  const [history, setHistory] = useState(false);
   const avatar = new FormData();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    apiClient.get("/order/history").then((res) => setHistoryOrders(res.data));
+  }, []);
 
   const handleFileUpload = (e: BaseSyntheticEvent) => {
     const file = e.target.files[0];
@@ -51,7 +58,7 @@ const AccountProfile = () => {
 
   return (
     <VStack>
-      <Stack direction={{ base: "column", xl: "row" }} spacing={6}>
+      <Stack direction={{ base: "column", xl: "row" }} spacing={4}>
         <Box pos="relative" display="inline-block">
           <Avatar
             size="xl"
@@ -75,6 +82,9 @@ const AccountProfile = () => {
         </Box>
         <Stack spacing={3}>
           <Text>Welcome, {customer?.name}</Text>
+          <Button onClick={() => setHistory(!history)}>
+            {history ? "Orders" : "History"}
+          </Button>
           <Button onClick={updateProfile} isDisabled>
             Edit Account
           </Button>
@@ -87,8 +97,11 @@ const AccountProfile = () => {
           </Button>
           <Button onClick={logout}>Log Out</Button>
         </Stack>
-        {/* <OrderTable /> */}
-        <OrderCart />
+        {history ? (
+          <OrderCart orders={historyOrders}>History</OrderCart>
+        ) : (
+          <OrderCart orders={orders}>Orders</OrderCart>
+        )}
       </Stack>
     </VStack>
   );

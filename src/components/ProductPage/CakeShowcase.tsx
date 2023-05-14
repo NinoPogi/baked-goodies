@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import {
   Box,
   Image,
@@ -8,6 +9,7 @@ import {
   Flex,
   Link,
 } from "@chakra-ui/react";
+import { WindowSizeContext } from "../../contexts/WindowSizeProvider";
 import { Link as ReactLink } from "react-router-dom";
 import { BsFacebook } from "react-icons/bs";
 import { BiLinkExternal } from "react-icons/bi";
@@ -19,6 +21,7 @@ interface Props {
 }
 
 const CakeShowcase = ({ cake }: Props) => {
+  const { windowSize } = useContext(WindowSizeContext);
   return (
     <Box
       h={{ sm: "230px", md: "335px", xl: "625px", "1xl": "550px" }}

@@ -51,18 +51,9 @@ const CakeCheckbox = ({ checkbox, onChange, control }: Props) => {
   const { value, getCheckboxProps } = useCheckboxGroup({
     onChange: onChange,
   });
-  //   <Heading fontSize="2xl">
-  //   {(value as unknown as string[])
-  //     .map((v) => v.replace(/₱.*/, ""))
-  //     .sort()
-  //     .join(", ")}
-  // </Heading>
 
   return (
     <FormControl>
-      {/* <FormLabel fontSize="2xl">
-        SELECT {checkbox.name.toUpperCase()}:
-      </FormLabel> */}
       <SimpleGrid columns={2} spacing="35px">
         {checkbox.options.map((option, index) => {
           const checkbox = getCheckboxProps({ value: option });
@@ -77,9 +68,7 @@ const CakeCheckbox = ({ checkbox, onChange, control }: Props) => {
               alignItems="center"
               justifyContent="center"
             >
-              <Checkbox key={option} {...checkbox}>
-                {option.replace(/₱.*/, "")}
-              </Checkbox>
+              <Checkbox {...checkbox}>{option.replace(/₱.*/, "")}</Checkbox>
             </Box>
           );
         })}
