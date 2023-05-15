@@ -184,8 +184,17 @@ const OrderCart = ({ orders, children }: Props) => {
                     {order.status === "pickup" ? (
                       <Button isDisabled>Upload Proof of Payment</Button>
                     ) : null}
-                    {order.status === "canceled" ||
-                    order.status === "decline" ? (
+                    {order.status === "decline" ? (
+                      <Button
+                        colorScheme="red"
+                        onClick={() => {
+                          apiClient.patch(`/order/${order._id}`);
+                        }}
+                      >
+                        Accept
+                      </Button>
+                    ) : null}
+                    {order.isDone === true ? (
                       <Button
                         colorScheme="red"
                         onClick={() => {
