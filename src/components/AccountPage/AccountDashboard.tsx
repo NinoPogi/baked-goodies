@@ -51,8 +51,6 @@ const AccountProfile = () => {
       .catch((err) => console.error("Error logging out: ", err.message));
   };
 
-  console.log(orders.filter((obj) => obj.isDone === false));
-
   return (
     <VStack>
       <Stack direction={{ base: "column", xl: "row" }} spacing={4}>
