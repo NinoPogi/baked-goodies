@@ -4,15 +4,8 @@ import {
   SetStateAction,
   createContext,
   useEffect,
-  useState,
 } from "react";
-import { AxiosProgressEvent } from "axios";
-import useCustomer, {
-  Customer,
-  CustomerOrdersData,
-  Order,
-} from "../hooks/useCustomer";
-import { Channel } from "pusher-js";
+import useCustomer, { CustomerOrdersData } from "../hooks/useCustomer";
 import usePusher from "../hooks/usePusher";
 import { useToast } from "@chakra-ui/react";
 
@@ -20,9 +13,6 @@ interface CustomerContextInterface {
   customer: CustomerOrdersData["customer"];
   setData: Dispatch<SetStateAction<CustomerOrdersData>>;
   orders: CustomerOrdersData["orders"];
-  progress: number;
-  handleProgress: (event: AxiosProgressEvent) => void;
-  // channel: Channel | null;
 }
 
 interface Props {
@@ -40,15 +30,12 @@ const defaultState: CustomerContextInterface = {
   },
   orders: [],
   setData: () => {},
-  progress: 0,
-  handleProgress: () => 0,
 };
 
 export const CustomerContext =
   createContext<CustomerContextInterface>(defaultState);
 
 export default function CustomerProvider({ children }: Props) {
-  const [progress, setProgress] = useState(defaultState.progress);
   const { data, setData } = useCustomer({
     customer: defaultState.customer,
     orders: defaultState.orders,
@@ -57,11 +44,6 @@ export default function CustomerProvider({ children }: Props) {
   useEffect(() => {
     if (data.customer._id) sessionStorage.setItem("isLoggedIn", "true");
   }, [data.customer._id]);
-
-  const handleProgress = (event: AxiosProgressEvent) => {
-    const progress = Math.round((event.loaded / event.total!) * 100);
-    setProgress(progress);
-  };
 
   const { pusher, channel } = usePusher(data.customer._id);
   const toast = useToast();
@@ -113,8 +95,6 @@ export default function CustomerProvider({ children }: Props) {
         customer: data.customer,
         orders: data.orders,
         setData,
-        progress,
-        handleProgress,
       }}
     >
       {children}

@@ -37,6 +37,6 @@ export interface CustomerOrdersData {
 }
 
 const useCustomer = (defaultValue: CustomerOrdersData) =>
-  useData<CustomerOrdersData>("get", "/customer", defaultValue);
+  useData<CustomerOrdersData>("/customer", defaultValue);
 
 export default useCustomer;
