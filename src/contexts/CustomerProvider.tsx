@@ -1,10 +1,4 @@
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  createContext,
-  useEffect,
-} from "react";
+import { ReactNode, createContext, useEffect } from "react";
 import useCustomer, { CustomerOrdersData } from "../hooks/useCustomer";
 import usePusher from "../hooks/usePusher";
 import { useToast } from "@chakra-ui/react";

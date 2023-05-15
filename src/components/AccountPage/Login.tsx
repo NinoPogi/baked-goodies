@@ -1,27 +1,22 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { useState } from "react";
 import {
   Link,
   VStack,
-  Heading,
   Input,
   Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
-  IconButton,
   InputGroup,
   InputRightElement,
   Box,
 } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useQueryClient } from "react-query";
-import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { CustomerContext } from "../../contexts/CustomerProvider";
-import apiClient from "../../services/api-client";
 import { useNavigate } from "react-router-dom";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
+import useMutate from "../../hooks/useMutate";
 
 const Login = () => {
-  const { orders } = useContext(CustomerContext);
   const {
     register,
     handleSubmit,
@@ -29,25 +24,11 @@ const Login = () => {
     reset,
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
-  const [serverError, setServerError] = useState("");
-  const queryClient = useQueryClient();
+  const { mutation: loginMutation, serverError } = useMutate("/customer/login");
   const navigate = useNavigate();
 
   const login = (form: FieldValues) => {
-    apiClient
-      .post("/customer/login", form)
-      .then((res) => {
-        queryClient.setQueryData("/customer", res.data);
-        reset();
-        sessionStorage.setItem("isLoggedIn", "true");
-      })
-      .catch((err) => {
-        if (err.response && err.response.data) {
-          setServerError(err.response.data);
-        } else {
-          console.error("Error logging in: ", err.message);
-        }
-      });
+    loginMutation.mutate(form);
   };
 
   return (

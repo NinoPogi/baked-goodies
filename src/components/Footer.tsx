@@ -5,7 +5,6 @@ import {
   Link,
   Stack,
   Text,
-  useColorModeValue,
   Image,
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
@@ -13,11 +12,7 @@ import logo from "../images/logo.svg";
 
 export default function Footer() {
   return (
-    <Box
-    // bg="pink.100"
-    // bg={useColorModeValue("gray.50", "gray.900")}
-    // color={useColorModeValue("gray.700", "gray.200")}
-    >
+    <Box>
       <Stack py={10} align="center">
         <Link as={ReactLink} to="/">
           <HStack>

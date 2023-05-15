@@ -2,13 +2,10 @@ import { BaseSyntheticEvent, useContext, useEffect, useState } from "react";
 import {
   VStack,
   Text,
-  Heading,
   Stack,
   Avatar,
   Input,
   Button,
-  useDisclosure,
-  Badge,
   Box,
   AvatarBadge,
 } from "@chakra-ui/react";

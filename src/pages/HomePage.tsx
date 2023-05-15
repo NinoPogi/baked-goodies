@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Heading, Text, Image, Stack, VStack } from "@chakra-ui/react";
-
 import CakeCarousel from "../components/HomePage/CakeCarousel";
 import CakeBrowse from "../components/HomePage/CakeBrowse";
 import getCroppedImageUrl from "../services/image-url";

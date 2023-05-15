@@ -6,23 +6,17 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
-  HStack,
-  IconButton,
   Input,
   InputGroup,
-  InputLeftElement,
   InputRightElement,
   Link,
-  Radio,
-  RadioGroup,
   VStack,
 } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useQueryClient } from "react-query";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { CustomerContext } from "../../contexts/CustomerProvider";
-import apiClient from "../../services/api-client";
 import { useNavigate } from "react-router-dom";
+import useMutate from "../../hooks/useMutate";
 
 const SignUp = () => {
   const { customer } = useContext(CustomerContext);
@@ -37,25 +31,11 @@ const SignUp = () => {
     pass: false,
     confirm: false,
   });
-  const [serverError, setServerError] = useState("");
-  const queryClient = useQueryClient();
+  const { mutation: signUpMutation, serverError } = useMutate("/customer");
   const navigate = useNavigate();
 
   const signUp = (form: FieldValues) => {
-    apiClient
-      .post("/customer", form)
-      .then((res) => {
-        queryClient.setQueryData("/customer", res.data);
-        reset();
-        sessionStorage.setItem("isLoggedIn", "true");
-      })
-      .catch((err) => {
-        if (err.response && err.response.data) {
-          setServerError(err.response.data);
-        } else {
-          console.error("Error signing up: ", err.message);
-        }
-      });
+    signUpMutation.mutate(form);
     navigate("/account");
   };
 

@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import {
   Box,
-  Heading,
   Text,
   Button,
   Accordion,
@@ -9,7 +8,6 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
-  Flex,
   Spacer,
   Stack,
   useColorModeValue,
