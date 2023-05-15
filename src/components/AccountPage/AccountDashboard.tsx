@@ -22,7 +22,6 @@ import { Order } from "../../hooks/useCustomer";
 
 const AccountProfile = () => {
   const { customer, orders } = useContext(CustomerContext);
-  const [historyOrders, setHistoryOrders] = useState([]);
   const [name, setName] = useState(customer.name);
   const [email, setEmail] = useState(customer.email);
   const [phone, setPhone] = useState(customer.phone);
@@ -30,10 +29,6 @@ const AccountProfile = () => {
   const [history, setHistory] = useState(false);
   const avatar = new FormData();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    apiClient.get("/order/history").then((res) => setHistoryOrders(res.data));
-  }, []);
 
   const handleFileUpload = (e: BaseSyntheticEvent) => {
     const file = e.target.files[0];
@@ -55,6 +50,8 @@ const AccountProfile = () => {
       .then(() => sessionStorage.removeItem("isLoggedIn"))
       .catch((err) => console.error("Error logging out: ", err.message));
   };
+
+  console.log(orders.filter((obj) => obj.isDone === false));
 
   return (
     <VStack>
@@ -82,9 +79,8 @@ const AccountProfile = () => {
         </Box>
         <Stack spacing={3}>
           <Text>Welcome, {customer?.name}</Text>
-          <Button onClick={() => setHistory(!history)}>
-            {history ? "Orders" : "History"}
-          </Button>
+          <Button onClick={() => setHistory(false)}>My Orders</Button>
+          <Button onClick={() => setHistory(true)}>History</Button>
           <Button onClick={updateProfile} isDisabled>
             Edit Account
           </Button>
@@ -98,9 +94,13 @@ const AccountProfile = () => {
           <Button onClick={logout}>Log Out</Button>
         </Stack>
         {history ? (
-          <OrderCart orders={historyOrders}>History</OrderCart>
+          <OrderCart orders={orders.filter((obj) => obj.isDone === true)}>
+            History
+          </OrderCart>
         ) : (
-          <OrderCart orders={orders}>Orders</OrderCart>
+          <OrderCart orders={orders.filter((obj) => obj.isDone === false)}>
+            Orders
+          </OrderCart>
         )}
       </Stack>
     </VStack>

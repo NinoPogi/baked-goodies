@@ -27,7 +27,8 @@ export interface Order {
   images: string[];
   status: string;
   endImage: string;
-  isPaid: string;
+  isPaid: boolean;
+  isDone: boolean;
 }
 
 export interface CustomerOrdersData {

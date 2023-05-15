@@ -63,53 +63,53 @@ export default function CustomerProvider({ children }: Props) {
     setProgress(progress);
   };
 
-  const { pusher, channel } = usePusher(data.customer._id);
-  const toast = useToast();
+  // const { pusher, channel } = usePusher(data.customer._id);
+  // const toast = useToast();
 
-  useEffect(() => {
-    channel.bind("customer-event", (data: any) => {
-      setData(data);
-    });
+  // useEffect(() => {
+  //   channel.bind("customer-event", (data: any) => {
+  //     setData(data);
+  //   });
 
-    channel.bind("order-event", ({ type, payload }: any) => {
-      const orders = [...data.orders];
+  //   channel.bind("order-event", ({ type, payload }: any) => {
+  //     const orders = [...data.orders];
 
-      if (type === "create") {
-        orders.push(payload);
-        toast({
-          title: "New order created!",
-          description: `Order ID: ${payload._id}`,
-          status: "success",
-          duration: 1000,
-          isClosable: true,
-        });
-      } else if (type === "update") {
-        const index = orders.findIndex((o) => o._id === payload._id);
-        if (index !== -1) {
-          orders[index] = payload;
-          toast({
-            title: "Order updated!",
-            description: `Order ID: ${payload._id}`,
-            status: "info",
-            duration: 3000,
-            isClosable: true,
-          });
-        }
-      } else if (type === "delete") {
-        const index = orders.findIndex((o) => o._id === payload._id);
-        if (index !== -1) {
-          orders.splice(index, 1);
-        }
-      }
+  //     if (type === "create") {
+  //       orders.push(payload);
+  //       toast({
+  //         title: "New order created!",
+  //         description: `Order ID: ${payload._id}`,
+  //         status: "success",
+  //         duration: 1000,
+  //         isClosable: true,
+  //       });
+  //     } else if (type === "update") {
+  //       const index = orders.findIndex((o) => o._id === payload._id);
+  //       if (index !== -1) {
+  //         orders[index] = payload;
+  //         toast({
+  //           title: "Order updated!",
+  //           description: `Order ID: ${payload._id}`,
+  //           status: "info",
+  //           duration: 3000,
+  //           isClosable: true,
+  //         });
+  //       }
+  //     } else if (type === "delete") {
+  //       const index = orders.findIndex((o) => o._id === payload._id);
+  //       if (index !== -1) {
+  //         orders.splice(index, 1);
+  //       }
+  //     }
 
-      setData({ customer: data.customer, orders });
+  //     setData({ customer: data.customer, orders });
 
-      return () => {
-        pusher.unsubscribe(`customer-${data.customer._id}`);
-        pusher.disconnect();
-      };
-    });
-  }, [channel, data, setData, toast]);
+  //     return () => {
+  //       pusher.unsubscribe(`customer-${data.customer._id}`);
+  //       pusher.disconnect();
+  //     };
+  //   });
+  // }, [channel, data, setData, toast]);
 
   return (
     <CustomerContext.Provider
