@@ -10,6 +10,7 @@ import {
   InputGroup,
   InputLeftElement,
   FormErrorMessage,
+  Textarea,
 } from "@chakra-ui/react";
 import { FieldErrors, UseFormRegister, useForm } from "react-hook-form";
 import { CustomerContext } from "../../../contexts/CustomerProvider";
@@ -32,21 +33,11 @@ const OrderDetails = ({ register, errors }: Props) => {
       />
       <FormControl>
         <FormLabel htmlFor="dedication">Dedication</FormLabel>
-        <Input
-          id="dedication"
-          type="textarea"
-          size="lg"
-          {...register("dedication")}
-        />
+        <Input id="dedication" size="lg" {...register("dedication")} />
       </FormControl>
       <FormControl>
         <FormLabel htmlFor="orderDetails">Describe Your Order</FormLabel>
-        <Input
-          id="orderDetails"
-          type="textarea"
-          size="lg"
-          {...register("orderDetails")}
-        />
+        <Textarea id="orderDetails" size="lg" {...register("orderDetails")} />
       </FormControl>
       <FormControl>
         {customer.paymentMethod ? null : (

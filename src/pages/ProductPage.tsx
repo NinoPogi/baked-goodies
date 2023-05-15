@@ -48,7 +48,6 @@ export type CakeCheckboxValues = {
 
 export type CakeFormValues = {
   type: string;
-  price: string | undefined;
   flavor: string;
   shape: string;
   size: string;
@@ -56,6 +55,7 @@ export type CakeFormValues = {
   bundle: string;
   upgrades: CakeCheckboxValues["upgrades"];
   addons: CakeCheckboxValues["addons"];
+  price: string | undefined;
 };
 
 const ProductPage = () => {
@@ -89,6 +89,7 @@ const ProductPage = () => {
     cake.radios.map((radio) => {
       const match = radio.defaultValue.match(/₱(\d+)/);
       match ? setRadio([parseInt(match[1])]) : null;
+      setValue(radio.name as keyof CakeFormValues, radio.defaultValue);
     });
     sessionStorage.setItem("initializeProduct", "true");
   }, []);

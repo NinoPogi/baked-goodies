@@ -100,6 +100,7 @@ const OrderCalendar = ({ stock, setValue }: Props) => {
         {isRush ? " (Rush Order) " : null}
       </Text>
       <Text>Slots Remaining: {stock}</Text>
+      <Text>*Max 3 reservation per day per customer</Text>
       <Text>*Reservation days prior 2months max</Text>
       <Text>*Rush reservation 2-3days lead time</Text>
     </Stack>

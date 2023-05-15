@@ -11,9 +11,9 @@ export interface Customer {
 
 export interface Order {
   _id: string;
+  customer: Customer;
   orderDate: string;
   promiseDate: string;
-  customer: Customer;
   type: string;
   flavor: string;
   shape: string;
@@ -25,9 +25,18 @@ export interface Order {
   dedication: string;
   orderDetails: string;
   images: string[];
+  comment: string;
   status: string;
+  price: string;
+  finalPrice: string;
+  feedback: {
+    rating: number;
+    comment: string;
+  };
+  endDate: string;
   endImage: string;
-  isPaid: boolean;
+  isRush: boolean;
+  isEdited: boolean;
   isDone: boolean;
 }
 

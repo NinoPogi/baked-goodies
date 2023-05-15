@@ -65,7 +65,6 @@ const ConfirmModal = ({
 
   getValues,
 }: Props) => {
-  const { handleProgress } = useContext(CustomerContext);
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
   const [isLoading, setIsLoading] = useState(false);
@@ -99,9 +98,7 @@ const ConfirmModal = ({
       paymentMethod: data?.paymentMethod,
     });
     await apiClient
-      .post("/order", orderForm, {
-        onUploadProgress: handleProgress,
-      })
+      .post("/order", orderForm)
       .then((res) => {
         setIsSubmitting(false);
         navigate("/account");

@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, useContext, useEffect, useState } from "react";
+import { BaseSyntheticEvent, useContext, useState } from "react";
 import {
   VStack,
   Text,
@@ -7,17 +7,20 @@ import {
   Input,
   Button,
   Box,
+  useColorModeValue,
   AvatarBadge,
 } from "@chakra-ui/react";
 import { useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { FaCamera } from "react-icons/fa";
 import { CustomerContext, defaultState } from "../../contexts/CustomerProvider";
 import apiClient from "../../services/api-client";
 import OrderCart from "./OrderCart";
-import { useNavigate } from "react-router-dom";
-import { FaCamera } from "react-icons/fa";
 import getCroppedImageUrl from "../../services/image-url";
+import { WindowSizeContext } from "../../contexts/WindowSizeProvider";
 
 const AccountProfile = () => {
+  const { windowSize } = useContext(WindowSizeContext);
   const { customer, orders } = useContext(CustomerContext);
   const [name, setName] = useState(customer.name);
   const [email, setEmail] = useState(customer.email);
@@ -98,15 +101,58 @@ const AccountProfile = () => {
           </Button>
           <Button onClick={logout}>Log Out</Button>
         </Stack>
-        {history ? (
-          <OrderCart orders={orders.filter((obj) => obj.isDone === true)}>
-            History
-          </OrderCart>
-        ) : (
-          <OrderCart orders={orders.filter((obj) => obj.isDone === false)}>
-            My Orders
-          </OrderCart>
-        )}
+        <Stack
+          width={{ base: windowSize.width - 50, xl: windowSize.width - 400 }}
+          height={windowSize.height}
+          overflow="auto"
+          borderRadius="20px"
+          background={useColorModeValue("white", "gray.600")}
+          padding="20px"
+        >
+          {history ? (
+            <OrderCart
+              orders={orders
+                .filter((obj) => obj.isDone === true)
+                .sort((a, b) => {
+                  const dateA = new Date(a.orderDate);
+                  const dateB = new Date(b.orderDate);
+                  if (dateA > dateB) {
+                    return -1;
+                  } else if (dateA > dateB) {
+                    return 1;
+                  } else {
+                    return 0;
+                  }
+                })}
+            >
+              History
+            </OrderCart>
+          ) : (
+            <OrderCart
+              orders={orders
+                .filter((obj) => obj.isDone === false)
+                .sort((a, b) => {
+                  if (a.isRush && !b.isRush) {
+                    return -1;
+                  } else if (!a.isRush && b.isRush) {
+                    return 1;
+                  } else {
+                    const dateA = new Date(a.orderDate);
+                    const dateB = new Date(b.orderDate);
+                    if (dateA > dateB) {
+                      return -1;
+                    } else if (dateA > dateB) {
+                      return 1;
+                    } else {
+                      return 0;
+                    }
+                  }
+                })}
+            >
+              My Orders
+            </OrderCart>
+          )}
+        </Stack>
       </Stack>
     </VStack>
   );

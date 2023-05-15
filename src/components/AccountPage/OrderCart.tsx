@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Text,
@@ -10,13 +10,20 @@ import {
   AccordionPanel,
   Spacer,
   Stack,
-  useColorModeValue,
   ButtonGroup,
   Image,
   HStack,
+  Badge,
+  BadgeProps,
+  useColorModeValue,
 } from "@chakra-ui/react";
+import { BsArrowRight, BsCalendarEvent, BsCalendarCheck } from "react-icons/bs";
+import { GiChemicalDrop, GiCakeSlice } from "react-icons/gi";
+import { BiIdCard } from "react-icons/bi";
+import { TfiRuler } from "react-icons/tfi";
+import { MdSettings, MdAdd } from "react-icons/md";
+import { IoShapesOutline } from "react-icons/io5";
 import apiClient from "../../services/api-client";
-import { WindowSizeContext } from "../../contexts/WindowSizeProvider";
 import { Order } from "../../hooks/useCustomer";
 
 interface Props {
@@ -25,8 +32,17 @@ interface Props {
 }
 
 const OrderCart = ({ orders, children }: Props) => {
-  const { windowSize } = useContext(WindowSizeContext);
   const [expandedOrderId, setExpandedOrderId] = useState<string>("");
+  const bgAccordion = useColorModeValue("pink.50", "gray.800");
+
+  const statusBadge: { [key: string]: BadgeProps } = {
+    processing: { colorScheme: "green", children: "Processing" },
+    decline: { colorScheme: "red", children: "Declined" },
+    canceled: { colorScheme: "yellow", children: "Canceled" },
+    accepted: { colorScheme: "green", children: "Accepted" },
+    pickup: { colorScheme: "pink", children: "Ready 4 Pickup" },
+    done: { colorScheme: "gray", children: "Done" },
+  };
 
   const toggleAccordion = (orderId: string) => {
     if (expandedOrderId === orderId) {
@@ -46,32 +62,48 @@ const OrderCart = ({ orders, children }: Props) => {
       : `${hoursDiff} hours from now`;
   };
 
+  const getTimeAfter = (startDate: string, endDate: string) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const timeDiff = Math.abs(end.getTime() - start.getTime());
+    const diffInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+    return `${diffInDays} day${diffInDays !== 1 ? "s" : ""} after`;
+  };
+
   return (
-    <Stack
-      width={{ base: windowSize.width - 50, xl: windowSize.width - 400 }}
-      height={windowSize.height}
-      overflow="auto"
-      borderRadius="20px"
-      background={useColorModeValue("white", "gray.600")}
-      padding="20px"
-    >
+    <Box>
       <Text mb="4">{children}</Text>
       {orders.length > 0 ? (
         <Accordion allowToggle>
           {orders.map((order) => (
-            <AccordionItem key={order._id} border="none">
+            <AccordionItem
+              key={order._id}
+              border="none"
+              background={bgAccordion}
+              borderRadius="10px"
+              marginY="10px"
+            >
               <AccordionButton
                 py="4"
                 onClick={() => toggleAccordion(order._id)}
               >
                 <Box flex="1" textAlign="left">
                   <HStack>
-                    {order.type && (
-                      <Text fontWeight="bold">Type: {order.type}</Text>
+                    {order.dedication ? (
+                      <Text fontWeight="bold">{order.dedication}</Text>
+                    ) : (
+                      order.type && <Text fontWeight="bold">{order.type}</Text>
                     )}
+                    {order.status && <Badge {...statusBadge[order.status]} />}
+                    {order.status !== "pickup" ? (
+                      <>
+                        {order.isEdited && <Badge>Edited</Badge>}
+                        {order.isRush && <Badge>Rush</Badge>}
+                      </>
+                    ) : null}
                     <Spacer />
                     {order.orderDate && (
-                      <Text>
+                      <Text paddingRight="20px">
                         {(() => {
                           const minute = 60 * 1000;
                           const hour = 60 * minute;
@@ -110,72 +142,125 @@ const OrderCart = ({ orders, children }: Props) => {
                       </Text>
                     )}
                   </HStack>
-                  {order.status && <Text>Status: {order.status}</Text>}
-                  {order.orderDate && (
-                    <Text>
-                      Date:{" "}
-                      {new Date(order.orderDate).toLocaleString([], {
-                        // year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </Text>
+                  <HStack>
+                    <BsCalendarEvent />
+                    {order.orderDate && (
+                      <Text>
+                        {new Date(order.orderDate).toLocaleString([], {
+                          // year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </Text>
+                    )}
+                    <BsArrowRight />
+                    {order.promiseDate && (
+                      <Text>
+                        {new Date(order.promiseDate).toLocaleString([], {
+                          // year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}{" "}
+                      </Text>
+                    )}
+                    <Spacer />
+                    <HStack paddingRight="20px">
+                      <Text> {getTimeDifference(order.promiseDate)}</Text>
+                      <BsCalendarCheck />
+                    </HStack>
+                  </HStack>
+                  {order.dedication
+                    ? order.type && (
+                        <HStack>
+                          <GiCakeSlice />
+                          <Text>{order.type}</Text>
+                        </HStack>
+                      )
+                    : null}
+                  {order.size && (
+                    <HStack>
+                      <TfiRuler />
+                      <Text>{order.size.replace(/^(.*)₱(.).*/, "$1")}</Text>
+                    </HStack>
                   )}
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
               <AccordionPanel pb="4">
                 <Box>
-                  {order.promiseDate && (
-                    <Text>
-                      Pickup Date:{" "}
-                      {new Date(order.promiseDate).toLocaleString([], {
-                        // year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}{" "}
-                      ({getTimeDifference(order.promiseDate)})
-                    </Text>
+                  {order._id && (
+                    <HStack>
+                      <BiIdCard />
+                      <Text>{order._id}</Text>
+                    </HStack>
                   )}
-                  {order._id && <Text>Order ID: {order._id}</Text>}
-                  {order.dedication && (
-                    <Text>Dedication: {order.dedication}</Text>
+                  {order.flavor && (
+                    <HStack>
+                      <GiChemicalDrop />
+                      <Text> {order.flavor}</Text>
+                    </HStack>
                   )}
-                  {order.orderDetails && (
-                    <Text>Order Details: {order.orderDetails}</Text>
+                  {order.shape && (
+                    <HStack>
+                      <IoShapesOutline />
+                      <Text>{order.shape}</Text>
+                    </HStack>
                   )}
-                  {order.flavor && <Text>Flavor: {order.flavor}</Text>}
-                  {order.shape && <Text>Shape: {order.shape}</Text>}
+
                   {order.digits && <Text>Digits: {order.digits}</Text>}
                   {order.bundle && <Text>Bundle: {order.bundle}</Text>}
                   {order.upgrades.length !== 0 ? (
                     <>
-                      <Text>Upgrade/s: </Text>
-                      <ul>
+                      <Text>Upgrade/s:</Text>
+                      <Stack>
                         {order.upgrades.map((up, index) => (
-                          <li key={index}>{up}</li>
+                          <HStack key={index}>
+                            <MdSettings />
+                            <Text>{up}</Text>
+                          </HStack>
                         ))}
-                      </ul>
+                      </Stack>
                     </>
                   ) : (
                     <Text>Upgrade/s: None</Text>
                   )}
                   {order.addons.length !== 0 ? (
                     <>
-                      <Text>Addon/s: </Text>
-                      <ul>
+                      <Text>Addon/s:</Text>
+                      <Stack>
                         {order.addons.map((add, index) => (
-                          <li key={index}>{add}</li>
+                          <HStack key={index}>
+                            <MdAdd />
+                            <Text>{add}</Text>
+                          </HStack>
                         ))}
-                      </ul>
+                      </Stack>
                     </>
                   ) : (
                     <Text>Addon/s: None</Text>
                   )}
-                  {order.endImage ? (
+                  {order.orderDetails && (
+                    <Text>Order Details: {order.orderDetails}</Text>
+                  )}
+                  {order.endImage && order.endDate ? (
                     <>
+                      <Text>
+                        Date Finished:{" "}
+                        {new Date(order.endDate).toLocaleString([], {
+                          // year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                        {" ( "} {getTimeAfter(order.orderDate, order.endDate)}
+                        {" ) "}
+                      </Text>
                       <Image src={order.endImage} boxSize="150px" />
-                      <Text>Payment QR Code HERE</Text>
+                    </>
+                  ) : null}
+                  {order.finalPrice ? (
+                    <>
+                      <Text>Price to Pay: {order.finalPrice}</Text>
+                      <Text>Payment QR Code HERE or Phone Number</Text>
                     </>
                   ) : null}
                   <ButtonGroup>
@@ -225,7 +310,7 @@ const OrderCart = ({ orders, children }: Props) => {
       ) : (
         <Text>No orders found.</Text>
       )}
-    </Stack>
+    </Box>
   );
 };
 
