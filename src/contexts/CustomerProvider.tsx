@@ -67,15 +67,9 @@ export default function CustomerProvider({ children }: Props) {
   const toast = useToast();
 
   useEffect(() => {
-    channel.bind("customer-event", (data: any) => {
-      setData(data);
-    });
-
-    channel.bind("order-event", ({ type, payload }: any) => {
+    const handleOrderEvent = ({ type, payload }: any) => {
       const orders = [...data.orders];
-
       if (type === "create") {
-        orders.push(payload);
         toast({
           title: "New order created!",
           description: `Order ID: ${payload._id}`,
@@ -83,6 +77,7 @@ export default function CustomerProvider({ children }: Props) {
           duration: 1000,
           isClosable: true,
         });
+        orders.push(payload);
       } else if (type === "update") {
         const index = orders.findIndex((o) => o._id === payload._id);
         if (index !== -1) {
@@ -103,12 +98,13 @@ export default function CustomerProvider({ children }: Props) {
       }
 
       setData({ customer: data.customer, orders });
+    };
 
-      return () => {
-        pusher.unsubscribe(`customer-${data.customer._id}`);
-        pusher.disconnect();
-      };
-    });
+    channel.bind("order-event", handleOrderEvent);
+
+    return () => {
+      channel.unbind("order-event", handleOrderEvent);
+    };
   }, [channel, data, setData, toast]);
 
   return (
