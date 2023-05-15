@@ -37,6 +37,16 @@ const OrderCart = ({ orders, children }: Props) => {
     }
   };
 
+  const getTimeDifference = (pickupDate: string) => {
+    const now = new Date();
+    const timeDiff = new Date(pickupDate).getTime() - now.getTime();
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    const hoursDiff = Math.ceil(timeDiff / (1000 * 3600));
+    return daysDiff > 0
+      ? `${daysDiff} days from now`
+      : `${hoursDiff} hours from now`;
+  };
+
   return (
     <Stack
       width={{ base: windowSize.width - 50, xl: windowSize.width - 400 }}
@@ -119,7 +129,8 @@ const OrderCart = ({ orders, children }: Props) => {
                         // year: "numeric",
                         month: "long",
                         day: "numeric",
-                      })}
+                      })}{" "}
+                      ({getTimeDifference(order.promiseDate)})
                     </Text>
                   )}
                   {order._id && <Text>Order ID: {order._id}</Text>}
@@ -164,9 +175,6 @@ const OrderCart = ({ orders, children }: Props) => {
                     </>
                   ) : null}
                   <ButtonGroup>
-                    {/* {order.status === "pickup" ? (
-                      <Button isDisabled>View Results</Button>
-                    ) : null} */}
                     {order.status !== "canceled" &&
                     order.status === "processing" ? (
                       <Button

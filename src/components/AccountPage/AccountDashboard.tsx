@@ -100,7 +100,7 @@ const AccountProfile = () => {
           </OrderCart>
         ) : (
           <OrderCart orders={orders.filter((obj) => obj.isDone === false)}>
-            Orders
+            My Orders
           </OrderCart>
         )}
       </Stack>
