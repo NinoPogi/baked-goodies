@@ -79,6 +79,9 @@ const AccountProfile = () => {
         </Box>
         <Stack spacing={3}>
           <Text>Welcome, {customer?.name}</Text>
+          <Button onClick={updateProfile} isDisabled>
+            Account Info
+          </Button>
           <Button onClick={() => setHistory(false)}>My Orders</Button>
           <Button onClick={() => setHistory(true)}>History</Button>
           <Button onClick={updateProfile} isDisabled>
