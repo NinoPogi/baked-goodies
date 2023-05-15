@@ -184,7 +184,7 @@ const OrderCart = ({ orders, children }: Props) => {
                     {order.status === "pickup" ? (
                       <Button isDisabled>Upload Proof of Payment</Button>
                     ) : null}
-                    {order.status === "decline" ? (
+                    {order.status === "decline" && order.isDone === false ? (
                       <Button
                         colorScheme="red"
                         onClick={() => {
