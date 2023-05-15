@@ -40,7 +40,7 @@ const OrderCart = ({ orders, children }: Props) => {
     decline: { colorScheme: "red", children: "Declined" },
     canceled: { colorScheme: "yellow", children: "Canceled" },
     accepted: { colorScheme: "green", children: "Accepted" },
-    pickup: { colorScheme: "pink", children: "Ready 4 Pickup" },
+    pickup: { colorScheme: "pink", children: "Ready" },
     done: { colorScheme: "gray", children: "Done" },
   };
 
@@ -95,7 +95,8 @@ const OrderCart = ({ orders, children }: Props) => {
                       order.type && <Text fontWeight="bold">{order.type}</Text>
                     )}
                     {order.status && <Badge {...statusBadge[order.status]} />}
-                    {order.status !== "pickup" ? (
+                    {order.status !== "pickup" &&
+                    order.status !== "canceled" ? (
                       <>
                         {order.isEdited && <Badge>Edited</Badge>}
                         {order.isRush && <Badge>Rush</Badge>}
@@ -164,10 +165,14 @@ const OrderCart = ({ orders, children }: Props) => {
                       </Text>
                     )}
                     <Spacer />
-                    <HStack paddingRight="20px">
-                      <Text> {getTimeDifference(order.promiseDate)}</Text>
-                      <BsCalendarCheck />
-                    </HStack>
+                    {order.status !== "pickup" ? (
+                      <HStack paddingRight="20px">
+                        <Text> {getTimeDifference(order.promiseDate)}</Text>
+                        <BsCalendarCheck />
+                      </HStack>
+                    ) : (
+                      <Badge paddingRight="20px">Ready 4 Pickup</Badge>
+                    )}
                   </HStack>
                   {order.dedication
                     ? order.type && (
@@ -242,28 +247,35 @@ const OrderCart = ({ orders, children }: Props) => {
                   {order.orderDetails && (
                     <Text>Order Details: {order.orderDetails}</Text>
                   )}
-                  {order.endImage && order.endDate ? (
-                    <>
-                      <Text>
-                        Date Finished:{" "}
-                        {new Date(order.endDate).toLocaleString([], {
-                          // year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-                        {" ( "} {getTimeAfter(order.orderDate, order.endDate)}
-                        {" ) "}
-                      </Text>
-                      <Image src={order.endImage} boxSize="150px" />
-                    </>
+                  {order.endDate ? (
+                    <Text>
+                      Date Finished:{" "}
+                      {new Date(order.endDate).toLocaleString([], {
+                        // year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                      {" ( "} {getTimeAfter(order.orderDate, order.endDate)}
+                      {" ) "}
+                    </Text>
                   ) : null}
-                  {order.finalPrice ? (
-                    <>
-                      <Text>Price to Pay: {order.finalPrice}</Text>
-                      <Text>Payment QR Code HERE or Phone Number</Text>
-                    </>
-                  ) : null}
-                  <ButtonGroup>
+                  <HStack overflow="auto">
+                    {order.endImage ? (
+                      <Image
+                        src={order.endImage}
+                        boxSize="250px"
+                        borderRadius="20px"
+                      />
+                    ) : null}
+                    {order.finalPrice ? (
+                      <Image
+                        src={order.finalPrice}
+                        boxSize="250px"
+                        borderRadius="20px"
+                      />
+                    ) : null}
+                  </HStack>
+                  <ButtonGroup marginTop="20px">
                     {order.status !== "canceled" &&
                     order.status === "processing" ? (
                       <Button
@@ -280,6 +292,16 @@ const OrderCart = ({ orders, children }: Props) => {
                     ) : null}
                     {order.status === "pickup" ? (
                       <Button isDisabled>Upload Proof of Payment</Button>
+                    ) : null}
+                    {order.status === "canceled" ? (
+                      <Button
+                        colorScheme="green"
+                        onClick={() => {
+                          apiClient.patch(`/order/${order._id}/restore`);
+                        }}
+                      >
+                        Restore
+                      </Button>
                     ) : null}
                     {order.status === "decline" && order.isDone === false ? (
                       <Button
@@ -300,6 +322,9 @@ const OrderCart = ({ orders, children }: Props) => {
                       >
                         Delete
                       </Button>
+                    ) : null}
+                    {order.status === "done" ? (
+                      <Button isDisabled>Feedback</Button>
                     ) : null}
                   </ButtonGroup>
                 </Box>
