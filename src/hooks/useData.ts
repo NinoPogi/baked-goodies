@@ -1,40 +1,55 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
 import { AxiosRequestConfig, AxiosError } from "axios";
 import apiClient from "../services/api-client";
+import { useState, useEffect } from "react";
 
 const useData = <T>(
   endpoint: string,
   defaultValue: T,
   requestConfig?: AxiosRequestConfig,
-  deps?: any[],
   headers?: Record<string, string>
 ) => {
   const [data, setData] = useState<T>(defaultValue);
 
-  useEffect(
-    () => {
-      const abortController = new AbortController();
+  useEffect(() => {
+    setData(defaultValue);
+  }, []);
 
-      apiClient
-        .get<T>(endpoint, {
-          signal: abortController.signal,
-          ...requestConfig,
-          headers: headers || {},
-        })
-        .then((res) => {
-          setData(res.data);
-        })
-        .catch((err: AxiosError) => {
-          if (err.message === "Request aborted") return;
-        });
-      return () => {
-        abortController.abort();
-      };
+  const {
+    data: queryData,
+    isLoading,
+    error,
+    status,
+  } = useQuery<T>(
+    endpoint,
+    async () => {
+      const response = await apiClient.get<T>(endpoint, {
+        ...requestConfig,
+        headers: headers || {},
+      });
+
+      return response.data;
     },
-    deps ? [...deps] : []
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchInterval: false,
+      retry: 3,
+      onError: (error: unknown) => {
+        const axiosError = error as AxiosError;
+
+        if (axiosError.message === "Request aborted") return;
+      },
+    }
   );
 
-  return { data, setData };
+  useEffect(() => {
+    if (queryData) {
+      setData(queryData as T);
+    }
+  }, [queryData]);
+
+  return { data, isLoading, error, status };
 };
 
 export default useData;

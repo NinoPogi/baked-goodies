@@ -18,18 +18,18 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { CustomerContext } from "../../contexts/CustomerProvider";
 import apiClient from "../../services/api-client";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const { customer, setData } = useContext(CustomerContext);
+  const { customer } = useContext(CustomerContext);
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    setValue,
     getValues,
     reset,
   } = useForm();
@@ -38,13 +38,14 @@ const SignUp = () => {
     confirm: false,
   });
   const [serverError, setServerError] = useState("");
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const signUp = (form: FieldValues) => {
     apiClient
       .post("/customer", form)
       .then((res) => {
-        setData(res.data);
+        queryClient.setQueryData("/customer", res.data);
         reset();
         sessionStorage.setItem("isLoggedIn", "true");
       })

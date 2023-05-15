@@ -12,13 +12,13 @@ import {
   Box,
   AvatarBadge,
 } from "@chakra-ui/react";
-import { CustomerContext } from "../../contexts/CustomerProvider";
+import { useQueryClient } from "react-query";
+import { CustomerContext, defaultState } from "../../contexts/CustomerProvider";
 import apiClient from "../../services/api-client";
 import OrderCart from "./OrderCart";
 import { useNavigate } from "react-router-dom";
 import { FaCamera } from "react-icons/fa";
 import getCroppedImageUrl from "../../services/image-url";
-import { Order } from "../../hooks/useCustomer";
 
 const AccountProfile = () => {
   const { customer, orders } = useContext(CustomerContext);
@@ -29,6 +29,7 @@ const AccountProfile = () => {
   const [history, setHistory] = useState(false);
   const avatar = new FormData();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleFileUpload = (e: BaseSyntheticEvent) => {
     const file = e.target.files[0];
@@ -47,7 +48,13 @@ const AccountProfile = () => {
   const logout = () => {
     apiClient
       .get("/customer/logout")
-      .then(() => sessionStorage.removeItem("isLoggedIn"))
+      .then(() => {
+        queryClient.setQueryData("/customer", {
+          customer: defaultState.customer,
+          orders: defaultState.orders,
+        });
+        sessionStorage.removeItem("isLoggedIn");
+      })
       .catch((err) => console.error("Error logging out: ", err.message));
   };
 

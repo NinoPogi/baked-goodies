@@ -14,13 +14,14 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { CustomerContext } from "../../contexts/CustomerProvider";
 import apiClient from "../../services/api-client";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { orders, setData } = useContext(CustomerContext);
+  const { orders } = useContext(CustomerContext);
   const {
     register,
     handleSubmit,
@@ -29,13 +30,14 @@ const Login = () => {
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState("");
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const login = (form: FieldValues) => {
     apiClient
       .post("/customer/login", form)
       .then((res) => {
-        setData(res.data);
+        queryClient.setQueryData("/customer", res.data);
         reset();
         sessionStorage.setItem("isLoggedIn", "true");
       })

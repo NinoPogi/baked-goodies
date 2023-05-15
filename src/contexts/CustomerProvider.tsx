@@ -8,10 +8,10 @@ import {
 import useCustomer, { CustomerOrdersData } from "../hooks/useCustomer";
 import usePusher from "../hooks/usePusher";
 import { useToast } from "@chakra-ui/react";
+import { useQueryClient } from "react-query";
 
 interface CustomerContextInterface {
   customer: CustomerOrdersData["customer"];
-  setData: Dispatch<SetStateAction<CustomerOrdersData>>;
   orders: CustomerOrdersData["orders"];
 }
 
@@ -19,7 +19,7 @@ interface Props {
   children: ReactNode;
 }
 
-const defaultState: CustomerContextInterface = {
+export const defaultState: CustomerContextInterface = {
   customer: {
     _id: "",
     avatar: "",
@@ -29,14 +29,13 @@ const defaultState: CustomerContextInterface = {
     paymentMethod: "",
   },
   orders: [],
-  setData: () => {},
 };
 
 export const CustomerContext =
   createContext<CustomerContextInterface>(defaultState);
 
 export default function CustomerProvider({ children }: Props) {
-  const { data, setData } = useCustomer({
+  const { data, isLoading, error, status } = useCustomer({
     customer: defaultState.customer,
     orders: defaultState.orders,
   });
@@ -47,6 +46,8 @@ export default function CustomerProvider({ children }: Props) {
 
   const { pusher, channel } = usePusher(data.customer._id);
   const toast = useToast();
+
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const handleOrderEvent = ({ type, payload }: any) => {
@@ -78,8 +79,10 @@ export default function CustomerProvider({ children }: Props) {
           orders.splice(index, 1);
         }
       }
-
-      setData({ customer: data.customer, orders });
+      queryClient.setQueryData("/customer", {
+        customer: data.customer,
+        orders,
+      });
     };
 
     channel.bind("order-event", handleOrderEvent);
@@ -87,14 +90,13 @@ export default function CustomerProvider({ children }: Props) {
     return () => {
       channel.unbind("order-event", handleOrderEvent);
     };
-  }, [channel, data, setData, toast]);
+  }, [data]);
 
   return (
     <CustomerContext.Provider
       value={{
-        customer: data.customer,
-        orders: data.orders,
-        setData,
+        customer: data?.customer,
+        orders: data?.orders,
       }}
     >
       {children}
