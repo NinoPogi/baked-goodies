@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Box,
   Text,
@@ -25,6 +25,7 @@ import { MdSettings, MdAdd } from "react-icons/md";
 import { IoShapesOutline } from "react-icons/io5";
 import apiClient from "../../services/api-client";
 import { Order } from "../../hooks/useCustomer";
+import { CustomerContext } from "../../contexts/CustomerProvider";
 
 interface Props {
   orders: Order[];
@@ -32,6 +33,7 @@ interface Props {
 }
 
 const OrderCart = ({ orders, children }: Props) => {
+  const { customer } = useContext(CustomerContext);
   const [expandedOrderId, setExpandedOrderId] = useState<string>("");
   const bgAccordion = useColorModeValue("pink.50", "gray.800");
 
@@ -40,8 +42,8 @@ const OrderCart = ({ orders, children }: Props) => {
     decline: { colorScheme: "red", children: "Declined" },
     canceled: { colorScheme: "yellow", children: "Canceled" },
     accepted: { colorScheme: "green", children: "Accepted" },
-    pickup: { colorScheme: "pink", children: "Ready" },
-    done: { colorScheme: "gray", children: "Done" },
+    pickup: { colorScheme: "pink", children: "Ready 4 Pickup" },
+    paid: { colorScheme: "gray", children: "Paid" },
   };
 
   const toggleAccordion = (orderId: string) => {
@@ -170,9 +172,7 @@ const OrderCart = ({ orders, children }: Props) => {
                         <Text> {getTimeDifference(order.promiseDate)}</Text>
                         <BsCalendarCheck />
                       </HStack>
-                    ) : (
-                      <Badge paddingRight="20px">Ready 4 Pickup</Badge>
-                    )}
+                    ) : null}
                   </HStack>
                   {order.dedication
                     ? order.type && (
@@ -259,22 +259,26 @@ const OrderCart = ({ orders, children }: Props) => {
                       {" ) "}
                     </Text>
                   ) : null}
-                  <HStack overflow="auto">
-                    {order.endImage ? (
-                      <Image
-                        src={order.endImage}
-                        boxSize="250px"
-                        borderRadius="20px"
-                      />
-                    ) : null}
-                    {order.finalPrice ? (
+
+                  {order.finalPrice ? (
+                    customer.paymentMethod === "Cash on Pickup" ? (
+                      <Text>{order.finalPrice}</Text>
+                    ) : (
                       <Image
                         src={order.finalPrice}
                         boxSize="250px"
                         borderRadius="20px"
                       />
-                    ) : null}
-                  </HStack>
+                    )
+                  ) : null}
+                  {order.endImage ? (
+                    <Image
+                      src={order.endImage}
+                      boxSize="250px"
+                      borderRadius="20px"
+                    />
+                  ) : null}
+
                   <ButtonGroup marginTop="20px">
                     {order.status !== "canceled" &&
                     order.status === "processing" ? (
@@ -323,7 +327,7 @@ const OrderCart = ({ orders, children }: Props) => {
                         Delete
                       </Button>
                     ) : null}
-                    {order.status === "done" ? (
+                    {order.status === "paid" ? (
                       <Button isDisabled>Feedback</Button>
                     ) : null}
                   </ButtonGroup>

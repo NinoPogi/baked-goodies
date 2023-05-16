@@ -2,9 +2,10 @@
   font-family: "Pacifico";
   src: url("./fonts/Pacifico-Regular.ttf") format("truetype");
 }
-* {
+
+/* * {
   -ms-overflow-style: none;
 }
 ::-webkit-scrollbar {
   display: none;
-}
+} */

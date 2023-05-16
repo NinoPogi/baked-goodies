@@ -13,8 +13,7 @@ const HomePage = () => {
     <VStack spacing={10}>
       <CakeCarousel />
 
-      <Heading fontSize="2xl">BROWSE CAKES</Heading>
-      {/* <CakeBrowse /> */}
+      <CakeBrowse />
 
       <Text fontSize="2xl">ORDERING PROCESS GUIDE | PRE ORDERS ONLY</Text>
 
