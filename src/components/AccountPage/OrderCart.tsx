@@ -278,7 +278,7 @@ const OrderCart = ({ orders, children }: Props) => {
                       borderRadius="20px"
                     />
                   ) : null}
-
+                  {order.comment && <Text>{order.comment}</Text>}
                   <ButtonGroup marginTop="20px">
                     {order.status !== "canceled" &&
                     order.status === "processing" ? (

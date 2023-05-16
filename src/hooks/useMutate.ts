@@ -22,7 +22,7 @@ const useMutate = (endpoint: string) => {
     },
   });
 
-  return { mutation, serverError };
+  return { mutation, serverError, setServerError };
 };
 
 export default useMutate;

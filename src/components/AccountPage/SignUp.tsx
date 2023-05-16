@@ -13,6 +13,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
+import axios, { AxiosError } from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { CustomerContext } from "../../contexts/CustomerProvider";
 import { useNavigate } from "react-router-dom";
@@ -31,12 +32,31 @@ const SignUp = () => {
     pass: false,
     confirm: false,
   });
-  const { mutation: signUpMutation, serverError } = useMutate("/customer");
+  const {
+    mutation: signUpMutation,
+    serverError,
+    setServerError,
+  } = useMutate("/customer");
   const navigate = useNavigate();
 
-  const signUp = (form: FieldValues) => {
-    signUpMutation.mutate(form);
-    navigate("/account");
+  const signUp = async (form: FieldValues) => {
+    const apiKey = import.meta.env.VITE_ZEROBOUNCE_KEY!;
+    const apiUrl = `https://api.zerobounce.net/v2/validate?api_key=${apiKey}&email=${encodeURIComponent(
+      form.email
+    )}`;
+
+    try {
+      const response = await axios.get(apiUrl);
+      if (response.data.status === "Valid") {
+        signUpMutation.mutate(form);
+        navigate("/account");
+      } else {
+        setServerError("Email is invalid");
+      }
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      console.error("An error occurred:", axiosError.message);
+    }
   };
 
   if (customer._id) {
