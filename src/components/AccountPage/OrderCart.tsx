@@ -105,7 +105,13 @@ const OrderCart = ({ orders, children }: Props) => {
                     ) : (
                       order.type && <Text fontWeight="bold">{order.type}</Text>
                     )}
-                    {order.status && <Badge {...statusBadge[order.status]} />}
+                    {order.status && (
+                      <Badge
+                        colorScheme={statusBadge[order.status].colorScheme}
+                      >
+                        {statusBadge[order.status].children}
+                      </Badge>
+                    )}
                     {order.status !== "pickup" &&
                     order.status !== "canceled" ? (
                       <>
