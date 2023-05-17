@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { BaseSyntheticEvent, useContext, useState } from "react";
 import {
   Box,
   Text,
@@ -16,6 +16,13 @@ import {
   Badge,
   BadgeProps,
   useColorModeValue,
+  useDisclosure,
+  Modal,
+  ModalHeader,
+  ModalCloseButton,
+  ModalContent,
+  ModalBody,
+  Input,
 } from "@chakra-ui/react";
 import { BsArrowRight, BsCalendarEvent, BsCalendarCheck } from "react-icons/bs";
 import { GiChemicalDrop, GiCakeSlice } from "react-icons/gi";
@@ -33,9 +40,11 @@ interface Props {
 }
 
 const OrderCart = ({ orders, children }: Props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { customer } = useContext(CustomerContext);
   const [expandedOrderId, setExpandedOrderId] = useState<string>("");
   const bgAccordion = useColorModeValue("pink.50", "gray.800");
+  const payment = new FormData();
 
   const statusBadge: { [key: string]: BadgeProps } = {
     processing: { colorScheme: "green", children: "Processing" },
@@ -43,7 +52,7 @@ const OrderCart = ({ orders, children }: Props) => {
     canceled: { colorScheme: "yellow", children: "Canceled" },
     accepted: { colorScheme: "green", children: "Accepted" },
     pickup: { colorScheme: "pink", children: "Ready 4 Pickup" },
-    paid: { colorScheme: "gray", children: "Paid" },
+    paid: { colorScheme: "green", children: "Ready 4 Pickup" },
   };
 
   const toggleAccordion = (orderId: string) => {
@@ -292,10 +301,26 @@ const OrderCart = ({ orders, children }: Props) => {
                       </Button>
                     ) : null}
                     {order.status === "processing" ? (
-                      <Button isDisabled>Edit Order</Button>
+                      <Button onClick={onOpen}>Edit Order</Button>
                     ) : null}
                     {order.status === "pickup" ? (
-                      <Button isDisabled>Upload Proof of Payment</Button>
+                      <>
+                        <Text>Upload Proof of Payment:</Text>
+                        <Input
+                          type="file"
+                          accept=".jpg,.jpeg,.png"
+                          onClick={(e: BaseSyntheticEvent) => {
+                            const file = e.target.files[0];
+                            payment.append("imageUpload", file);
+                            apiClient.post("/upload", payment).then((res) =>
+                              apiClient.put(`/order/server/${order._id}`, {
+                                paymentImage: res.data[0],
+                                status: "paid",
+                              })
+                            );
+                          }}
+                        />
+                      </>
                     ) : null}
                     {order.status === "canceled" ? (
                       <Button
@@ -339,6 +364,14 @@ const OrderCart = ({ orders, children }: Props) => {
       ) : (
         <Text>No orders found.</Text>
       )}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalContent>
+          <ModalHeader>
+            <ModalCloseButton />
+          </ModalHeader>
+          <ModalBody>Hello</ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

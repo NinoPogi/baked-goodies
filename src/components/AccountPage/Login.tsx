@@ -88,7 +88,16 @@ const Login = () => {
             <Button type="submit">Log in</Button>
           </VStack>
         </FormControl>
-
+        <Link
+          color="pink.500"
+          onClick={() => {
+            alert("Just Don't Forgot Your Password!");
+            reset();
+          }}
+          cursor="pointer"
+        >
+          Forgot password?
+        </Link>
         <Box mt={4}>
           No account?{" "}
           <Link
