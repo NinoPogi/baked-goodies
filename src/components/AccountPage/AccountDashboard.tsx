@@ -26,7 +26,7 @@ const AccountProfile = () => {
   const [email, setEmail] = useState(customer.email);
   const [phone, setPhone] = useState(customer.phone);
   const [password, setPassword] = useState("");
-  const [history, setHistory] = useState(false);
+  const [page, setPage] = useState("My Orders");
   const avatar = new FormData();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -84,20 +84,15 @@ const AccountProfile = () => {
         </Box>
         <Stack spacing={3}>
           <Text>Welcome, {customer?.name}</Text>
-          <Button onClick={updateProfile} isDisabled>
-            Account Info
-          </Button>
-          <Button onClick={() => setHistory(false)}>My Orders</Button>
-          <Button onClick={() => setHistory(true)}>History</Button>
-          <Button onClick={updateProfile} isDisabled>
-            Edit Account
-          </Button>
+          <Button onClick={() => setPage("Account Info")}>Account Info</Button>
+          <Button onClick={() => setPage("My Orders")}>My Orders</Button>
+          <Button onClick={() => setPage("History")}>History</Button>
           <Button
             onClick={() => {
               navigate("/shop");
             }}
           >
-            Order Now{" "}
+            Order Now
           </Button>
           <Button onClick={logout}>Log Out</Button>
         </Stack>
@@ -109,7 +104,7 @@ const AccountProfile = () => {
           background={useColorModeValue("white", "gray.600")}
           padding="20px"
         >
-          {history ? (
+          {page === "History" && (
             <OrderCart
               orders={orders
                 .filter((obj) => obj.isDone === true)
@@ -127,7 +122,8 @@ const AccountProfile = () => {
             >
               History
             </OrderCart>
-          ) : (
+          )}
+          {page === "My Orders" && (
             <OrderCart
               orders={orders
                 .filter((obj) => obj.isDone === false)
@@ -151,6 +147,21 @@ const AccountProfile = () => {
             >
               My Orders
             </OrderCart>
+          )}
+          {page === "Account Info" && (
+            <Box>
+              <Text>Account Info</Text>
+              <VStack align="left">
+                <Text>{customer._id}</Text>
+                <Text>{customer.name}</Text>
+                <Text>{customer.email}</Text>
+                <Text>{customer.phone}</Text>
+                <Text>{customer.paymentMethod}</Text>
+                <Button onClick={updateProfile} isDisabled>
+                  Edit Account
+                </Button>
+              </VStack>
+            </Box>
           )}
         </Stack>
       </Stack>

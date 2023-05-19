@@ -28,6 +28,7 @@ export interface Order {
   comment: string;
   status: string;
   price: string;
+  payment: string;
   paymentImage: string;
   finalPrice: string;
   feedback: {

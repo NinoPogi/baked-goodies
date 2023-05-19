@@ -23,16 +23,19 @@ import {
   ModalContent,
   ModalBody,
   Input,
+  Flex,
 } from "@chakra-ui/react";
 import { BsArrowRight, BsCalendarEvent, BsCalendarCheck } from "react-icons/bs";
 import { GiChemicalDrop, GiCakeSlice } from "react-icons/gi";
 import { BiIdCard } from "react-icons/bi";
 import { TfiRuler } from "react-icons/tfi";
+import { ImPriceTag } from "react-icons/im";
 import { MdSettings, MdAdd } from "react-icons/md";
 import { IoShapesOutline } from "react-icons/io5";
 import apiClient from "../../services/api-client";
 import { Order } from "../../hooks/useCustomer";
 import { CustomerContext } from "../../contexts/CustomerProvider";
+import FeedbackModal from "./FeedbackModal";
 
 interface Props {
   orders: Order[];
@@ -41,6 +44,11 @@ interface Props {
 
 const OrderCart = ({ orders, children }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpen2,
+    onOpen: onOpen2,
+    onClose: onClose2,
+  } = useDisclosure();
   const { customer } = useContext(CustomerContext);
   const [expandedOrderId, setExpandedOrderId] = useState<string>("");
   const bgAccordion = useColorModeValue("pink.50", "gray.800");
@@ -214,6 +222,12 @@ const OrderCart = ({ orders, children }: Props) => {
                       <Text>{order._id}</Text>
                     </HStack>
                   )}
+                  {order.price && (
+                    <HStack>
+                      <ImPriceTag />
+                      <Text>{order.price}</Text>
+                    </HStack>
+                  )}
                   {order.flavor && (
                     <HStack>
                       <GiChemicalDrop />
@@ -274,25 +288,27 @@ const OrderCart = ({ orders, children }: Props) => {
                       {" ) "}
                     </Text>
                   ) : null}
-
-                  {order.finalPrice ? (
-                    customer.paymentMethod === "Cash on Pickup" ? (
-                      <Text>{order.finalPrice}</Text>
-                    ) : (
+                  <Flex direction={{ base: "column", xl: "row" }}>
+                    {order.finalPrice ? (
+                      customer.paymentMethod === "Cash on Pickup" ? (
+                        <Text>{order.finalPrice}</Text>
+                      ) : (
+                        <Image
+                          src={order.finalPrice}
+                          boxSize="250px"
+                          borderRadius="20px"
+                        />
+                      )
+                    ) : null}
+                    {order.endImage ? (
                       <Image
-                        src={order.finalPrice}
+                        src={order.endImage}
                         boxSize="250px"
                         borderRadius="20px"
                       />
-                    )
-                  ) : null}
-                  {order.endImage ? (
-                    <Image
-                      src={order.endImage}
-                      boxSize="250px"
-                      borderRadius="20px"
-                    />
-                  ) : null}
+                    ) : null}
+                  </Flex>
+
                   {order.comment && <Text>{order.comment}</Text>}
                   <ButtonGroup marginTop="20px">
                     {order.status !== "canceled" &&
@@ -315,7 +331,7 @@ const OrderCart = ({ orders, children }: Props) => {
                         <Input
                           type="file"
                           accept=".jpg,.jpeg,.png"
-                          onClick={(e: BaseSyntheticEvent) => {
+                          onChange={(e: BaseSyntheticEvent) => {
                             const file = e.target.files[0];
                             payment.append("imageUpload", file);
                             apiClient.post("/upload", payment).then((res) =>
@@ -358,10 +374,17 @@ const OrderCart = ({ orders, children }: Props) => {
                         Delete
                       </Button>
                     ) : null}
-                    {order.status === "paid" ? (
-                      <Button isDisabled>Feedback</Button>
-                    ) : null}
+                    {order.status === "paid" && !order.feedback ? (
+                      <Button onClick={onOpen2}>Give Feedback</Button>
+                    ) : (
+                      <Button onClick={onOpen2}>Edit Feedback</Button>
+                    )}
                   </ButtonGroup>
+                  <FeedbackModal
+                    order={order}
+                    isOpen={isOpen2}
+                    onClose={onClose2}
+                  />
                 </Box>
               </AccordionPanel>
             </AccordionItem>
