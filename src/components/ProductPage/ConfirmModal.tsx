@@ -100,13 +100,13 @@ const ConfirmModal = ({
     await apiClient
       .post("/order", orderForm)
       .then((res) => {
-        setIsSubmitting(false);
         navigate("/account");
       })
       .catch((err) => {
         alert(err.response.data);
         setIsLoading(false);
       });
+    setIsSubmitting(false);
   };
 
   return (
