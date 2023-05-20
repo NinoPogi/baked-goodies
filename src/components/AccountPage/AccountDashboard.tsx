@@ -9,6 +9,7 @@ import {
   Box,
   useColorModeValue,
   AvatarBadge,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
@@ -61,40 +62,44 @@ const AccountProfile = () => {
   return (
     <VStack>
       <Stack direction={{ base: "column", xl: "row" }} spacing={4}>
-        <Box pos="relative" display="inline-block">
-          <Avatar
-            size="xl"
-            name={customer?.name}
-            src={getCroppedImageUrl(customer?.avatar)}
-          >
-            <label htmlFor="file-upload">
-              <AvatarBadge color="teal" cursor="pointer">
-                <FaCamera size="15px" />
+        <Stack direction={{ base: "row", xl: "column" }}>
+          <Box pos="relative" display="inline-block">
+            <Avatar
+              size="xl"
+              name={customer?.name}
+              src={getCroppedImageUrl(customer?.avatar)}
+            >
+              <label htmlFor="file-upload">
+                <AvatarBadge color="teal" cursor="pointer">
+                  <FaCamera size="15px" />
 
-                <Input
-                  id="file-upload"
-                  display="none"
-                  type="file"
-                  accept=".jpg,.jpeg,.png"
-                  onChange={handleFileUpload}
-                />
-              </AvatarBadge>
-            </label>
-          </Avatar>
-        </Box>
-        <Stack spacing={3}>
-          <Text>Welcome, {customer?.name}</Text>
-          <Button onClick={() => setPage("Account Info")}>Account Info</Button>
-          <Button onClick={() => setPage("My Orders")}>My Orders</Button>
-          <Button onClick={() => setPage("History")}>History</Button>
-          <Button
-            onClick={() => {
-              navigate("/shop");
-            }}
-          >
-            Order Now
-          </Button>
-          <Button onClick={logout}>Log Out</Button>
+                  <Input
+                    id="file-upload"
+                    display="none"
+                    type="file"
+                    accept=".jpg,.jpeg,.png"
+                    onChange={handleFileUpload}
+                  />
+                </AvatarBadge>
+              </label>
+            </Avatar>
+          </Box>
+          <SimpleGrid spacing="10px" columns={{ base: 2, xl: 1 }}>
+            <Text>Welcome, {customer?.name}</Text>
+            <Button onClick={() => setPage("Account Info")}>
+              Account Info
+            </Button>
+            <Button onClick={() => setPage("My Orders")}>My Orders</Button>
+            <Button onClick={() => setPage("History")}>History</Button>
+            <Button
+              onClick={() => {
+                navigate("/shop");
+              }}
+            >
+              Order Now
+            </Button>
+            <Button onClick={logout}>Log Out</Button>
+          </SimpleGrid>
         </Stack>
         <Stack
           width={{ base: windowSize.width - 50, xl: windowSize.width - 400 }}
@@ -152,11 +157,11 @@ const AccountProfile = () => {
             <Box>
               <Text>Account Info</Text>
               <VStack align="left">
-                <Text>{customer._id}</Text>
-                <Text>{customer.name}</Text>
-                <Text>{customer.email}</Text>
-                <Text>{customer.phone}</Text>
-                <Text>{customer.paymentMethod}</Text>
+                <Text>Id: {customer._id}</Text>
+                <Text>Name: {customer.name}</Text>
+                <Text>Email: {customer.email}</Text>
+                <Text>Phone: {customer.phone}</Text>
+                <Text>Preferred Payment: {customer.paymentMethod}</Text>
                 <Button onClick={updateProfile} isDisabled>
                   Edit Account
                 </Button>

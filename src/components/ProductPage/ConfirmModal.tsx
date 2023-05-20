@@ -103,6 +103,8 @@ const ConfirmModal = ({
         navigate("/account");
       })
       .catch((err) => {
+        console.log(err);
+
         alert(err.response.data);
         setIsLoading(false);
       });

@@ -90,9 +90,7 @@ const OrderDetails = ({ register, errors }: Props) => {
           </>
         )}
         <FormErrorMessage>
-          {errors.phone?.type === "required"
-            ? "This field is required"
-            : "Please enter a valid phone number"}
+          {errors.phone && "Please enter a valid phone number"}
         </FormErrorMessage>
       </FormControl>
     </VStack>

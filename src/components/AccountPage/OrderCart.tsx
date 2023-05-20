@@ -78,7 +78,9 @@ const OrderCart = ({ orders, children }: Props) => {
     const hoursDiff = Math.ceil(timeDiff / (1000 * 3600));
     return daysDiff > 0
       ? `${daysDiff} days from now`
-      : `${hoursDiff} hours from now`;
+      : hoursDiff > 0
+      ? `${hoursDiff} hours from now`
+      : "Done";
   };
 
   const getTimeAfter = (startDate: string, endDate: string) => {
@@ -376,9 +378,11 @@ const OrderCart = ({ orders, children }: Props) => {
                     ) : null}
                     {order.status === "paid" && !order.feedback ? (
                       <Button onClick={onOpen2}>Give Feedback</Button>
-                    ) : (
+                    ) : order.isDone &&
+                      order.status !== "canceled" &&
+                      order.status !== "decline" ? (
                       <Button onClick={onOpen2}>Edit Feedback</Button>
-                    )}
+                    ) : null}
                   </ButtonGroup>
                   <FeedbackModal
                     order={order}
