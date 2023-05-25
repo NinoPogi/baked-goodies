@@ -314,6 +314,13 @@ const OrderCart = ({ orders, children }: Props) => {
                     </Text>
                   ) : null}
                   <Flex direction={{ base: "column", xl: "row" }}>
+                    {order.endImage ? (
+                      <Image
+                        src={order.endImage}
+                        boxSize="250px"
+                        borderRadius="20px"
+                      />
+                    ) : null}
                     {order.finalPrice ? (
                       customer.paymentMethod === "Cash on Pickup" ? (
                         <Text>{order.finalPrice}</Text>
@@ -326,13 +333,6 @@ const OrderCart = ({ orders, children }: Props) => {
                           borderRadius="20px"
                         />
                       )
-                    ) : null}
-                    {order.endImage ? (
-                      <Image
-                        src={order.endImage}
-                        boxSize="250px"
-                        borderRadius="20px"
-                      />
                     ) : null}
                   </Flex>
 
