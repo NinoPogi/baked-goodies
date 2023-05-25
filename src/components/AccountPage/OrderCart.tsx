@@ -24,6 +24,7 @@ import {
   ModalBody,
   Input,
   Flex,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { BsArrowRight, BsCalendarEvent, BsCalendarCheck } from "react-icons/bs";
 import { GiChemicalDrop, GiCakeSlice } from "react-icons/gi";
@@ -277,6 +278,13 @@ const OrderCart = ({ orders, children }: Props) => {
                   )}
                   {order.orderDetails && (
                     <Text>Order Details: {order.orderDetails}</Text>
+                  )}
+                  {order.images && (
+                    <SimpleGrid columns={{ base: 2, xl: 4 }}>
+                      {order.images.map((image, index) => (
+                        <Image src={image} boxSize="100px" />
+                      ))}
+                    </SimpleGrid>
                   )}
                   {order.endDate ? (
                     <Text>

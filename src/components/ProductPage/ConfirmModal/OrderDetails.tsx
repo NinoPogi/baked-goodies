@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { BaseSyntheticEvent, useContext } from "react";
 import {
   VStack,
   FormControl,
@@ -19,10 +19,12 @@ import { ConfirmFormValues } from "../ConfirmModal";
 interface Props {
   register: UseFormRegister<ConfirmFormValues>;
   errors: FieldErrors<ConfirmFormValues>;
+  handleFileUpload: (e: BaseSyntheticEvent) => void;
 }
 
-const OrderDetails = ({ register, errors }: Props) => {
+const OrderDetails = ({ register, errors, handleFileUpload }: Props) => {
   const { customer } = useContext(CustomerContext);
+
   return (
     <VStack>
       <Input
@@ -38,6 +40,17 @@ const OrderDetails = ({ register, errors }: Props) => {
       <FormControl>
         <FormLabel htmlFor="orderDetails">Describe Your Order</FormLabel>
         <Textarea id="orderDetails" size="lg" {...register("orderDetails")} />
+      </FormControl>
+      <FormControl>
+        <FormLabel htmlFor="images">Upload Your Design:</FormLabel>
+        <InputGroup>
+          <Input
+            type="file"
+            accept=".jpg,.jpeg,.png"
+            onChange={handleFileUpload}
+            multiple
+          />
+        </InputGroup>
       </FormControl>
       <FormControl>
         {customer.paymentMethod ? null : (
@@ -83,7 +96,7 @@ const OrderDetails = ({ register, errors }: Props) => {
                 placeholder="Enter your phone number"
                 borderColor="pink"
                 {...register("phone", {
-                  pattern: /^[1-9]{1}[0-9]{9}$/i,
+                  pattern: /^(09|9)[0-9]{9}$/i,
                 })}
               />
             </InputGroup>

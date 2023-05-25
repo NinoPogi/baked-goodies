@@ -14,7 +14,7 @@ const AccountPage = () => {
 
   return isLoggedIn === "true" ? (
     <AccountDashboard />
-  ) : !customer._id ? (
+  ) : !(isLoggedIn === "true") && !customer._id ? (
     <Login />
   ) : (
     <Heading>Something Happened!</Heading>

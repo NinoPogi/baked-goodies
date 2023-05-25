@@ -1,4 +1,5 @@
 import {
+  BaseSyntheticEvent,
   Dispatch,
   SetStateAction,
   useContext,
@@ -33,6 +34,7 @@ import OrderDetails from "./ConfirmModal/OrderDetails";
 import OrderReview from "./ConfirmModal/OrderReview";
 import apiClient from "../../services/api-client";
 import { CustomerContext } from "../../contexts/CustomerProvider";
+import { useQueryClient } from "react-query";
 
 export interface ConfirmFormValues {
   promiseDate: string;
@@ -67,6 +69,7 @@ const ConfirmModal = ({
 }: Props) => {
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [stock, setStock] = useState<number>(10);
   const {
@@ -77,6 +80,7 @@ const ConfirmModal = ({
     formState: { errors },
   } = useForm<ConfirmFormValues>();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const stepInstructions = {
     1: "Review Your Order",
@@ -90,24 +94,53 @@ const ConfirmModal = ({
     });
   }, []);
 
-  const handleConfirm = async (data: FieldValues) => {
-    const orderForm = { ...form, ...data };
-    setIsLoading(true);
-    await apiClient.put("/customer", {
-      phone: data?.phone,
-      paymentMethod: data?.paymentMethod,
-    });
-    await apiClient
-      .post("/order", orderForm)
-      .then((res) => {
-        navigate("/account");
-      })
-      .catch((err) => {
-        console.log(err);
+  const handleFiles = (e: BaseSyntheticEvent) => {
+    const files = e.target.files;
+    if (files.length > 5) {
+      alert("The maximum number of photo is 5");
+      e.target.value = null;
+    } else {
+      setSelectedFiles(files);
+    }
+  };
 
-        alert(err.response.data);
-        setIsLoading(false);
-      });
+  const handleConfirm = async (data: FieldValues) => {
+    const imagesForm = new FormData();
+    if (selectedFiles) {
+      for (let i = 0; i < selectedFiles.length; i++) {
+        let file = selectedFiles[i];
+        imagesForm.append("imageUpload", file);
+      }
+    }
+    setIsSubmitting(true);
+    setIsLoading(true);
+    try {
+      const { data: images } = await apiClient.post("/upload", imagesForm);
+      const orderForm = { ...form, ...data, images };
+      await apiClient
+        .put("/customer", {
+          phone: data?.phone,
+          paymentMethod: data?.paymentMethod,
+        })
+
+        .then((res) => queryClient.setQueryData("/customer", res.data));
+      await apiClient
+        .post("/order", orderForm)
+        .then((res) => {
+          navigate("/account");
+        })
+        .catch((err) => {
+          console.log(err);
+
+          alert(err.response.data);
+          setIsLoading(false);
+        });
+    } catch (err) {
+      alert(err);
+      setIsSubmitting(false);
+      setIsLoading(false);
+    }
+
     setIsSubmitting(false);
   };
 
@@ -149,7 +182,11 @@ const ConfirmModal = ({
               ) : step === 2 ? (
                 <OrderCalendar stock={stock} setValue={setValue} />
               ) : (
-                <OrderDetails register={register} errors={errors} />
+                <OrderDetails
+                  register={register}
+                  errors={errors}
+                  handleFileUpload={handleFiles}
+                />
               )}
             </Box>
           </form>
@@ -171,13 +208,14 @@ const ConfirmModal = ({
                   setStep(step - 1);
                   setProgress(progress - 33.33);
                 }}
-                isDisabled={step === 1}
+                isDisabled={step === 1 || isLoading}
                 variant="solid"
               >
                 Back
               </Button>
             )}
             <Button
+              display={step === 3 ? "none" : "block"}
               onClick={() => {
                 setStep(step + 1);
                 if (step === 3) {
@@ -187,7 +225,6 @@ const ConfirmModal = ({
                 }
               }}
               variant="outline"
-              isDisabled={step === 3}
             >
               Next
             </Button>
@@ -195,8 +232,8 @@ const ConfirmModal = ({
               <Button
                 form="confirm"
                 type="submit"
-                variant="ghost"
                 isDisabled={isLoading}
+                variant="outline"
               >
                 Submit
               </Button>

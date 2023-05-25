@@ -289,7 +289,7 @@ const ProductPage = () => {
                   ? `Price ${cake?.pricing}`
                   : cake?.title === "Pullapart Cupcake"
                   ? `Price ${cake?.pricing}`
-                  : total
+                  : `Price starts @ ${total}`
               }`}</Text>
             </HStack>
             <CakeInfoAccordion heading={cake.title} info={cake.info} />
