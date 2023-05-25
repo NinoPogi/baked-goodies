@@ -64,7 +64,11 @@ const MenuLinks = () => {
             borderRadius="20px"
           >
             <HStack>
-              <Text display={{ base: "none", xl: "block" }} color="black">
+              <Text
+                fontFamily="body"
+                display={{ base: "none", xl: "block" }}
+                color="black"
+              >
                 {customer.name ? customer.name : "Account"}
               </Text>
               {orders?.length !== 0 ? (

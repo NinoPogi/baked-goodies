@@ -10,6 +10,7 @@ import {
   InputGroup,
   InputRightElement,
   Link,
+  Spinner,
   VStack,
 } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -37,9 +38,11 @@ const SignUp = () => {
     serverError,
     setServerError,
   } = useMutate("/customer");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const signUp = async (form: FieldValues) => {
+    setIsLoading(true);
     const apiKey = import.meta.env.VITE_ZEROBOUNCE_KEY!;
     const apiUrl = `https://api.zerobounce.net/v2/validate?api_key=${apiKey}&email=${encodeURIComponent(
       form.email
@@ -54,18 +57,33 @@ const SignUp = () => {
       // const response = await axios.get(apiUrl);
       if (response.data.status === "Valid") {
         signUpMutation.mutate(form);
-        navigate("/account");
+        setIsLoading(false);
       } else {
         setServerError("Email is invalid");
+        setIsLoading(false);
       }
     } catch (error) {
       const axiosError = error as AxiosError;
       console.error("An error occurred:", axiosError.message);
+      setIsLoading(false);
     }
   };
 
   if (customer._id) {
-    return <Heading> Hello {customer.name}</Heading>;
+    return (
+      <VStack>
+        <Heading> Hello {customer.name}</Heading>
+        <Button
+          onClick={() => {
+            navigate("/shop");
+          }}
+        >
+          Order Now
+        </Button>
+      </VStack>
+    );
+  } else if (isLoading) {
+    <Spinner />;
   } else {
     return (
       <form id="customer" onSubmit={handleSubmit(signUp)}>
