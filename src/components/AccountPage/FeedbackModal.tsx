@@ -11,6 +11,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  ModalOverlay,
   Spinner,
   Textarea,
 } from "@chakra-ui/react";
@@ -61,6 +62,7 @@ const FeedbackModal = ({ order, isOpen, onClose }: Props) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
       <ModalContent>
         <ModalHeader>
           <ModalCloseButton />

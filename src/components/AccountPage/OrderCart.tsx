@@ -18,6 +18,7 @@ import {
   useColorModeValue,
   useDisclosure,
   Modal,
+  ModalOverlay,
   ModalHeader,
   ModalCloseButton,
   ModalContent,
@@ -37,6 +38,7 @@ import apiClient from "../../services/api-client";
 import { Order } from "../../hooks/useCustomer";
 import { CustomerContext } from "../../contexts/CustomerProvider";
 import FeedbackModal from "./FeedbackModal";
+import PaymentModal from "./PaymentModal";
 
 interface Props {
   orders: Order[];
@@ -50,10 +52,14 @@ const OrderCart = ({ orders, children }: Props) => {
     onOpen: onOpen2,
     onClose: onClose2,
   } = useDisclosure();
+  const {
+    isOpen: isOpen3,
+    onOpen: onOpen3,
+    onClose: onClose3,
+  } = useDisclosure();
   const { customer } = useContext(CustomerContext);
   const [expandedOrderId, setExpandedOrderId] = useState<string>("");
   const bgAccordion = useColorModeValue("pink.50", "gray.800");
-  const payment = new FormData();
 
   const statusBadge: { [key: string]: BadgeProps } = {
     processing: { colorScheme: "green", children: "Processing" },
@@ -225,12 +231,12 @@ const OrderCart = ({ orders, children }: Props) => {
                       <Text>{order._id}</Text>
                     </HStack>
                   )}
-                  {order.price && (
+                  {/* {order.price && (
                     <HStack>
                       <ImPriceTag />
                       <Text>{order.price}</Text>
                     </HStack>
-                  )}
+                  )} */}
                   {order.flavor && (
                     <HStack>
                       <GiChemicalDrop />
@@ -240,12 +246,20 @@ const OrderCart = ({ orders, children }: Props) => {
                   {order.shape && (
                     <HStack>
                       <IoShapesOutline />
-                      <Text>{order.shape}</Text>
+                      <Text>{order.shape.replace(/^(.*)₱(.).*/, "$1")}</Text>
                     </HStack>
                   )}
 
-                  {order.digits && <Text>Digits: {order.digits}</Text>}
-                  {order.bundle && <Text>Bundle: {order.bundle}</Text>}
+                  {order.digits && (
+                    <Text>
+                      Digits: {order.digits.replace(/^(.*)₱(.).*/, "$1")}
+                    </Text>
+                  )}
+                  {order.bundle && (
+                    <Text>
+                      Bundle: {order.bundle.replace(/^(.*)₱(.).*/, "$1")}
+                    </Text>
+                  )}
                   {order.upgrades.length !== 0 ? (
                     <>
                       <Text>Upgrade/s:</Text>
@@ -253,7 +267,7 @@ const OrderCart = ({ orders, children }: Props) => {
                         {order.upgrades.map((up, index) => (
                           <HStack key={index}>
                             <MdSettings />
-                            <Text>{up}</Text>
+                            <Text>{up.replace(/^(.*)₱(.).*/, "$1")}</Text>
                           </HStack>
                         ))}
                       </Stack>
@@ -268,7 +282,7 @@ const OrderCart = ({ orders, children }: Props) => {
                         {order.addons.map((add, index) => (
                           <HStack key={index}>
                             <MdAdd />
-                            <Text>{add}</Text>
+                            <Text>{add.replace(/^(.*)₱(.).*/, "$1")}</Text>
                           </HStack>
                         ))}
                       </Stack>
@@ -282,7 +296,7 @@ const OrderCart = ({ orders, children }: Props) => {
                   {order.images && (
                     <SimpleGrid columns={{ base: 2, xl: 4 }}>
                       {order.images.map((image, index) => (
-                        <Image src={image} boxSize="100px" />
+                        <Image key={index} src={image} boxSize="100px" />
                       ))}
                     </SimpleGrid>
                   )}
@@ -336,23 +350,7 @@ const OrderCart = ({ orders, children }: Props) => {
                       <Button onClick={onOpen}>Edit Order</Button>
                     ) : null}
                     {order.status === "pickup" ? (
-                      <>
-                        <Text>Upload Proof of Payment:</Text>
-                        <Input
-                          type="file"
-                          accept=".jpg,.jpeg,.png"
-                          onChange={(e: BaseSyntheticEvent) => {
-                            const file = e.target.files[0];
-                            payment.append("imageUpload", file);
-                            apiClient.post("/upload", payment).then((res) =>
-                              apiClient.put(`/order/server/${order._id}`, {
-                                paymentImage: res.data[0],
-                                status: "paid",
-                              })
-                            );
-                          }}
-                        />
-                      </>
+                      <Button onClick={onOpen3}>Pay Your Cake </Button>
                     ) : null}
                     {order.status === "canceled" ? (
                       <Button
@@ -392,6 +390,11 @@ const OrderCart = ({ orders, children }: Props) => {
                       <Button onClick={onOpen2}>Edit Feedback</Button>
                     ) : null}
                   </ButtonGroup>
+                  <PaymentModal
+                    order={order}
+                    isOpen={isOpen3}
+                    onClose={onClose3}
+                  />
                   <FeedbackModal
                     order={order}
                     isOpen={isOpen2}
@@ -406,6 +409,7 @@ const OrderCart = ({ orders, children }: Props) => {
         <Text>No orders found.</Text>
       )}
       <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
         <ModalContent>
           <ModalHeader>
             <ModalCloseButton />

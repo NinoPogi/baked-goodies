@@ -158,6 +158,7 @@ const ProductPage = () => {
       spacing="40px"
       justify="center"
       w="full"
+      padding="0 90px"
     >
       <Box w="100%">
         <Link as={ReactLink} to="/shop">
