@@ -83,7 +83,7 @@ const SignUp = () => {
       </VStack>
     );
   } else if (isLoading) {
-    <Spinner />;
+    return <Spinner />;
   } else {
     return (
       <form id="customer" onSubmit={handleSubmit(signUp)}>
