@@ -313,6 +313,13 @@ const OrderCart = ({ orders, children }: Props) => {
                       {" ) "}
                     </Text>
                   ) : null}
+                  {order.finalPrice && customer.paymentMethod === "BDO" ? (
+                    <Link> {order.finalPrice}</Link>
+                  ) : null}
+                  {order.finalPrice &&
+                  customer.paymentMethod === "Cash on Pickup" ? (
+                    <Text>{order.finalPrice}</Text>
+                  ) : null}
                   <Flex direction={{ base: "column", xl: "row" }}>
                     {order.endImage ? (
                       <Image
@@ -322,17 +329,11 @@ const OrderCart = ({ orders, children }: Props) => {
                       />
                     ) : null}
                     {order.finalPrice ? (
-                      customer.paymentMethod === "Cash on Pickup" ? (
-                        <Text>{order.finalPrice}</Text>
-                      ) : customer.paymentMethod === "BDO" ? (
-                        <Link> {order.finalPrice}</Link>
-                      ) : (
-                        <Image
-                          src={order.finalPrice}
-                          boxSize="250px"
-                          borderRadius="20px"
-                        />
-                      )
+                      <Image
+                        src={order.finalPrice}
+                        boxSize="250px"
+                        borderRadius="20px"
+                      />
                     ) : null}
                   </Flex>
 
