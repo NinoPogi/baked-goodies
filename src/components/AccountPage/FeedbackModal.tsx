@@ -70,8 +70,6 @@ const FeedbackModal = ({ order, isOpen, onClose }: Props) => {
         <ModalBody>
           {isLoading ? (
             <Spinner />
-          ) : order.payment ? (
-            <></>
           ) : (
             <>
               <FormControl>
