@@ -26,6 +26,7 @@ import {
   Input,
   Flex,
   SimpleGrid,
+  Link,
 } from "@chakra-ui/react";
 import { BsArrowRight, BsCalendarEvent, BsCalendarCheck } from "react-icons/bs";
 import { GiChemicalDrop, GiCakeSlice } from "react-icons/gi";
@@ -316,6 +317,8 @@ const OrderCart = ({ orders, children }: Props) => {
                     {order.finalPrice ? (
                       customer.paymentMethod === "Cash on Pickup" ? (
                         <Text>{order.finalPrice}</Text>
+                      ) : customer.paymentMethod === "BDO" ? (
+                        <Link> {order.finalPrice}</Link>
                       ) : (
                         <Image
                           src={order.finalPrice}
