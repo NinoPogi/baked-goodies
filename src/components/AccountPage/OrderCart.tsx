@@ -369,7 +369,7 @@ const OrderCart = ({ orders, children }: Props) => {
                       <Button onClick={onOpen}>Edit Order</Button>
                     ) : null}
                     {order.status === "pickup" ? (
-                      <Button onClick={onOpen3}>Pay Your Cake </Button>
+                      <Button onClick={onOpen3}>Upload Proof of Payment</Button>
                     ) : null}
                     {order.status === "canceled" ? (
                       <Button
