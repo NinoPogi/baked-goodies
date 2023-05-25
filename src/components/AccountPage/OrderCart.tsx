@@ -69,6 +69,8 @@ const OrderCart = ({ orders, children }: Props) => {
     accepted: { colorScheme: "green", children: "Accepted" },
     pickup: { colorScheme: "pink", children: "Ready 4 Pickup" },
     paid: { colorScheme: "green", children: "Ready 4 Pickup" },
+    confirm: { colorScheme: "green", children: "Payment Confirmed" },
+    getCake: { colorScheme: "pink", children: "Claimed" },
   };
 
   const toggleAccordion = (orderId: string) => {
@@ -295,11 +297,14 @@ const OrderCart = ({ orders, children }: Props) => {
                     <Text>Order Details: {order.orderDetails}</Text>
                   )}
                   {order.images && (
-                    <SimpleGrid columns={{ base: 2, xl: 4 }}>
-                      {order.images.map((image, index) => (
-                        <Image key={index} src={image} boxSize="100px" />
-                      ))}
-                    </SimpleGrid>
+                    <>
+                      <Text>Uploaded: Design/s</Text>
+                      <SimpleGrid columns={{ base: 2, xl: 4 }}>
+                        {order.images.map((image, index) => (
+                          <Image key={index} src={image} boxSize="100px" />
+                        ))}
+                      </SimpleGrid>
+                    </>
                   )}
                   {order.endDate ? (
                     <Text>
@@ -314,11 +319,21 @@ const OrderCart = ({ orders, children }: Props) => {
                     </Text>
                   ) : null}
                   {order.finalPrice && customer.paymentMethod === "BDO" ? (
-                    <Link> {order.finalPrice}</Link>
+                    <>
+                      <Text fontSize="2xl" fontWeight="bold">
+                        Click the Link to Pay:
+                      </Text>
+                      <Link> {order.finalPrice}</Link>
+                    </>
                   ) : null}
                   {order.finalPrice &&
                   customer.paymentMethod === "Cash on Pickup" ? (
-                    <Text>{order.finalPrice}</Text>
+                    <>
+                      <Text fontSize="2xl" fontWeight="bold">
+                        Please Pay This Amount on Pickup:
+                      </Text>
+                      <Text>{order.finalPrice}</Text>
+                    </>
                   ) : null}
                   <Flex direction={{ base: "column", xl: "row" }}>
                     {order.endImage ? (
@@ -328,7 +343,7 @@ const OrderCart = ({ orders, children }: Props) => {
                         borderRadius="20px"
                       />
                     ) : null}
-                    {order.finalPrice ? (
+                    {order.finalPrice && customer.paymentMethod === "GCash" ? (
                       <Image
                         src={order.finalPrice}
                         boxSize="250px"
