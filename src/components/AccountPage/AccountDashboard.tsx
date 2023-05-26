@@ -162,9 +162,9 @@ const AccountProfile = () => {
                 <Text>Email: {customer.email}</Text>
                 <Text>Phone: {customer.phone}</Text>
                 <Text>Preferred Payment: {customer.paymentMethod}</Text>
-                <Button onClick={updateProfile} isDisabled>
+                {/* <Button onClick={updateProfile} isDisabled>
                   Edit Account
-                </Button>
+                </Button> */}
               </VStack>
             </Box>
           )}

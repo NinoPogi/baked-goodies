@@ -403,13 +403,15 @@ const OrderCart = ({ orders, children }: Props) => {
                     ) : null}
                     {order.status === "paid" && !order.feedback ? (
                       <Button onClick={onOpen2}>Give Feedback</Button>
-                    ) : order.isDone &&
-                      order.status !== "canceled" &&
-                      order.status !== "decline" ? (
-                      <Button onClick={onOpen2} isDisabled>
-                        Edit Feedback
-                      </Button>
-                    ) : null}
+                    ) 
+                    // : order.isDone &&
+                    //   order.status !== "canceled" &&
+                    //   order.status !== "decline" ? (
+                    //   <Button onClick={onOpen2} isDisabled>
+                    //     Edit Feedback
+                    //   </Button>
+                    // ) 
+                    : null}
                   </ButtonGroup>
                   <PaymentModal
                     order={order}
