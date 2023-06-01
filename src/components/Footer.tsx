@@ -33,6 +33,10 @@ export default function Footer() {
             Tiktok
           </Link>
         </HStack>
+        <HStack>
+          <Link href={"/terms"}>Terms of Service</Link>{" "}
+          <Link href={"/privacy"}>Privacy Policy</Link>
+        </HStack>
         <Text fontSize={"sm"}>Copyright © 2023, Baked Goodies by H.</Text>
       </Stack>
     </Box>

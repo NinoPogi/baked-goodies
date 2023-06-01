@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import {
   Box,
   Button,
+  Checkbox,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -39,6 +40,7 @@ const SignUp = () => {
     setServerError,
   } = useMutate("/customer");
   const [isLoading, setIsLoading] = useState(false);
+  const [agreed, isAgreed] = useState(false);
   const navigate = useNavigate();
 
   const signUp = async (form: FieldValues) => {
@@ -211,8 +213,19 @@ const SignUp = () => {
             </FormErrorMessage>
           </FormControl>
 
+          <Checkbox size="md" onChange={() => isAgreed(!agreed)}>
+            I have read and agreed to the{" "}
+            <Link href="/privacy" color="pink.500" isExternal>
+              privacy policy
+            </Link>
+            , and{" "}
+            <Link href="/terms" color="pink.500" isExternal>
+              terms of service
+            </Link>
+            .
+          </Checkbox>
           <Box textAlign="center">
-            <Button type="submit" isLoading={isSubmitting}>
+            <Button type="submit" isLoading={isSubmitting} isDisabled={!agreed}>
               Sign Up
             </Button>
             <Box mt={4}>

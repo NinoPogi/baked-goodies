@@ -7,6 +7,8 @@ import ProductPage from "./pages/ProductPage";
 import ShopPage from "./pages/ShopPage";
 import Login from "./components/AccountPage/Login";
 import SignUp from "./components/AccountPage/SignUp";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsPage from "./pages/TermsPage";
 
 const Routes = () => {
   const element = useRoutes([
@@ -32,6 +34,14 @@ const Routes = () => {
     {
       path: "/account/signup",
       element: <SignUp />,
+    },
+    {
+      path: "/terms",
+      element: <TermsPage />,
+    },
+    {
+      path: "/privacy",
+      element: <PrivacyPolicyPage />,
     },
     {
       path: "/*",
