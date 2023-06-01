@@ -129,7 +129,7 @@ const OrderCart = ({ orders, children }: Props) => {
                       <Badge
                         colorScheme={statusBadge[order.status].colorScheme}
                       >
-                        {statusBadge[order.status].children}
+                        {statusBadge[order.status].children as string}
                       </Badge>
                     )}
                     {order.status !== "pickup" &&
@@ -403,15 +403,14 @@ const OrderCart = ({ orders, children }: Props) => {
                     ) : null}
                     {order.status === "paid" && !order.feedback ? (
                       <Button onClick={onOpen2}>Give Feedback</Button>
-                    ) 
-                    // : order.isDone &&
+                    ) : // : order.isDone &&
                     //   order.status !== "canceled" &&
                     //   order.status !== "decline" ? (
                     //   <Button onClick={onOpen2} isDisabled>
                     //     Edit Feedback
                     //   </Button>
-                    // ) 
-                    : null}
+                    // )
+                    null}
                   </ButtonGroup>
                   <PaymentModal
                     order={order}
