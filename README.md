@@ -62,7 +62,6 @@ The system includes:
 ---
 
 ##  Screenshots  
-_Add your images below. Replace the placeholders with actual file paths in your repo._
 
 ### **Customer Side**
 #### Home Page  
@@ -131,8 +130,7 @@ _Add your images below. Replace the placeholders with actual file paths in your 
 │  ├─ components/
 │  ├─ services/          # API, email, payment services
 │  ├─ utils/
-│  └─ styles/
-├─ admin/                # Admin panel (if separated)
+│  └─ styles/                
 └─ README.md
 ```
 
